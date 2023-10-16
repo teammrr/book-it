@@ -1,7 +1,10 @@
 version = 1
+<<<<<<< HEAD
 
 [[analyzers]]
 name = "javascript"
 
   [analyzers.meta]
   plugins = ["react"]
+=======
+>>>>>>> d386474 (new config setup)
