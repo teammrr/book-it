@@ -6,11 +6,11 @@ import { Fragment } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import Image from "next/image";
-import Rooms from "./rooms";
+import Rooms from "../rooms";
 
 const navigation = [
-  { name: "Rooms", href: "/", current: true },
-  { name: "My Reservation", href: "/reservation", current: false },
+  { name: "Rooms", href: "/", current: false },
+  { name: "My Reservation", href: "/reservations", current: true },
   { name: "History", href: "/history", current: false },
 ];
 

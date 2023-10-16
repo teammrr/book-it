@@ -5,7 +5,7 @@ import Image from "next/image";
 import { useSession, signIn } from "next-auth/react";
 import { redirect } from "next/navigation";
 
-export default function page() {
+export default function Page() {
   const { data: session } = useSession();
   if (session) {
     redirect("/");
@@ -29,7 +29,7 @@ export default function page() {
               height={30}
               alt="Google Logo"
             />
-            <span className="px-2">Sign In WIth Google</span>
+            <span className="px-2">Sign In With Google</span>
           </button>
         </div>
       </div>
