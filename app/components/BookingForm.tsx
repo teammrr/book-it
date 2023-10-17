@@ -43,8 +43,8 @@ const BookingForm: React.FC = () => {
   }, []);
 
   return (
-    <div className="space-y-2 space-x-4 mt-4 text-black mx-auto max-w-7xl sm:px-6 lg:px-8">
-      <h2 className="text-2xl font-medium ">Book a Meeting Room</h2>
+    <div className="space-y-2 mt-4 text-black mx-auto max-w-7xl sm:px-6 lg:px-8">
+      <h2 className="text-xl font-medium ">Book a Meeting Room</h2>
       <form onSubmit={handleSubmit}>
         <div className="flex flex-col space-y-2">
           <div>
