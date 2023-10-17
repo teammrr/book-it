@@ -5,6 +5,7 @@ import type {
 } from "next";
 import type { NextAuthOptions as NextAuthConfig } from "next-auth";
 import { getServerSession } from "next-auth";
+import { v4 as uuidv4 } from "uuid";
 
 import Google from "next-auth/providers/google";
 
@@ -13,6 +14,7 @@ declare module "next-auth/jwt" {
   interface JWT {
     /** The user's role. */
     userRole?: "user";
+    userId?: string;
   }
 }
 
@@ -24,12 +26,17 @@ export const config = {
     }),
   ],
   callbacks: {
-    async jwt({ token }) {
-      token.userRole = "user";
+    async jwt({ token, account, user }) {
+      if (account) {
+        token.accessToken = account.access_token;
+        token.id = user?.id;
+        console.log("account", account);
+        return token;
+      }
       return token;
     },
   },
-} satisfies NextAuthConfig;
+} as NextAuthConfig;
 
 // Helper function to get session without passing config every time
 // https://next-auth.js.org/configuration/nextjs#getserversession

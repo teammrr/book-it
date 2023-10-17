@@ -6,7 +6,7 @@ export default function Layout({ children }: { children: ReactNode }) {
   return (
     <>
       <Header />
-      <main>{children}</main>
+      <main className="bg-gray-50 min-h-screen text-black">{children}</main>
       <Footer />
     </>
   );

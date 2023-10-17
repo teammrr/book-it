@@ -1,4 +1,4 @@
-import { auth } from "../auth";
+import { auth } from "../../auth";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 export default async function handler(
