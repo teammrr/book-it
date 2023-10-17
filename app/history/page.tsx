@@ -20,7 +20,7 @@ export default function History() {
       <main className="bg-gray-50 min-h-screen">
         <Header />
         <h1 className="text-3xl font-semibold text-gray-800 mt-8 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          Reservation History
+          Please login to view this page
         </h1>
       </main>
     );
@@ -30,7 +30,7 @@ export default function History() {
     <main className="bg-gray-50 min-h-screen">
       <Header />
       <h1 className="text-3xl font-semibold text-gray-800 mt-8 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        Please login to view this page
+        Reservation History
       </h1>
     </main>
   );

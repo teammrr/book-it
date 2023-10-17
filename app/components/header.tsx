@@ -86,12 +86,6 @@ export default function Header() {
                         Home
                       </Link>
                       <Link
-                        href="/reserve"
-                        className="bg-gray-200 text-[#002D74] hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium"
-                      >
-                        Reserve a Room
-                      </Link>
-                      <Link
                         href="/reservations"
                         className="bg-gray-200 text-[#002D74] hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium"
                       >
@@ -199,12 +193,6 @@ export default function Header() {
                   className="bg-gray-200 text-[#002D74] hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium"
                 >
                   Home
-                </Link>
-                <Link
-                  href="/reserve"
-                  className="bg-gray-200 text-[#002D74] hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium"
-                >
-                  Reserve a Room
                 </Link>
                 <Link
                   href="/reservations"
