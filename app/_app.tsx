@@ -13,7 +13,6 @@ export default function App({
   return (
     <SessionProvider
       session={session}
-      basePath="cool-app"
       // Re-fetch session every 5 minutes
       refetchInterval={5 * 60}
       // Re-fetches session when window is focused
