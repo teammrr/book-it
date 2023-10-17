@@ -13,7 +13,7 @@ const BookingForm: React.FC = () => {
     // Handle form submission here
     const reservationData = {
       date,
-      time,
+      time: time.split("-")[0],
       room,
       // Add other user-related data like name and email here
     };
@@ -43,10 +43,10 @@ const BookingForm: React.FC = () => {
   }, []);
 
   return (
-    <div className="space-y-2">
-      <h2 className="font-semibold text-xl">Book a Meeting Room</h2>
+    <div className="space-y-2 space-x-4 mt-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
+      <h2 className="text-2xl font-medium ">Book a Meeting Room</h2>
       <form onSubmit={handleSubmit}>
-        <div className="flex">
+        <div className="flex flex-col space-y-2">
           <div>
             <label className="text-lg" htmlFor="date">
               Date:{" "}
@@ -71,7 +71,9 @@ const BookingForm: React.FC = () => {
               onChange={(e) => setTime(e.target.value)}
               required
             >
-              <option value="">Select a time slot</option>
+              <option disabled value="">
+                Select a time slot
+              </option>
               {/* Populate the options dynamically */}
             </select>
           </div>
@@ -86,7 +88,13 @@ const BookingForm: React.FC = () => {
               onChange={(e) => setRoom(e.target.value)}
               required
             >
-              <option value="">Select a room</option>
+              <option disabled value="">
+                Select a room
+              </option>
+              {/* Add a default room option */}
+              <option value="Room A">Room A</option>{" "}
+              <option value="Room B">Room B</option>
+              <option value="Room C">Room C</option>
               {/* Populate the options dynamically */}
             </select>
           </div>

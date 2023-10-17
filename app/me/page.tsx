@@ -1,8 +1,10 @@
+"use client";
+
 import { useSession } from "next-auth/react";
 import Header from "../components/header";
 
 export default function MePage() {
-  const { status } = useSession({
+  const { data: session, status } = useSession({
     required: true,
     onUnauthenticated() {
       // The user is not authenticated, handle it here.
@@ -23,7 +25,14 @@ export default function MePage() {
   return (
     <main className="bg-gray-50 min-h-screen">
       <Header />
-      <pre>{JSON.stringify(data, null, 2)}</pre>
+      <div className="">
+        <h1 className="text-3xl font-semibold text-gray-800 mt-8 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          Welcome, {session?.user?.name}
+        </h1>
+        <p className="mt-4 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-gray-600 text-lg">
+          Email: {session?.user?.email}
+        </p>
+      </div>
     </main>
   );
 }
