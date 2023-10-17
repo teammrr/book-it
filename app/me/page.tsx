@@ -1,14 +1,7 @@
-"use client";
-
 import { useSession } from "next-auth/react";
-import Header from "./components/header";
-import Footer from "./components/footer";
-import Head from "next/head";
-import BookingForm from "./components/BookingForm";
+import Header from "../components/header";
 
-// import { navigation, classNames } from "./page";
-
-export default function Home() {
+export default function MePage() {
   const { status } = useSession({
     required: true,
     onUnauthenticated() {
@@ -30,12 +23,7 @@ export default function Home() {
   return (
     <main className="bg-gray-50 min-h-screen">
       <Header />
-      <h1 className="text-3xl font-semibold text-gray-800 mt-8 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        Welcome back,
-      </h1>
-      <div className="mt-8 px-10  ">
-        <BookingForm />
-      </div>
+      <pre>{JSON.stringify(data, null, 2)}</pre>
     </main>
   );
 }

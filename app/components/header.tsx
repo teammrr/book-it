@@ -145,15 +145,15 @@ export default function Header() {
                           </Menu.Item> */}
                         <Menu.Item>
                           {({ active }) => (
-                            <p
-                              // href="profile"
+                            <a
+                              href="me"
                               className={classNames(
                                 active ? "bg-gray-100" : "",
                                 "block px-4 py-2 text-sm text-[#002D74]"
                               )}
                             >
                               {session?.user?.name || "Not Signed In"}
-                            </p>
+                            </a>
                           )}
                         </Menu.Item>
                         <Menu.Item>
