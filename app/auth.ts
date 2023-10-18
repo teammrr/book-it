@@ -37,7 +37,7 @@ export const config = {
 
         if (!userExists) {
           const response = await fetch(
-            "http://room-booking-dev.teamrr.live/api/auth/user",
+            "https://room-booking-dev.teamrr.live/api/auth/user",
             {
               method: "POST",
               headers: { "Content-Type": "application/json" },
