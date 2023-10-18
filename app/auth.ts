@@ -5,7 +5,9 @@ import type {
 } from "next";
 import type { NextAuthOptions as NextAuthConfig } from "next-auth";
 import { getServerSession } from "next-auth";
-import { v4 as uuidv4 } from "uuid";
+// import { v4 as uuidv4 } from "uuid";
+import { connectToDatabase } from "@/lib/mongodb";
+import User from "@/models/user";
 
 import Google from "next-auth/providers/google";
 
