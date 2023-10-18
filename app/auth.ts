@@ -5,18 +5,16 @@ import type {
 } from "next";
 import type { NextAuthOptions as NextAuthConfig } from "next-auth";
 import { getServerSession } from "next-auth";
-// import { v4 as uuidv4 } from "uuid";
-import { connectToDatabase } from "@/lib/mongodb";
 import User from "@/models/user";
 
 import Google from "next-auth/providers/google";
+import { connectToDatabase } from "@/lib/mongodb";
 
 // Read more at: https://next-auth.js.org/getting-started/typescript#module-augmentation
 declare module "next-auth/jwt" {
   interface JWT {
     /** The user's role. */
     userRole?: "user";
-    userId?: string;
   }
 }
 
@@ -28,17 +26,35 @@ export const config = {
     }),
   ],
   callbacks: {
-    async jwt({ token, account, user }) {
-      if (account) {
-        token.accessToken = account.access_token;
-        token.id = user?.id;
-        console.log("account", account);
-        return token;
+    async jwt({ token }) {
+      token.userRole = "user";
+      console.log("jwt", token);
+
+      const { name, email } = token;
+      try {
+        await connectToDatabase();
+        const userExists = await User.findOne({ email });
+
+        if (!userExists) {
+          const response = await fetch(
+            "http://room-booking-dev.teamrr.live/api/auth/user",
+            {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ name, email }),
+            }
+          );
+          if (response.ok) {
+            return token;
+          }
+        }
+      } catch (error) {
+        console.error("There was an error when creating user", error);
       }
       return token;
     },
   },
-} as NextAuthConfig;
+} satisfies NextAuthConfig;
 
 // Helper function to get session without passing config every time
 // https://next-auth.js.org/configuration/nextjs#getserversession
