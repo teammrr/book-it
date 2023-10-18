@@ -50,9 +50,6 @@ export default function MePage() {
         <p className="mt-4 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-gray-600 text-lg">
           Email: {user?.email}
         </p>
-        <p className="mt-4 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-gray-600 text-lg">
-          User ID: {user?.sub}
-        </p>
       </div>
     </main>
   );

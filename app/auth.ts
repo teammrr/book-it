@@ -18,6 +18,9 @@ declare module "next-auth/jwt" {
   }
 }
 
+const localUrl = "http://localhost:3000/api/auth/user";
+const prodUrl = "https://room-booking-dev.teamrr.live/api/auth/user";
+
 export const config = {
   providers: [
     Google({
@@ -36,14 +39,11 @@ export const config = {
         const userExists = await User.findOne({ email });
 
         if (!userExists) {
-          const response = await fetch(
-            "https://room-booking-dev.teamrr.live/api/auth/user",
-            {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ name, email }),
-            }
-          );
+          const response = await fetch(localUrl, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ name, email }),
+          });
           if (response.ok) {
             return token;
           }
