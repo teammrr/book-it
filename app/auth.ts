@@ -20,6 +20,7 @@ declare module "next-auth/jwt" {
 
 const localUrl = "http://localhost:3000/api/auth/user";
 const prodUrl = "https://room-booking-dev.teamrr.live/api/auth/user";
+const prodUrl2 = "https://bookit.teamrr.live/api/auth/user";
 
 export const config = {
   providers: [
@@ -33,18 +34,19 @@ export const config = {
       token.userRole = "user";
       console.log("jwt", token);
 
-      const { name, email } = token;
+      const { name, email, userRole } = token;
       try {
         await connectToDatabase();
         const userExists = await User.findOne({ email });
 
         if (!userExists) {
-          const response = await fetch(localUrl, {
+          const response = await fetch(prodUrl2, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ name, email }),
+            body: JSON.stringify({ name, email, userRole }),
           });
           if (response.ok) {
+            console.log("ok");
             return token;
           }
         }
