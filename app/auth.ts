@@ -8,6 +8,7 @@ import { getServerSession } from "next-auth";
 import User from "@/models/user";
 
 import Google from "next-auth/providers/google";
+import LineProvider from "next-auth/providers/line";
 import { connectToDatabase } from "@/lib/mongodb";
 
 // Read more at: https://next-auth.js.org/getting-started/typescript#module-augmentation
@@ -19,14 +20,20 @@ declare module "next-auth/jwt" {
 }
 
 const localUrl = "http://localhost:3000/api/auth/user";
-const prodUrl = "https://room-booking-dev.teamrr.live/api/auth/user";
-const prodUrl2 = "https://bookit.teamrr.live/api/auth/user";
+const prodUrl = "https://bookit.teamrr.live/api/auth/user";
 
 export const config = {
+  theme: {
+    logo: "/img/logo-black.png",
+  },
   providers: [
     Google({
       clientId: process.env.AUTH_GOOGLE_ID,
       clientSecret: process.env.AUTH_GOOGLE_SECRET,
+    }),
+    LineProvider({
+      clientId: process.env.AUTH_LINE_ID,
+      clientSecret: process.env.AUTH_LINE_SECRET,
     }),
   ],
   callbacks: {
@@ -40,7 +47,7 @@ export const config = {
         const userExists = await User.findOne({ email });
 
         if (!userExists) {
-          const response = await fetch(prodUrl2, {
+          const response = await fetch(prodUrl, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ name, email, userRole }),
@@ -75,6 +82,8 @@ declare global {
     export interface ProcessEnv {
       AUTH_GOOGLE_ID: string;
       AUTH_GOOGLE_SECRET: string;
+      AUTH_LINE_ID: string;
+      AUTH_LINE_SECRET: string;
     }
   }
 }
