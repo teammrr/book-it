@@ -9,7 +9,7 @@ export default function RoomList({
 }: any) {
   return (
     <div className="flex flex-col justify-center pb-5 ">
-      <div className="max-w-lg rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] ">
+      <div className="max-w-lg rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] transition ease-in-out hover:scale-105  duration-500 ">
         <div
           className="relative overflow-hidden bg-cover bg-no-repeat"
           data-te-ripple-init
@@ -37,14 +37,17 @@ export default function RoomList({
             <li>Floor {floor}</li>
             <li>Seats: {seats}</li>
           </ul>
-          <button
-            type="button"
-            className="bg-blue-500 hover:bg-blue-700 text-white font-semibold py-1 px-2 rounded-lg mt-2"
-            data-te-ripple-init
-            data-te-ripple-color="light"
-          >
-            Reserve this room
-          </button>
+          <div className="flex justify-end ">
+            <button
+              type="button"
+              className="px-3 py-2 relative mt-2 rounded group overflow-hidden font-medium bg-blue-50 text-blue-600"
+            >
+              <span className="absolute top-0 left-0 flex w-full h-0 mb-0 transition-all duration-200 ease-out transform translate-y-0 bg-blue-600 group-hover:h-full opacity-90"></span>
+              <span className="relative group-hover:text-white">
+                Reserve this room
+              </span>
+            </button>
+          </div>
         </div>
       </div>
     </div>

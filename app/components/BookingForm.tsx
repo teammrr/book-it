@@ -100,7 +100,7 @@ const BookingForm: React.FC = () => {
           </div>
         </div>
         <button
-          className="bg-blue-500 hover:bg-blue-700 text-white font-semibold py-1 px-2 rounded-lg mt-2"
+          className="bg-blue-100 hover:bg-blue-300 text-blue-700 font-semibold py-1 px-2 rounded-lg mt-2 transition ease-in-out hover:scale-110  duration-300"
           type="submit"
         >
           Book Room

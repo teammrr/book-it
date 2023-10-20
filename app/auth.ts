@@ -10,17 +10,19 @@ import User from "@/models/user";
 import Google from "next-auth/providers/google";
 import LineProvider from "next-auth/providers/line";
 import { connectToDatabase } from "@/lib/mongodb";
+import { signIn } from "next-auth/react";
 
 // Read more at: https://next-auth.js.org/getting-started/typescript#module-augmentation
 declare module "next-auth/jwt" {
   interface JWT {
     /** The user's role. */
-    userRole?: "user";
+    role?: "user";
   }
 }
 
 const localUrl = "http://localhost:3000/api/auth/user";
 const prodUrl = "https://bookit.teamrr.live/api/auth/user";
+const lineUrl = "https://bookit.teamrr.live/api/auth/user/line";
 
 export const config = {
   theme: {
@@ -38,19 +40,20 @@ export const config = {
   ],
   callbacks: {
     async jwt({ token }) {
-      token.userRole = "user";
+      token.role = "user";
       console.log("jwt", token);
 
-      const { name, email, userRole } = token;
+      const { name, email, role } = token;
       try {
         await connectToDatabase();
         const userExists = await User.findOne({ email });
+        console.log(userExists);
 
         if (!userExists) {
-          const response = await fetch(prodUrl, {
+          const response = await fetch(localUrl, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ name, email, userRole }),
+            body: JSON.stringify({ name, email, role }),
           });
           if (response.ok) {
             console.log("ok");
@@ -62,6 +65,30 @@ export const config = {
       }
       return token;
     },
+    // async signIn({ account }) {
+    //   console.log("signIn", account);
+    //   try {
+    //     await connectToDatabase();
+    //     console.log("check 1");
+    //     const userExists = await User.findOne({ account });
+    //     if (!userExists) {
+    //       console.log("check 2");
+    //       const response = await fetch(lineUrl, {
+    //         method: "POST",
+    //         headers: { "Content-Type": "application/json" },
+    //         body: JSON.stringify({ account }),
+    //       });
+    //       if (response.ok) {
+    //         console.log("ok");
+    //         return true;
+    //       }
+    //     }
+    //   } catch (error) {
+    //     console.log("check 3");
+    //     console.error("There was an error when creating user", error);
+    //   }
+    //   return true;
+    // },
   },
 } satisfies NextAuthConfig;
 

@@ -1,24 +1,32 @@
 import { SessionProvider } from "next-auth/react";
 import "./globals.css";
-
+import { useEffect } from "react";
 import type { AppProps } from "next/app";
 import type { Session } from "next-auth";
+const liffId = process.env.AUTH_LIFF_ID;
 
 // Use of the <SessionProvider> is mandatory to allow components that call
 // `useSession()` anywhere in your application to access the `session` object.
-export default function App({
-  Component,
-  pageProps: { session, ...pageProps },
-}: AppProps<{ session: Session }>) {
+export default function App({ Component, pageProps }: any) {
+  useEffect(() => {
+    (async () => {
+      const liff = (await import("@line/liff")).default;
+      try {
+        await liff.init({ liffId: liffId || "" });
+      } catch (error) {
+        console.error("liff init error", error);
+      }
+      if (!liff.isLoggedIn()) {
+        liff.login();
+      }
+    })();
+  }, []);
   return (
-    <SessionProvider
-      session={session}
-      // Re-fetch session every 5 minutes
-      refetchInterval={5 * 60}
-      // Re-fetches session when window is focused
-      refetchOnWindowFocus={true}
-    >
-      <Component {...pageProps} />
-    </SessionProvider>
+    <>
+      <script src="https://static.line-scdn.net/liff/edge/2.1/liff.js" async />
+      <SessionProvider>
+        <Component {...pageProps} />
+      </SessionProvider>
+    </>
   );
 }
