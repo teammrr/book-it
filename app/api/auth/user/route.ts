@@ -1,8 +1,8 @@
 import { connectToDatabase } from "@/lib/mongodb";
 import User from "@/models/user";
-import { NextResponse } from "next/server";
+import { NextResponse, NextRequest } from "next/server";
 
-export async function POST(req: any) {
+export async function POST(req: NextRequest) {
   const { name, email, role } = await req.json();
   await connectToDatabase();
   await User.insertMany({ name, email, role });

@@ -1,8 +1,8 @@
 import { connectToDatabase } from "@/lib/mongodb";
 import Room from "@/models/room";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
-export async function POST(req: any) {
+export async function POST(req: NextRequest) {
   const { roomId, roomName, roomFloor, roomCapacity } = await req.json();
   await connectToDatabase();
   await Room.create({ roomId, roomName, roomFloor, roomCapacity });
