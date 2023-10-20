@@ -46,7 +46,7 @@ export const config = {
       const { name, email, role } = token;
       try {
         await connectToDatabase();
-        const userExists = await User.findOne({ email });
+        const userExists = await User.findOne({ name });
         console.log(userExists);
 
         if (!userExists) {
