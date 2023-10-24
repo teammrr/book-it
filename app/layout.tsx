@@ -12,6 +12,7 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "Book-It",
   description: "Newton School Room Reservation App",
+  appleWebApp: true,
 };
 
 export default async function RootLayout({

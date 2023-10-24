@@ -46,11 +46,11 @@ export const config = {
       const { name, email, role } = token;
       try {
         await connectToDatabase();
-        const userExists = await User.findOne({ name });
+        const userExists = await User.findOne({});
         console.log(userExists);
 
         if (!userExists) {
-          const response = await fetch(prodUrl, {
+          const response = await fetch(localUrl, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ name, email, role }),

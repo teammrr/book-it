@@ -1,24 +1,21 @@
-import mongoose, { Schema, models } from "mongoose";
+import { Schema, model } from "mongoose";
 
-const roomSchema = new Schema({
-  roomId: {
-    type: String,
-    required: true,
-  },
-  roomName: {
-    type: String,
-    required: true,
-  },
-  roomFloor: {
-    type: String,
-    required: true,
-  },
-  roomCapacity: {
-    type: String,
-    required: true,
-  },
+interface Room {
+  id: number;
+  picture: string;
+  roomName: string;
+  description: string;
+  roomFloor: number;
+  roomCapacity: number;
+}
+
+const roomSchema = new Schema<Room>({
+  id: { type: Number, required: true },
+  picture: { type: String, required: true },
+  roomName: { type: String, required: true },
+  description: { type: String, required: true },
+  roomFloor: { type: Number, required: true },
+  roomCapacity: { type: Number, required: true },
 });
 
-const Room = models.room || mongoose.model("Room", roomSchema);
-
-export default Room;
+export default model<Room>("Room", roomSchema);
