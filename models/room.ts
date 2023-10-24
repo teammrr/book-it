@@ -5,17 +5,17 @@ interface Room {
   picture: string;
   roomName: string;
   description: string;
-  roomFloor: number;
+  roomFloor: string;
   roomCapacity: number;
 }
 
 const roomSchema = new Schema<Room>({
   id: { type: Number, required: true },
-  picture: { type: String, required: true },
+  picture: { type: String, required: false },
   roomName: { type: String, required: true },
   description: { type: String, required: true },
-  roomFloor: { type: Number, required: true },
+  roomFloor: { type: String, required: true },
   roomCapacity: { type: Number, required: true },
 });
 
-export default model<Room>("Room", roomSchema);
+export default model<Room>("Rooms", roomSchema);

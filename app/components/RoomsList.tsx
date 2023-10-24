@@ -8,7 +8,7 @@ interface Room {
   picture: string;
   roomName: string;
   description: string;
-  roomFloor: number;
+  roomFloor: string;
   roomCapacity: number;
 }
 

@@ -3,9 +3,17 @@ import Room from "@/models/room";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
-  const { roomId, roomName, roomFloor, roomCapacity } = await req.json();
+  const { id, picture, roomName, description, roomFloor, roomCapacity } =
+    await req.json();
   await connectToDatabase();
-  await Room.create({ roomId, roomName, roomFloor, roomCapacity });
+  await Room.create({
+    id,
+    picture,
+    roomName,
+    description,
+    roomFloor,
+    roomCapacity,
+  });
   return NextResponse.json(
     { message: "Room created successfully" },
     { status: 201 }
