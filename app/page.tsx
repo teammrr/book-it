@@ -36,38 +36,7 @@ export default function Home() {
       <div className="px-4 space-y-6 ">
         <BookingForm />
         <div className="lg:grid lg:grid-cols-3 lg:gap-4">
-          <RoomList
-            picture="/img/room-sample.jpg"
-            title="Multipurpose Room 1"
-            description="Some quick example text to build on the card title and make up the
-            bulk of the card's content."
-            floor="9"
-            seats="8"
-          />
-          <RoomList
-            picture="/img/room-sample-small.jpg"
-            title="Multipurpose Room 2"
-            description="Some quick example text to build on the card title and make up the
-            bulk of the card's content."
-            floor="9A"
-            seats="8"
-          />
-          <RoomList
-            picture="/img/room-sample.jpg"
-            title="Large Room 1"
-            description="Some quick example text to build on the card title and make up the
-            bulk of the card's content."
-            floor="9"
-            seats="11"
-          />
-          <RoomList
-            picture="/img/room-sample-small.jpg"
-            title="Small Room 1"
-            description="Some quick example text to build on the card title and make up the
-            bulk of the card's content."
-            floor="9"
-            seats="3"
-          />
+          <RoomList />
         </div>
       </div>
     </main>
