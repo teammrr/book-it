@@ -50,7 +50,7 @@ export const config = {
         console.log(userExists);
 
         if (!userExists) {
-          const response = await fetch(localUrl, {
+          const response = await fetch(prodUrl, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ name, email, role }),
