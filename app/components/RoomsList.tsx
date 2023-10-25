@@ -16,8 +16,6 @@ export default function RoomList() {
   const [rooms, setRooms] = useState<Room[]>([]);
 
   async function getRooms() {
-    // const localUrl = "http://127.0.0.1:3000/api/rooms";
-    // const prodUrl = "https://bookit.teamrr.live/api/rooms";
     const headers = {
       "Content-Type": "application/json",
     };

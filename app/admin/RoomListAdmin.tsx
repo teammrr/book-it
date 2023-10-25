@@ -23,13 +23,11 @@ export default function RoomList({ rooms, deleteRoom }: RoomListProps) {
   };
 
   async function getRooms() {
-    const localUrl = "http://127.0.0.1:3000/api/rooms";
-    const prodUrl = "https://bookit.teamrr.live/api/rooms";
     const headers = {
       "Content-Type": "application/json",
     };
     console.log("fetching");
-    const res = await axios.get(prodUrl, { headers });
+    const res = await axios.get("/api/rooms", { headers });
     const data = res.data;
     console.log(data);
     setRooms(data);

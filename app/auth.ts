@@ -19,11 +19,6 @@ declare module "next-auth/jwt" {
     role?: "user";
   }
 }
-
-const localUrl = "http://localhost:3000/api/auth/user";
-const prodUrl = "https://bookit.teamrr.live/api/auth/user";
-const lineUrl = "https://bookit.teamrr.live/api/auth/user/line";
-
 export const config = {
   theme: {
     logo: "/img/logo-black.png",

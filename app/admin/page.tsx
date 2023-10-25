@@ -5,6 +5,9 @@ import { useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
 import RoomList from "./RoomListAdmin";
 import { useState } from "react";
+import { toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function AdminPage() {
   const { data: session, status } = useSession({
@@ -19,11 +22,10 @@ export default function AdminPage() {
     setRooms(data);
   };
 
-  const deleteRoom = async (id: any) => {
-    const prodUrl = `https://bookit.teamrr.live/api/rooms/${id}`;
-    const localUrl = `http://127.0.0.1:3000/api/rooms/${id}`;
-    await fetch(localUrl, { method: "DELETE" });
+  const deleteRoom = async (id: string) => {
+    await fetch(`/api/rooms/${id}`, { method: "DELETE" });
     fetchRooms();
+    toast.success("Room deleted");
   };
 
   if (status === "loading") {
@@ -38,6 +40,7 @@ export default function AdminPage() {
         <div className="pt-4">
           <RoomList rooms={rooms} deleteRoom={deleteRoom} />
         </div>
+        <ToastContainer />
       </Layout>
     </main>
   );

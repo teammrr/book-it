@@ -29,7 +29,7 @@ export async function GET() {
 export async function DELETE(req: NextRequest) {
   const { id } = await req.json();
   await connectToDatabase();
-  const rooms = await Room.deleteOne({});
+  const rooms = await Room.findOneAndDelete({ id });
   return NextResponse.json(rooms);
 }
 
