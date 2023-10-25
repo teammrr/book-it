@@ -5,6 +5,7 @@ import Header from "./components/header";
 import Head from "next/head";
 import BookingForm from "./components/BookingForm";
 import RoomList from "./components/RoomsList";
+import { redirect } from "next/navigation";
 
 // import { navigation, classNames } from "./page";
 
@@ -17,14 +18,7 @@ export default function Home() {
   });
 
   if (status === "loading") {
-    return (
-      <main className="bg-gray-50 min-h-screen">
-        <Header />
-        <h1 className="text-3xl font-semibold text-gray-800 mt-8 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          {/* Welcome to Book-It, please login to continue. */}
-        </h1>
-      </main>
-    );
+    return redirect("/api/auth/signin");
   }
 
   return (

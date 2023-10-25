@@ -15,6 +15,7 @@ export default function MePage() {
   const { data: session, status } = useSession({
     required: true,
     onUnauthenticated() {
+      return { redirect: "/login" };
       // The user is not authenticated, handle it here.
     },
   });
