@@ -22,7 +22,7 @@ export default function RoomList() {
       "Content-Type": "application/json",
     };
     console.log("fetching");
-    const res = axios.get(localUrl, { headers });
+    const res = axios.get(prodUrl, { headers });
     const data = (await res).data;
     console.log(data);
     setRooms(data);
