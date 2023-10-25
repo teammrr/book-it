@@ -29,7 +29,7 @@ export default function Home() {
       </h1>
       <div className="px-4 space-y-6 ">
         <BookingForm />
-        <div className="lg:grid lg:grid-cols-3 lg:gap-4">
+        <div className="">
           <RoomList />
         </div>
       </div>

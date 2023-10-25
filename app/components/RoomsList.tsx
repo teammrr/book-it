@@ -33,9 +33,9 @@ export default function RoomList() {
   }, []); // Pass an empty dependency array here
 
   return (
-    <div>
+    <div className="lg:flex lg:flex-row lg:flex-wrap lg:justify-center lg:gap-4 ">
       {rooms.map((room) => (
-        <div key={room.id} className="flex flex-col justify-center pb-5 ">
+        <div key={room.id} className="flex flex-col justify-center pb-5  ">
           <div className="max-w-lg rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] transition ease-in-out hover:scale-105  duration-500 ">
             <div
               className="relative overflow-hidden bg-cover bg-no-repeat"

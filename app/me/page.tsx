@@ -3,6 +3,8 @@
 import { useSession } from "next-auth/react";
 import Header from "../components/header";
 import Image from "next/image";
+import Layout from "../components/layout";
+import { redirect } from "next/navigation";
 
 interface User {
   name?: string | null;
@@ -21,22 +23,14 @@ export default function MePage() {
   });
 
   if (status === "loading") {
-    return (
-      <main className="bg-gray-50 min-h-screen">
-        <Header />
-        <h1 className="text-3xl font-semibold text-gray-800 mt-8 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          Please login to view this page
-        </h1>
-      </main>
-    );
+    return redirect("/api/auth/signin");
   }
 
   const user: User = session?.user || {};
   console.group(user);
 
   return (
-    <main className="bg-gray-50 min-h-screen">
-      <Header />
+    <Layout>
       <div className="flex flex-col justify-center items-center mt-52">
         <Image
           width={100}
@@ -45,13 +39,13 @@ export default function MePage() {
           alt="User Profile"
           className="rounded-full"
         />
-        <h1 className="text-2xl text-center font-semibold text-gray-800 mt-8 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <h1 className="text-4xl text-center font-semibold text-gray-800 mt-8 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           Hello I&apos;m, {user?.name}
         </h1>
         <p className="mt-4 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-gray-600 text-lg">
           Email: {user?.email}
         </p>
       </div>
-    </main>
+    </Layout>
   );
 }
