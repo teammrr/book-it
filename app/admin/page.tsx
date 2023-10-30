@@ -35,7 +35,7 @@ export default function AdminPage() {
     <main className="bg-gray-50 min-h-screen">
       <Layout>
         <h1 className="text-2xl font-semibold text-gray-800 mt-8 mx-auto max-w-7xl px-4 sm:px-6 lg:px-6 ">
-          Welcome to admin page {session?.user?.name}
+          Admin Panel
         </h1>
         <div className="pt-4">
           <RoomList rooms={rooms} deleteRoom={deleteRoom} />
