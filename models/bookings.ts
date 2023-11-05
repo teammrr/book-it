@@ -1,7 +1,6 @@
 import { Schema, model } from "mongoose";
 
 interface Booking {
-  id: number;
   roomId: number;
   date: string;
   startTime: string;
@@ -9,7 +8,6 @@ interface Booking {
 }
 
 const bookingSchema = new Schema<Booking>({
-  id: { type: Number, required: true },
   roomId: { type: Number, required: true },
   date: { type: String, required: true },
   startTime: { type: String, required: true },

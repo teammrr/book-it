@@ -3,15 +3,9 @@ import bookings from "@/models/bookings";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
-  const { id, roomId, date, startTime, endTime } = await req.json();
+  const room = await req.json();
   await connectToDatabase();
-  await bookings.create({
-    id,
-    roomId,
-    date,
-    startTime,
-    endTime,
-  });
+  await bookings.create({room});
   return NextResponse.json(
     { message: "Booking successfully" },
     { status: 201 }
@@ -31,13 +25,13 @@ export async function DELETE(req: NextRequest) {
   return NextResponse.json(booking);
 }
 
-export async function PUT(req: NextRequest) {
-  const { id, roomId, date, startTime, endTime } = await req.json();
-  await connectToDatabase();
-  const updatedRoom = await bookings.findOneAndUpdate(
-    { id },
-    { roomId, date, startTime, endTime },
-    { new: true }
-  );
-  return NextResponse.json(updatedRoom);
-}
+// export async function PUT(req: NextRequest) {
+//   const room = await req.json();
+//   await connectToDatabase();
+//   const updatedRoom = await bookings.findOneAndUpdate(
+//     { id },
+//     { roomId, date, startTime, endTime },
+//     { new: true }
+//   );
+//   return NextResponse.json(updatedRoom);
+// }

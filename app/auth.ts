@@ -56,7 +56,7 @@ export const config = {
           }
         }
       } catch (error) {
-        console.error("There was an error when creating user", error);
+        console.error("There was an error during authentication", error);
       }
       return token;
     },
