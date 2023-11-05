@@ -3,17 +3,16 @@ import Image from "next/image";
 import axios from "axios";
 import Room from "@/models/room";
 
-interface Room {
-  id: number;
-  picture: string;
-  roomName: string;
+interface Rooms {
+  name: string;
   description: string;
-  roomFloor: string;
-  roomCapacity: number;
+  floor: string;
+  capacity: number;
+  picture: string;
 }
 
 export default function RoomList() {
-  const [rooms, setRooms] = useState<Room[]>([]);
+  const [rooms, setRooms] = useState<Rooms[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   async function getRooms() {
@@ -22,6 +21,7 @@ export default function RoomList() {
     };
     const res = axios.get("api/rooms", { headers });
     const data = (await res).data;
+    console.log(data);
     setRooms(data);
     setIsLoading(false);
   }
@@ -48,7 +48,7 @@ export default function RoomList() {
           <div className="pt-10 lg:flex lg:flex-row lg:flex-wrap lg:justify-center lg:gap-4  ">
             {rooms.map((room) => (
               <div
-                key={room.id}
+                key={room.name}
                 className="flex flex-col justify-center pb-5  "
               >
                 <div className="max-w-lg rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] transition ease-in-out hover:scale-105  duration-500 ">
@@ -65,20 +65,20 @@ export default function RoomList() {
                       src={room.picture}
                       alt=""
                     />
-                    <a href={`/rooms/${room.id}`}>
+                    <a href={`/rooms/${room.name}`}>
                       <div className=" bottom-0 left-0 right-0 top-0 h-full w-full overflow-hidden bg-[hsla(0,0%,98%,0.15)] bg-fixed opacity-0 transition duration-300 ease-in-out hover:opacity-100"></div>
                     </a>
                   </div>
                   <div className="p-6">
                     <h5 className="mb-2 text-xl font-medium leading-tight text-neutral-800 ">
-                      {room.roomName}
+                      {room.name}
                     </h5>
                     <p className="mb-2 text-base text-neutral-600 ">
                       {room.description}
                     </p>
                     <ul className="text-black">
-                      <li>Floor {room.roomFloor}</li>
-                      <li>Seats: {room.roomCapacity}</li>
+                      <li>Floor {room.floor}</li>
+                      <li>Capacity: {room.capacity}</li>
                     </ul>
                   </div>
                 </div>

@@ -21,11 +21,11 @@ export async function POST(req: NextRequest) {
   }
 }
 
-// export async function GET() {
-//   await connectToDatabase();
-//   const rooms = await Room.find({});
-//   return NextResponse.json(rooms);
-// }
+export async function GET() {
+  await connectToDatabase();
+  const rooms = await room.find({});
+  return NextResponse.json(rooms);
+}
 
 // export async function DELETE(req: NextRequest) {
 //   const { id } = await req.json();
