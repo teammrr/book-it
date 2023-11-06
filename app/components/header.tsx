@@ -6,12 +6,6 @@ import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import Image from "next/image";
 import styles from "./header.module.css";
 
-// const navigation = [
-//   { name: "Rooms", href: "/", current: true },
-//   { name: "My Reservation", href: "/reservations", current: false },
-//   { name: "History", href: "/history", current: false },
-// ];
-
 function classNames(...classes: any[]) {
   return classes.filter(Boolean).join(" ");
 }
@@ -65,35 +59,35 @@ export default function Header() {
                       width={40}
                       height={40}
                       src="/img/logo512.png"
-                      alt="Your Company"
+                      alt="Book It"
                     />
                   </div>
                   <div className="hidden sm:ml-6 sm:block">
                     <div className="flex flex-row space-x-4">
                       {/* {navigation.map((item) => (
-                      <Link
-                      href={item.href}
-                      key={item.name}
-                      className="bg-gray-200 text-[#002D74] hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium"
-                      >
-                      {item.name}
-                      </Link>
-                    ))} */}
+              <Link
+              href={item.href}
+              key={item.name}
+              className="bg-gray-200 text-[#002D74] hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium"
+              >
+              {item.name}
+              </Link>
+            ))} */}
                       <Link
                         href="/"
-                        className="bg-gray-200 text-[#002D74] hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium"
+                        className="text-[#002D74]  hover:text-[#393e46] transition ease-in-out duration-200 block rounded-md px-3 py-2 text-base font-medium"
                       >
                         Home
                       </Link>
                       <Link
                         href="/reservations"
-                        className="bg-gray-200 text-[#002D74] hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium"
+                        className="text-[#002D74]  hover:text-[#393e46] transition ease-in-out duration-200 block rounded-md px-3 py-2 text-base font-medium"
                       >
                         My Reservation
                       </Link>
                       <Link
                         href="/history"
-                        className="bg-gray-200 text-[#002D74] hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium"
+                        className="text-[#002D74]  hover:text-[#393e46] transition ease-in-out duration-200 block rounded-md px-3 py-2 text-base font-medium"
                       >
                         History
                       </Link>
@@ -131,18 +125,18 @@ export default function Header() {
                     >
                       <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                         {/* <Menu.Item>
-                        {({ active }) => (
-                          <a
-                          href="#"
-                          className={classNames(
-                            active ? "bg-gray-100" : "",
-                            "block px-4 py-2 text-sm truncate text-[#002D74]"
-                            )}
-                            >
-                            {session.user?.email || "email"}
-                            </a>
-                            )}
-                          </Menu.Item> */}
+            {({ active }) => (
+              <a
+              href="#"
+              className={classNames(
+                active ? "bg-gray-100" : "",
+                "block px-4 py-2 text-sm truncate text-[#002D74]"
+                )}
+                >
+                {session.user?.email || "email"}
+                </a>
+                )}
+              </Menu.Item> */}
                         <Menu.Item>
                           {({ active }) => (
                             <a
@@ -179,33 +173,36 @@ export default function Header() {
             <Disclosure.Panel className="sm:hidden">
               <div className="space-y-1 px-2 pb-3 pt-2">
                 {/* {navigation.map((item) => (
-                <Link
-                href={item.href}
-                key={item.name}
-                className="bg-gray-200 text-[#002D74] hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium
-                "
-                >
-                {item.name}
-                </Link>
-              ))} */}
+                        <Link
+                        href={item.href}
+                        key={item.name}
+                        className="bg-gray-200 text-[#002D74] hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium
+                        "
+                        >
+                        {item.name}
+                        </Link>
+                      ))} */}
                 <Link
                   href="/"
-                  className="bg-gray-200 text-[#002D74] hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium"
+                  className="text-[#002D74]  hover:text-[#393e46] transition ease-in-out duration-200 block rounded-md px-3 py-2 text-base font-medium"
                 >
                   Home
                 </Link>
+                <hr className=" h-0.5 border-t-2 bg-zinc-100 opacity-100 " />
                 <Link
                   href="/reservations"
-                  className="bg-gray-200 text-[#002D74] hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium"
+                  className="text-[#002D74]  hover:text-[#393e46] transition ease-in-out duration-200 block rounded-md px-3 py-2 text-base font-medium"
                 >
                   My Reservation
                 </Link>
+                <hr className=" h-0.5 border-t-2 bg-zinc-100 opacity-100 " />
                 <Link
                   href="/history"
-                  className="bg-gray-200 text-[#002D74] hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium"
+                  className="text-[#002D74]  hover:text-[#393e46] transition ease-in-out duration-200 block rounded-md px-3 py-2 text-base font-medium"
                 >
                   History
                 </Link>
+                <hr className=" h-0.5 border-t-2 bg-zinc-100 opacity-100 " />
               </div>
             </Disclosure.Panel>
           </>

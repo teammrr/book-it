@@ -1,6 +1,6 @@
-import { Schema, model } from "mongoose";
+import mongoose, { Schema, Model, Document } from "mongoose";
 
-interface Rooms {
+interface IRoom extends Document {
   name: string;
   description: string;
   floor: string;
@@ -8,7 +8,7 @@ interface Rooms {
   picture: string;
 }
 
-const roomSchema = new Schema<Rooms>({
+const roomSchema = new Schema<IRoom>({
   name: { type: String, required: true },
   description: { type: String, required: true },
   floor: { type: String, required: true },
@@ -16,4 +16,12 @@ const roomSchema = new Schema<Rooms>({
   picture: { type: String, required: false },
 });
 
-export default model<Rooms>("rooms", roomSchema);
+let Room: Model<IRoom> | null = null;
+
+try {
+  Room = mongoose.model<IRoom>("Room");
+} catch (e) {
+  Room = mongoose.model<IRoom>("Room", roomSchema);
+}
+
+export default Room;

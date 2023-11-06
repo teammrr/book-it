@@ -5,10 +5,9 @@ import { NextApiRequest, NextApiResponse } from "next";
 
 export async function POST(req: NextRequest) {
   const RoomInfo = await req.json();
-  console.log(room);
   try {
     await connectToDatabase();
-    const newRoom = await room.create(RoomInfo);
+    await room.create(RoomInfo);
     return NextResponse.json(
       { message: "Room created successfully" },
       { status: 201 }
@@ -21,10 +20,17 @@ export async function POST(req: NextRequest) {
   }
 }
 
-export async function GET() {
-  await connectToDatabase();
-  const rooms = await room.find({});
-  return NextResponse.json(rooms);
+export async function GET(req: NextRequest, res: NextResponse) {
+  try {
+    await connectToDatabase();
+    const rooms = await room.find(); // Fetch all rooms
+    return NextResponse.json(rooms, { status: 200 });
+  } catch (err) {
+    return NextResponse.json(
+      { message: "Failed to fetch rooms" },
+      { status: 500 }
+    );
+  }
 }
 
 // export async function DELETE(req: NextRequest) {
