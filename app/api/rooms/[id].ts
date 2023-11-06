@@ -9,7 +9,7 @@ export async function PUT(req: NextApiRequest, res: NextApiResponse) {
   await connectToDatabase();
 
   try {
-    const updatedRoom = await room.findByIdAndUpdate(id, updatedRoomInfo, {
+    const updatedRoom = await room?.findByIdAndUpdate(id, updatedRoomInfo, {
       new: true,
     });
     return updatedRoom

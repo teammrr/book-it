@@ -4,7 +4,7 @@ import cors from "cors";
 
 export async function getRooms(req: Request, res: Response) {
   try {
-    const rooms = await room.find();
+    const rooms = await room?.find();
     res.json(rooms);
   } catch (err) {
     console.error(err);

@@ -7,7 +7,7 @@ export async function POST(req: NextRequest) {
   const RoomInfo = await req.json();
   try {
     await connectToDatabase();
-    await room.create(RoomInfo);
+    await room?.create(RoomInfo);
     return NextResponse.json(
       { message: "Room created successfully" },
       { status: 201 }
@@ -23,7 +23,7 @@ export async function POST(req: NextRequest) {
 export async function GET(req: NextRequest, res: NextResponse) {
   try {
     await connectToDatabase();
-    const rooms = await room.find(); // Fetch all rooms
+    const rooms = await room?.find(); // Fetch all rooms
     return NextResponse.json(rooms, { status: 200 });
   } catch (err) {
     return NextResponse.json(
