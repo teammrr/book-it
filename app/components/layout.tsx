@@ -13,18 +13,17 @@ const variants = {
 export default function Layout({ children }: { children: ReactNode }) {
   return (
     <>
-      <meta name="apple-mobile-web-app-capable" content="yes">
-        <Header />
-        <motion.main
-          variants={variants}
-          initial="hidden"
-          animate="enter"
-          transition={{ type: "linear" }}
-        >
-          <main className="bg-gray-50 min-h-screen text-black">{children}</main>
-        </motion.main>
-        <Footer />
-      </meta>
+      <meta name="apple-mobile-web-app-capable" content="yes" />
+      <Header />
+      <motion.main
+        variants={variants}
+        initial="hidden"
+        animate="enter"
+        transition={{ type: "linear" }}
+      >
+        <main className="bg-gray-50 min-h-screen text-black">{children}</main>
+      </motion.main>
+      <Footer />
     </>
   );
 }
