@@ -54,13 +54,15 @@ export default function Header() {
                 </div>
                 <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
                   <div className="flex flex-shrink-0 items-center">
-                    <Image
-                      className="h-8 w-auto"
-                      width={40}
-                      height={40}
-                      src="/img/logo512.png"
-                      alt="Book It"
-                    />
+                    <a href="/">
+                      <Image
+                        className="h-8 w-auto"
+                        width={40}
+                        height={40}
+                        src="/img/logo512.png"
+                        alt="Book It"
+                      />
+                    </a>
                   </div>
                   <div className="hidden sm:ml-6 sm:block">
                     <div className="flex flex-row space-x-4">
@@ -73,24 +75,24 @@ export default function Header() {
               {item.name}
               </Link>
             ))} */}
-                      <Link
+                      <a
                         href="/"
                         className="text-[#002D74]  hover:text-[#393e46] transition ease-in-out duration-200 block rounded-md px-3 py-2 text-base font-medium"
                       >
                         Home
-                      </Link>
-                      <Link
+                      </a>
+                      <a
                         href="/reservations"
                         className="text-[#002D74]  hover:text-[#393e46] transition ease-in-out duration-200 block rounded-md px-3 py-2 text-base font-medium"
                       >
                         My Reservation
-                      </Link>
-                      <Link
+                      </a>
+                      <a
                         href="/history"
                         className="text-[#002D74]  hover:text-[#393e46] transition ease-in-out duration-200 block rounded-md px-3 py-2 text-base font-medium"
                       >
                         History
-                      </Link>
+                      </a>
                     </div>
                   </div>
                 </div>
@@ -182,26 +184,26 @@ export default function Header() {
                         {item.name}
                         </Link>
                       ))} */}
-                <Link
+                <a
                   href="/"
                   className="text-[#002D74]  hover:text-[#393e46] transition ease-in-out duration-200 block rounded-md px-3 py-2 text-base font-medium"
                 >
                   Home
-                </Link>
+                </a>
                 <hr className=" h-0.5 border-t-2 bg-zinc-100 opacity-100 " />
-                <Link
+                <a
                   href="/reservations"
                   className="text-[#002D74]  hover:text-[#393e46] transition ease-in-out duration-200 block rounded-md px-3 py-2 text-base font-medium"
                 >
                   My Reservation
-                </Link>
+                </a>
                 <hr className=" h-0.5 border-t-2 bg-zinc-100 opacity-100 " />
-                <Link
+                <a
                   href="/history"
                   className="text-[#002D74]  hover:text-[#393e46] transition ease-in-out duration-200 block rounded-md px-3 py-2 text-base font-medium"
                 >
                   History
-                </Link>
+                </a>
                 <hr className=" h-0.5 border-t-2 bg-zinc-100 opacity-100 " />
               </div>
             </Disclosure.Panel>
