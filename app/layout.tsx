@@ -2,8 +2,6 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import AuthProvider from "./context/AuthProvider";
-import { useEffect, useState } from "react";
-import Footer from "./components/footer";
 import { getServerSession } from "next-auth";
 import { config } from "./auth";
 
@@ -23,6 +21,7 @@ export default async function RootLayout({
   const session = await getServerSession(config);
   return (
     <html lang="en">
+      <meta name="apple-mobile-web-app-capable" content="yes" />
       <body className={inter.className}>
         <main className="bg-gray-50 min-h-screen">
           <AuthProvider session={session}>{children}</AuthProvider>

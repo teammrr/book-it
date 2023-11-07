@@ -1,9 +1,6 @@
 "use client";
 
 import { useSession } from "next-auth/react";
-import Header from "./components/header";
-import Head from "next/head";
-import BookingForm from "./components/BookingForm";
 import RoomList from "./components/RoomsList";
 import { redirect } from "next/navigation";
 import Layout from "./components/layout";

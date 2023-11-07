@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import axios from "axios";
-import Room from "@/models/room";
+import Link from "next/link";
 
 interface Rooms {
   name: string;
@@ -51,23 +51,20 @@ export default function RoomList() {
                 key={room.name}
                 className="flex flex-col justify-center pb-5  "
               >
-                <div className="max-w-lg rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] transition ease-in-out hover:scale-105  duration-500 ">
+                <div className="max-w-lg rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] transition ease-in-out ß duration-500 ">
                   <div
                     className="relative overflow-hidden bg-cover bg-no-repeat"
                     data-te-ripple-init
                     data-te-ripple-color="light"
                   >
                     <Image
-                      className="rounded-t-lg"
+                      className="rounded-t-lg transition ease-in-out hover:opacity-90 duration-500"
                       height={500}
                       width={600}
                       objectFit="cover"
                       src={room.picture}
                       alt=""
                     />
-                    <a href={`/rooms/${room.name}`}>
-                      <div className=" bottom-0 left-0 right-0 top-0 h-full w-full overflow-hidden bg-[hsla(0,0%,98%,0.15)] bg-fixed opacity-0 transition duration-300 ease-in-out hover:opacity-100"></div>
-                    </a>
                   </div>
                   <div className="p-6">
                     <h5 className="mb-2 text-xl font-medium leading-tight text-neutral-800 ">
@@ -80,6 +77,15 @@ export default function RoomList() {
                       <li>Floor {room.floor}</li>
                       <li>Capacity: {room.capacity}</li>
                     </ul>
+                    <div className="justify-end items-end flex ">
+                      <Link
+                        href={`/book/${room.name}`}
+                        // name={room.name}
+                        className="px-5 py-2.5 font-medium bg-blue-50 hover:bg-blue-100 transition ease-in-out duration-300  hover:text-blue-600 text-blue-500 rounded-lg text-sm"
+                      >
+                        Book {room.name}
+                      </Link>
+                    </div>
                   </div>
                 </div>
               </div>

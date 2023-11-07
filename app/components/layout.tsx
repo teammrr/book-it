@@ -1,4 +1,5 @@
 "use client";
+
 import Header from "./header";
 import Footer from "./footer";
 import type { ReactNode } from "react";
@@ -12,16 +13,18 @@ const variants = {
 export default function Layout({ children }: { children: ReactNode }) {
   return (
     <>
-      <Header />
-      <motion.main
-        variants={variants}
-        initial="hidden"
-        animate="enter"
-        transition={{ type: "linear" }}
-      >
-        <main className="bg-gray-50 min-h-screen text-black">{children}</main>
-      </motion.main>
-      <Footer />
+      <meta name="apple-mobile-web-app-capable" content="yes">
+        <Header />
+        <motion.main
+          variants={variants}
+          initial="hidden"
+          animate="enter"
+          transition={{ type: "linear" }}
+        >
+          <main className="bg-gray-50 min-h-screen text-black">{children}</main>
+        </motion.main>
+        <Footer />
+      </meta>
     </>
   );
 }
