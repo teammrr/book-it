@@ -9,8 +9,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Book-It",
-  description: "Newton School Room Reservation App",
-  // appleWebApp: true,
+  description: "Room Reservation App",
   manifest: "/manifest.json",
   icons: { apple: "/img/logo-black.png" },
   themeColor: "#fff",

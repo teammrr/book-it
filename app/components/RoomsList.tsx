@@ -16,12 +16,12 @@ export default function RoomList() {
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   async function getRooms() {
+    console.info("Made with %c♥%c by teamrr", "color: #e25555", "color: unset");
     const headers = {
       "Content-Type": "application/json",
     };
     const res = axios.get("api/rooms", { headers });
     const data = (await res).data;
-    console.log(data);
     setRooms(data);
     setIsLoading(false);
   }
