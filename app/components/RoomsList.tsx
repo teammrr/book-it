@@ -79,8 +79,10 @@ export default function RoomList() {
                     </ul>
                     <div className="justify-end items-end flex ">
                       <Link
-                        href={`/book/${room.name}`}
-                        // name={room.name}
+                        href={{
+                          pathname: `/book/${room.name}`,
+                          query: { name: room.name },
+                        }}
                         className="px-5 py-2.5 font-medium bg-blue-50 hover:bg-blue-100 transition ease-in-out duration-300  hover:text-blue-600 text-blue-500 rounded-lg text-sm"
                       >
                         Book {room.name}

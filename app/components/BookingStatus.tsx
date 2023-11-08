@@ -1,15 +1,18 @@
 import Image from "next/image";
 import StatusIndicator from "./StatusIndicator";
+import BookedUser from "./BookedUser";
 
 interface Booking {
   time: string;
-  name: string;
+  name?: string;
   status: number;
 }
 
 export default function BookingStatus(Bookings: Booking) {
   return (
-    <div className="flex items-center space-x-3">
+    <div className="flex items-center space-x-3 w-screen pt-2 pb-2 pr-4 pl-4 rounded-lg shadow shadow-black/8">
+      {" "}
+      {/* Add your desired width and height here */}
       <div className="flex-shrink-0">
         <Image
           height={32}
@@ -20,12 +23,12 @@ export default function BookingStatus(Bookings: Booking) {
         />
       </div>
       <div className="flex-1 min-w-0">
-        <p className="text-sm font-semibold text-gray-900 truncate dark:text-white">
+        <p className="font-semibold text-md text-gray-900 truncate dark:text-white">
           {Bookings.time}
         </p>
-        <p className="text-sm text-gray-500 truncate dark:text-gray-400">
-          Booked by: {Bookings.name}
-        </p>
+        <span>
+          <BookedUser name={Bookings.name} />
+        </span>
       </div>
       <StatusIndicator status={Bookings.status} />
     </div>

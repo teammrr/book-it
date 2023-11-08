@@ -4,6 +4,8 @@ import Header from "./header";
 import Footer from "./footer";
 import type { ReactNode } from "react";
 import { motion } from "framer-motion";
+import RootLayout from "../layout";
+import { Root } from "postcss";
 
 const variants = {
   hidden: { opacity: 0, x: -200, y: 0 },
@@ -12,18 +14,20 @@ const variants = {
 
 export default function Layout({ children }: { children: ReactNode }) {
   return (
-    <>
-      <meta name="apple-mobile-web-app-capable" content="yes" />
-      <Header />
-      <motion.main
-        variants={variants}
-        initial="hidden"
-        animate="enter"
-        transition={{ type: "linear" }}
-      >
-        <main className="bg-gray-50 min-h-screen text-black">{children}</main>
-      </motion.main>
-      <Footer />
-    </>
+    <RootLayout>
+      <>
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <Header />
+        <motion.main
+          variants={variants}
+          initial="hidden"
+          animate="enter"
+          transition={{ type: "linear" }}
+        >
+          <main className="bg-gray-50 min-h-screen text-black">{children}</main>
+        </motion.main>
+        <Footer />
+      </>
+    </RootLayout>
   );
 }

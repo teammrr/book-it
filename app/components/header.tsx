@@ -75,24 +75,24 @@ export default function Header() {
               {item.name}
               </Link>
             ))} */}
-                      <a
+                      <Link
                         href="/"
                         className="text-[#002D74]  hover:text-[#393e46] transition ease-in-out duration-200 block rounded-md px-3 py-2 text-base font-medium"
                       >
                         Home
-                      </a>
-                      <a
+                      </Link>
+                      <Link
                         href="/reservations"
                         className="text-[#002D74]  hover:text-[#393e46] transition ease-in-out duration-200 block rounded-md px-3 py-2 text-base font-medium"
                       >
                         My Reservation
-                      </a>
-                      <a
+                      </Link>
+                      <Link
                         href="/history"
                         className="text-[#002D74]  hover:text-[#393e46] transition ease-in-out duration-200 block rounded-md px-3 py-2 text-base font-medium"
                       >
                         History
-                      </a>
+                      </Link>
                     </div>
                   </div>
                 </div>
@@ -184,26 +184,26 @@ export default function Header() {
                         {item.name}
                         </Link>
                       ))} */}
-                <a
+                <Link
                   href="/"
                   className="text-[#002D74]  hover:text-[#393e46] transition ease-in-out duration-200 block rounded-md px-3 py-2 text-base font-medium"
                 >
                   Home
-                </a>
+                </Link>
                 <hr className=" h-0.5 border-t-2 bg-zinc-100 opacity-100 " />
-                <a
+                <Link
                   href="/reservations"
                   className="text-[#002D74]  hover:text-[#393e46] transition ease-in-out duration-200 block rounded-md px-3 py-2 text-base font-medium"
                 >
                   My Reservation
-                </a>
+                </Link>
                 <hr className=" h-0.5 border-t-2 bg-zinc-100 opacity-100 " />
-                <a
+                <Link
                   href="/history"
                   className="text-[#002D74]  hover:text-[#393e46] transition ease-in-out duration-200 block rounded-md px-3 py-2 text-base font-medium"
                 >
                   History
-                </a>
+                </Link>
                 <hr className=" h-0.5 border-t-2 bg-zinc-100 opacity-100 " />
               </div>
             </Disclosure.Panel>
