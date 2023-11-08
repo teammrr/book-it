@@ -34,9 +34,9 @@ export default function MePage() {
           <div className="bg-white shadow-xl rounded-lg py-3">
             <div className="photo-wrapper p-2">
               <Image
-                className="w-32 h-32 rounded-full mx-auto"
-                width={32}
-                height={32}
+                className="w-24 h-24 rounded-full mx-auto"
+                width={128}
+                height={128}
                 src={user?.image ? user.image : "/img/logo-black.png"}
                 alt="User Profile"
               />
