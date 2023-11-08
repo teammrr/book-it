@@ -68,3 +68,5 @@ function Booking({ params }: { params: { id: string; name: string } }) {
     </>
   );
 }
+
+export default Booking;
