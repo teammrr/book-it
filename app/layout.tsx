@@ -1,5 +1,5 @@
 import "./globals.css";
-import type { Metadata } from "next";
+import { Metadata } from "next";
 import { Inter } from "next/font/google";
 import AuthProvider from "./context/AuthProvider";
 import { getServerSession } from "next-auth";
@@ -10,7 +10,10 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "Book-It",
   description: "Newton School Room Reservation App",
-  appleWebApp: true,
+  // appleWebApp: true,
+  manifest: "/manifest.json",
+  icons: { apple: "/img/logo-black.png" },
+  themeColor: "#fff",
 };
 
 export default async function RootLayout({
