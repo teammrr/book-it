@@ -17,7 +17,11 @@ export default function RoomList() {
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   async function getRooms() {
-    console.info("Made with %c♥%c by teamrr", "color: #e25555", "color: unset");
+    console.info(
+      "Built with %c♥%c by teamrr",
+      "color: #e25555",
+      "color: unset"
+    );
     const headers = {
       "Content-Type": "application/json",
     };

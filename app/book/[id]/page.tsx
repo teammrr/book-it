@@ -42,15 +42,25 @@ function Booking({ params }: { params: { id: string; name: string } }) {
   // List of all possible times
   const allTimes = [
     "09:00",
+    "09:30",
     "10:00",
+    "10:30",
     "11:00",
+    "11:30",
     "12:00",
+    "12:30",
     "13:00",
+    "13:30",
     "14:00",
+    "14:30",
     "15:00",
+    "15:30",
     "16:00",
+    "16:30",
     "17:00",
+    "17:30",
     "18:00",
+    "18:30",
   ];
 
   // Get the start times of all bookings
@@ -65,6 +75,42 @@ function Booking({ params }: { params: { id: string; name: string } }) {
 
   // Get the times that are not booked
   const availableTimes = allTimes.filter((time) => !bookedTimes.includes(time));
+
+  const allTimeStamps = allTimes.map((time) => timeToTimestamp(time));
+
+  // Convert booked times to timestamps
+  const bookedTimeStamps = bookings.map(
+    (booking: { startTime: any; endTime: any }) => ({
+      start: booking.startTime,
+      end: booking.endTime,
+    })
+  );
+
+  // Sort booked times
+  bookedTimeStamps.sort(
+    (a: { start: number }, b: { start: number }) => a.start - b.start
+  );
+
+  // Initialize an array to hold the available time ranges
+  let availableTimeRanges = [];
+
+  // Get the start of the first available time range
+  let startOfRange = timeToTimestamp(allTimes[0]);
+
+  // Iterate over booked times
+  for (let i = 0; i < bookedTimeStamps.length; i++) {
+    // Add the current range to the array
+    availableTimeRanges.push([startOfRange, bookedTimeStamps[i].start]);
+
+    // Update the start of the range
+    startOfRange = bookedTimeStamps[i].end;
+  }
+
+  // Add the last range to the array
+  availableTimeRanges.push([
+    startOfRange,
+    timeToTimestamp(allTimes[allTimes.length - 1], true),
+  ]);
 
   function timeToTimestamp(time: string, addHour = false) {
     const [hours, minutes] = time.split(":").map(Number);
@@ -101,21 +147,21 @@ function Booking({ params }: { params: { id: string; name: string } }) {
                   />
                 );
               })}
-              {availableTimes.map((time, index) => {
-                const startTimestamp = timeToTimestamp(time);
-                const endTimestamp = timeToTimestamp(time, true);
-                return (
-                  <BookingStatus
-                    key={index}
-                    roomId={params.id}
-                    startTime={startTimestamp}
-                    endTime={endTimestamp}
-                    name={undefined}
-                    status="Available"
-                    description=""
-                  />
-                );
-              })}
+              <div className=" justify-center align-middle flex flex-col gap-2">
+                {availableTimeRanges.map((range, index) => {
+                  return (
+                    <BookingStatus
+                      key={index}
+                      roomId={params.id}
+                      startTime={range[0]}
+                      endTime={range[1]}
+                      name={undefined}
+                      status="Available"
+                      description=""
+                    />
+                  );
+                })}
+              </div>
             </div>
           )}
         </Layout>
