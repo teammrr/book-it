@@ -3,9 +3,9 @@ import bookings from "@/models/bookings";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
-  const room = await req.json();
+  const booking = await req.json();
   await connectToDatabase();
-  await bookings.create({room});
+  await bookings.create({ booking });
   return NextResponse.json(
     { message: "Booking successfully" },
     { status: 201 }

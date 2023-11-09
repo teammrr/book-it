@@ -3,12 +3,17 @@ import StatusIndicator from "./StatusIndicator";
 import BookedUser from "./BookedUser";
 
 interface Booking {
-  time: string;
-  name?: string;
-  status: number;
+  roomId: number;
+  startTime: string;
+  endTime: string;
+  name: string;
+  description: string;
+  status: string;
 }
 
 export default function BookingStatus(Bookings: Booking) {
+  const startTime = new Date(Bookings.startTime);
+  const endTime = new Date(Bookings.endTime);
   return (
     <div className="flex items-center space-x-3 w-screen pt-2 pb-2 pr-4 pl-4 rounded-lg shadow shadow-black/8">
       {" "}
@@ -24,13 +29,24 @@ export default function BookingStatus(Bookings: Booking) {
       </div>
       <div className="flex-1 min-w-0">
         <p className="font-semibold text-md text-gray-900 truncate dark:text-white">
-          {Bookings.time}
+          {startTime.toLocaleTimeString([], {
+            hour: "2-digit",
+            minute: "2-digit",
+          })}{" "}
+          -{" "}
+          {endTime.toLocaleTimeString([], {
+            hour: "2-digit",
+            minute: "2-digit",
+          })}
         </p>
         <span>
           <BookedUser name={Bookings.name} />
         </span>
       </div>
-      <StatusIndicator status={Bookings.status} />
+      <StatusIndicator
+        description={Bookings.description}
+        status={Bookings.status}
+      />
     </div>
   );
 }

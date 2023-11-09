@@ -16,9 +16,14 @@ function Booking({ params }: { params: { id: string; name: string } }) {
       const headers = {
         "Content-Type": "application/json",
       };
-      const res = await fetch(`api/bookings/${id}`, { headers });
+      // const res = await fetch(`api/bookings/${id}`, { headers });
+      const res = await fetch(`/api/bookings/`, { headers });
       const data = await res.json();
       setIsLoading(false);
+      data.forEach((booking: any) => {
+        booking.startTimeC = new Date(booking.startTime * 1000);
+        booking.endTimeC = new Date(booking.endTime * 1000);
+      });
       setBookings(data);
     } catch (err) {
       console.log(err);
@@ -54,9 +59,12 @@ function Booking({ params }: { params: { id: string; name: string } }) {
               {bookings.map((booking: any) => {
                 return (
                   <BookingStatus
-                    key={booking._id}
-                    time={booking.time}
+                    key={booking.name}
+                    roomId={booking.roomId}
+                    startTime={booking.startTimeC}
+                    endTime={booking.endTimeC}
                     name={booking.name}
+                    description={booking.description}
                     status={booking.status}
                   />
                 );

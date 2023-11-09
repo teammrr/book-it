@@ -11,7 +11,6 @@ const variants = {
 export default function Layout({ children }: { children: ReactNode }) {
   return (
     <>
-      <meta name="apple-mobile-web-app-capable" content="yes" />
       <Header />
       <motion.main
         variants={variants}
