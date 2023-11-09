@@ -121,7 +121,7 @@ function Booking({ params }: { params: { id: string; name: string } }) {
 
   return (
     <>
-      <main className="bg-gray-50">
+      <main className="bg-gray-50 ">
         <Layout>
           <div className="mt-5 mb-5">
             <h1 className="text-3xl font-semibold text-gray-800 mt-8 mx-auto lg:px-32 px-5">
@@ -157,7 +157,7 @@ function Booking({ params }: { params: { id: string; name: string } }) {
                       endTime={range[1]}
                       name={undefined}
                       status="Available"
-                      description=""
+                      description="Nobody has booked this time yet."
                     />
                   );
                 })}

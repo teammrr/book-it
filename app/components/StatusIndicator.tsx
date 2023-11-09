@@ -1,5 +1,6 @@
 interface BookingStatusProps {
   status: string;
+  description?: string;
 }
 
 const StatusIndicator: React.FC<BookingStatusProps> = ({ status }) => {

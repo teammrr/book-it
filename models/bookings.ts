@@ -14,7 +14,7 @@ const BookingSchema = new Schema<IBooking>({
   startTime: { type: String, required: true },
   endTime: { type: String, required: true },
   name: { type: String, required: true },
-  description: { type: String, required: true },
+  description: { type: String, required: false },
   status: { type: String, required: true },
 });
 

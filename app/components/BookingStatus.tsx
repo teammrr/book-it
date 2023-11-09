@@ -37,7 +37,7 @@ export default function BookingStatus(Bookings: any) {
         </span>
       </div>
       <StatusIndicator
-        description={Bookings.description}
+        description={Bookings.description || "Nobody has booked this time yet."}
         status={Bookings.status}
       />
     </div>

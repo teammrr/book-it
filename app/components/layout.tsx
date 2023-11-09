@@ -18,7 +18,7 @@ export default function Layout({ children }: { children: ReactNode }) {
         animate="enter"
         transition={{ type: "linear" }}
       >
-        <main className="bg-gray-50 text-black">{children}</main>
+        <main className="bg-gray-50 text-black min-h-max">{children}</main>
       </motion.main>
       <Footer />
     </>
