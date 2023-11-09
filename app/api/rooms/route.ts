@@ -1,7 +1,6 @@
 import { connectToDatabase } from "@/lib/mongodb";
 import room from "@/models/room";
 import { NextRequest, NextResponse } from "next/server";
-import { NextApiRequest, NextApiResponse } from "next";
 
 export async function POST(req: NextRequest) {
   const RoomInfo = await req.json();

@@ -19,16 +19,17 @@ function Booking({ params }: { params: { id: string; name: string } }) {
       // const res = await fetch(`api/bookings/${id}`, { headers });
       const res = await fetch(`/api/bookings/`, { headers });
       const data = await res.json();
-      setIsLoading(false);
-      data.forEach((booking: any) => {
-        console.log("Start time:", booking.startTime);
-        console.log("End time:", booking.endTime);
-        booking.startTimeC = new Date(booking.startTime * 1000);
-        booking.endTimeC = new Date(booking.endTime * 1000);
-        console.log("Converted start time:", booking.startTimeC);
-        console.log("Converted end time:", booking.endTimeC);
-      });
+      // data.forEach((booking: any) => {
+      //   console.log("Start time:", booking.startTime);
+      //   console.log("End time:", booking.endTime);
+      //   booking.startTimeC = new Date(booking.startTime * 1000);
+      //   booking.endTimeC = new Date(booking.endTime * 1000);
+      //   console.log("Start timeC:", booking.startTimeC);
+      //   console.log("End timeC:", booking.endTimeC);
+      // });
       setBookings(data);
+      // console.log(data);
+      setIsLoading(false);
     } catch (err) {
       console.log(err);
     }
@@ -37,6 +38,41 @@ function Booking({ params }: { params: { id: string; name: string } }) {
   useEffect(() => {
     getBooking(params.id);
   }, [params.id]);
+
+  // List of all possible times
+  const allTimes = [
+    "09:00",
+    "10:00",
+    "11:00",
+    "12:00",
+    "13:00",
+    "14:00",
+    "15:00",
+    "16:00",
+    "17:00",
+    "18:00",
+    "19:00",
+  ];
+
+  // Get the start times of all bookings
+
+  const bookedTimes = bookings.map((booking: any) => {
+    const startTime = new Date(booking.startTime * 1000);
+    return `${startTime.getHours().toString().padStart(2, "0")}:${startTime
+      .getMinutes()
+      .toString()
+      .padStart(2, "0")}`;
+  });
+
+  // Get the times that are not booked
+  const availableTimes = allTimes.filter((time) => !bookedTimes.includes(time));
+
+  function timeToTimestamp(time: string, addHour = false) {
+    const [hours, minutes] = time.split(":").map(Number);
+    const date = new Date();
+    date.setHours(hours + (addHour ? 1 : 0), minutes, 0, 0);
+    return date.getTime() / 1000;
+  }
 
   return (
     <>
@@ -63,6 +99,21 @@ function Booking({ params }: { params: { id: string; name: string } }) {
                     name={booking.name}
                     status={booking.status}
                     description={booking.description}
+                  />
+                );
+              })}
+              {availableTimes.map((time, index) => {
+                const startTimestamp = timeToTimestamp(time);
+                const endTimestamp = timeToTimestamp(time, true);
+                return (
+                  <BookingStatus
+                    key={index}
+                    roomId={params.id}
+                    startTime={startTimestamp}
+                    endTime={endTimestamp}
+                    name={undefined}
+                    status="Available"
+                    description=""
                   />
                 );
               })}

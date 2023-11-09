@@ -21,9 +21,9 @@ const BookingSchema = new Schema<IBooking>({
 let Booking: Model<IBooking> | null = null;
 
 try {
-  Booking = mongoose.model<IBooking>("Room");
+  Booking = mongoose.model<IBooking>("booking-test");
 } catch (e) {
-  Booking = mongoose.model<IBooking>("Room", BookingSchema);
+  Booking = mongoose.model<IBooking>("booking-test", BookingSchema);
 }
 
 export default Booking;

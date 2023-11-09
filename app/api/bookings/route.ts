@@ -5,24 +5,36 @@ import { NextRequest, NextResponse } from "next/server";
 export async function POST(req: NextRequest) {
   const booking = await req.json();
   await connectToDatabase();
-  await bookings.create({ booking });
-  return NextResponse.json(
-    { message: "Booking successfully" },
-    { status: 201 }
-  );
+  try {
+    await bookings?.create({ booking });
+    return NextResponse.json(
+      { message: "Booking successfully" },
+      { status: 201 }
+    );
+  } catch (err) {
+    return NextResponse.json({ message: "Booking failed" }, { status: 500 });
+  }
 }
 
 export async function GET() {
   await connectToDatabase();
-  const booking = await bookings.find({});
-  return NextResponse.json(booking);
+  try {
+    const booking = await bookings?.find({});
+    return NextResponse.json(booking);
+  } catch (err) {
+    return NextResponse.json({ message: "Failed to fetch" }, { status: 500 });
+  }
 }
 
 export async function DELETE(req: NextRequest) {
   const { id } = await req.json();
   await connectToDatabase();
-  const booking = await bookings.findOneAndDelete({ id });
-  return NextResponse.json(booking);
+  try {
+    const booking = await bookings?.findOneAndDelete({ id });
+    return NextResponse.json(booking);
+  } catch (err) {
+    return NextResponse.json({ message: "Failed to delete" }, { status: 500 });
+  }
 }
 
 // export async function PUT(req: NextRequest) {
