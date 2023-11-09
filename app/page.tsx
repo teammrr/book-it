@@ -4,10 +4,13 @@ import { useSession } from "next-auth/react";
 import RoomList from "./components/RoomsList";
 import { redirect } from "next/navigation";
 import Layout from "./components/layout";
+import BookingModal from "./components/BookingModal";
+import { useState } from "react";
 
 // import { navigation, classNames } from "./page";
 
 export default function Home() {
+  const [showModal, setShowModal] = useState(false);
   const { data: session, status } = useSession({
     required: true,
     onUnauthenticated() {
@@ -28,6 +31,11 @@ export default function Home() {
         <div className="px-4 space-y-6 ">
           {/* <BookingForm /> */}
           <div className="">
+            {/* <BookingModal
+              showModal={showModal}
+              setShowModal={setShowModal}
+            ></BookingModal>
+            {showModal && <BookingModal setShowModal={setShowModal} />} */}
             <RoomList />
           </div>
         </div>

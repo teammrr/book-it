@@ -1,17 +1,9 @@
 import Image from "next/image";
 import StatusIndicator from "./StatusIndicator";
 import BookedUser from "./BookedUser";
+import BookingModal from "./BookingModal";
 
-interface Booking {
-  roomId: number;
-  startTime: string;
-  endTime: string;
-  name: string;
-  description: string;
-  status: string;
-}
-
-export default function BookingStatus(Bookings: Booking) {
+export default function BookingStatus(Bookings: any) {
   const startTime = new Date(Bookings.startTime);
   const endTime = new Date(Bookings.endTime);
   return (

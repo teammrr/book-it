@@ -1,6 +1,6 @@
-import { Schema, model } from "mongoose";
+import mongoose, { Schema, Model, Document } from "mongoose";
 
-interface Booking {
+interface IBooking extends Document {
   roomId: number;
   startTime: string;
   endTime: string;
@@ -9,7 +9,7 @@ interface Booking {
   status: string;
 }
 
-const bookingSchema = new Schema<Booking>({
+const BookingSchema = new Schema<IBooking>({
   roomId: { type: Number, required: true },
   startTime: { type: String, required: true },
   endTime: { type: String, required: true },
@@ -18,4 +18,12 @@ const bookingSchema = new Schema<Booking>({
   status: { type: String, required: true },
 });
 
-export default model<Booking>("Booking-Test", bookingSchema);
+let Booking: Model<IBooking> | null = null;
+
+try {
+  Booking = mongoose.model<IBooking>("Room");
+} catch (e) {
+  Booking = mongoose.model<IBooking>("Room", BookingSchema);
+}
+
+export default Booking;

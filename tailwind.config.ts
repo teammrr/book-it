@@ -20,6 +20,6 @@ const config: Config = {
     //   serif: ["Ubuntu", "sans-serif"],
     // },
   },
-  plugins: [require("flowbite/plugin")],
+  plugins: [require("flowbite/plugin"), require("tailwindcss-animate")],
 };
 export default config;

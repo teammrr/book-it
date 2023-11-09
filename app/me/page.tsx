@@ -25,7 +25,6 @@ export default function MePage() {
   }
 
   const user: User = session?.user || {};
-  console.group(user);
 
   return (
     <Layout>

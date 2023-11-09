@@ -64,8 +64,8 @@ function Booking({ params }: { params: { id: string; name: string } }) {
                     startTime={booking.startTimeC}
                     endTime={booking.endTimeC}
                     name={booking.name}
-                    description={booking.description}
                     status={booking.status}
+                    description={booking.description}
                   />
                 );
               })}
