@@ -3,7 +3,7 @@ import Layout from "../../components/layout";
 import { useSearchParams } from "next/navigation";
 import BookingStatus from "@/app/components/BookingStatus";
 import { useState, useEffect } from "react";
-import Image from "next/image";
+import { PropagateLoader } from "react-spinners";
 
 function Booking({ params }: { params: { id: string; name: string } }) {
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -21,8 +21,12 @@ function Booking({ params }: { params: { id: string; name: string } }) {
       const data = await res.json();
       setIsLoading(false);
       data.forEach((booking: any) => {
+        console.log("Start time:", booking.startTime);
+        console.log("End time:", booking.endTime);
         booking.startTimeC = new Date(booking.startTime * 1000);
         booking.endTimeC = new Date(booking.endTime * 1000);
+        console.log("Converted start time:", booking.startTimeC);
+        console.log("Converted end time:", booking.endTimeC);
       });
       setBookings(data);
     } catch (err) {
@@ -44,15 +48,8 @@ function Booking({ params }: { params: { id: string; name: string } }) {
             </h1>
           </div>
           {isLoading ? ( // Render a loading spinner if isLoading is true
-            <div role="status" className="text-center pt-64">
-              <Image
-                src="/Magnify.svg"
-                alt="Loading..."
-                width={190}
-                height={190}
-                className="mx-auto"
-              />
-              <span className="sr-only">Loading...</span>
+            <div className="flex justify-center items-center min-h-screen">
+              <PropagateLoader color="#3676d6" />
             </div>
           ) : (
             <div className="mt-4 justify-center align-middle flex flex-col gap-2">
@@ -61,8 +58,8 @@ function Booking({ params }: { params: { id: string; name: string } }) {
                   <BookingStatus
                     key={booking.name}
                     roomId={booking.roomId}
-                    startTime={booking.startTimeC}
-                    endTime={booking.endTimeC}
+                    startTime={booking.startTime}
+                    endTime={booking.endTime}
                     name={booking.name}
                     status={booking.status}
                     description={booking.description}

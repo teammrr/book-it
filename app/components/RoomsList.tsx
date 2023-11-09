@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import axios from "axios";
 import Link from "next/link";
+import { PropagateLoader } from "react-spinners";
 
 interface Rooms {
   name: string;
@@ -33,19 +34,12 @@ export default function RoomList() {
   return (
     <div>
       {isLoading ? ( // Render a loading spinner if isLoading is true
-        <div role="status" className="text-center pt-64">
-          <Image
-            src="/Magnify.svg"
-            alt="Loading..."
-            width={190}
-            height={190}
-            className="mx-auto"
-          />
-          <span className="sr-only">Loading...</span>
+        <div className="flex justify-center items-center min-h-screen">
+          <PropagateLoader color="#3676d6" />
         </div>
       ) : (
         <div className="items-center flex justify-center">
-          <div className="pt-10 lg:flex lg:flex-row lg:flex-wrap lg:justify-center lg:gap-4  ">
+          <div className="pt-6 lg:flex lg:flex-row lg:flex-wrap lg:justify-center lg:gap-4  ">
             {rooms.map((room) => (
               <div
                 key={room.name}
@@ -74,8 +68,8 @@ export default function RoomList() {
                       {room.description}
                     </p>
                     <ul className="text-black">
-                      <li>Floor {room.floor}</li>
-                      <li>Capacity: {room.capacity}</li>
+                      <li>📍: {room.floor}</li>
+                      <li>🪑: {room.capacity}</li>
                     </ul>
                     <div className="justify-end items-end flex ">
                       <Link
@@ -83,9 +77,9 @@ export default function RoomList() {
                           pathname: `/book/${room.name}`,
                           query: { name: room.name },
                         }}
-                        className="px-5 py-2.5 font-medium bg-blue-50 hover:bg-blue-100 transition ease-in-out duration-300  hover:text-blue-600 text-blue-500 rounded-lg text-sm"
+                        className="px-4 py-2.5 font-medium bg-blue-50 hover:bg-blue-100 transition ease-in-out duration-300  hover:text-blue-600 text-blue-500 rounded-lg text-sm"
                       >
-                        Book {room.name}
+                        📘 {room.name}
                       </Link>
                     </div>
                   </div>

@@ -26,7 +26,7 @@ export default function Home() {
     <main className="bg-gray-50 min-h-screen">
       <Layout>
         <h1 className="text-3xl font-semibold text-gray-800 mt-8 mx-auto lg:px-32 px-5">
-          Welcome back, {session?.user?.name}
+          Hello, {session?.user?.name} 👋
         </h1>
         <div className="px-4 space-y-6 ">
           {/* <BookingForm /> */}
