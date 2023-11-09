@@ -51,7 +51,6 @@ function Booking({ params }: { params: { id: string; name: string } }) {
     "16:00",
     "17:00",
     "18:00",
-    "19:00",
   ];
 
   // Get the start times of all bookings
@@ -76,7 +75,7 @@ function Booking({ params }: { params: { id: string; name: string } }) {
 
   return (
     <>
-      <main className="bg-gray-50 min-h-screen">
+      <main className="bg-gray-50">
         <Layout>
           <div className="mt-5 mb-5">
             <h1 className="text-3xl font-semibold text-gray-800 mt-8 mx-auto lg:px-32 px-5">
