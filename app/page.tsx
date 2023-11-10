@@ -4,7 +4,7 @@ import { useSession } from "next-auth/react";
 import RoomList from "./components/RoomsList";
 import { redirect } from "next/navigation";
 import Layout from "./components/layout";
-import BookingModal from "./components/BookingModal";
+import BookingModal from "./components/ConfirmBookingModal";
 import { useState } from "react";
 
 // import { navigation, classNames } from "./page";

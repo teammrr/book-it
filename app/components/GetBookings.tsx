@@ -16,16 +16,7 @@ function GetBookings({ params }: { params: { id: string; name: string } }) {
       // const res = await fetch(`api/bookings/${id}`, { headers });
       const res = await fetch(`/api/bookings/`, { headers });
       const data = await res.json();
-      // data.forEach((booking: any) => {
-      //   console.log("Start time:", booking.startTime);
-      //   console.log("End time:", booking.endTime);
-      //   booking.startTimeC = new Date(booking.startTime * 1000);
-      //   booking.endTimeC = new Date(booking.endTime * 1000);
-      //   console.log("Start timeC:", booking.startTimeC);
-      //   console.log("End timeC:", booking.endTimeC);
-      // });
       setBookings(data);
-      // console.log(data);
     } catch (err) {
       console.log(err);
     }

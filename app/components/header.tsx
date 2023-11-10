@@ -16,7 +16,7 @@ export default function Header() {
   const { scrollYProgress } = useScroll();
   const headerY = useTransform(
     scrollYProgress,
-    [0, 0.4, 0.6],
+    [0, 0.5, 0.6],
     ["0%", "0%", "-100%"]
   );
 

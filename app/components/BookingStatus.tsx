@@ -16,7 +16,7 @@ export default function BookingStatus(Bookings: any) {
     .padStart(2, "0")}:${endTime.getMinutes().toString().padStart(2, "0")}`;
 
   return (
-    <div className="flex items-center space-x-3 w-screen pt-2 pb-2 pr-4 pl-4 rounded-lg shadow shadow-black/8">
+    <div className="flex items-center space-x-2 mr-2 ml-2 pt-2 pb-2 pr-4 pl-4 rounded-lg shadow shadow-black/8">
       {" "}
       {/* Add your desired width and height here */}
       <div className="flex-shrink-0">
