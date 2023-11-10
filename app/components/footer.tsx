@@ -1,6 +1,6 @@
 export default function Footer() {
   return (
-    <footer className="">
+    <footer>
       <div className="mx-auto max-w-screen-xl pl-4 pr-4 py-4 lg:py-8">
         <hr className="my-2 border-gray-200 sm:mx-auto lg:my-4" />
         <div className="sm:flex sm:items-center sm:justify-between  ">

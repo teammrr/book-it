@@ -1,13 +1,9 @@
 "use client";
-import Layout from "../../components/layout";
 import { useSearchParams } from "next/navigation";
 import BookingStatus from "@/app/components/BookingStatus";
 import { useState, useEffect } from "react";
-import { PropagateLoader } from "react-spinners";
-import GetBookings from "@/app/components/GetBookings";
 
-function Booking({ params }: { params: { id: string; name: string } }) {
-  const [isLoading, setIsLoading] = useState<boolean>(true);
+function GetBookings({ params }: { params: { id: string; name: string } }) {
   const [bookings, setBookings] = useState<any>([]);
   const searchParams = useSearchParams();
   const name = searchParams.get("name");
@@ -30,7 +26,6 @@ function Booking({ params }: { params: { id: string; name: string } }) {
       // });
       setBookings(data);
       // console.log(data);
-      setIsLoading(false);
     } catch (err) {
       console.log(err);
     }
@@ -122,26 +117,38 @@ function Booking({ params }: { params: { id: string; name: string } }) {
 
   return (
     <>
-      <main className="bg-gray-50">
-        <Layout>
-          <div className="mt-5 mb-5">
-            <h1 className="text-3xl font-semibold text-gray-800 mt-8 mx-auto lg:px-32 px-5">
-              {name} Availability
-            </h1>
-          </div>
-          {isLoading ? ( // Render a loading spinner if isLoading is true
-            <div className="flex justify-center items-center min-h-screen">
-              <PropagateLoader color="#3676d6" />
-            </div>
-          ) : (
-            <div className="mt-4 justify-center align-middle flex flex-col gap-2">
-              <GetBookings params={{ id: "1", name: "Team" }} />
-            </div>
-          )}
-        </Layout>
-      </main>
+      <div className="mt-4 justify-center align-middle flex flex-col gap-2">
+        {bookings.map((booking: any) => {
+          return (
+            <BookingStatus
+              key={booking.name}
+              roomId={booking.roomId}
+              startTime={booking.startTime}
+              endTime={booking.endTime}
+              name={booking.name}
+              status={booking.status}
+              description={booking.description}
+            />
+          );
+        })}
+        <div className=" justify-center align-middle flex flex-col gap-2">
+          {availableTimeRanges.map((range, index) => {
+            return (
+              <BookingStatus
+                key={index}
+                roomId={params.id}
+                startTime={range[0]}
+                endTime={range[1]}
+                name={undefined}
+                status="Available"
+                description="Nobody has booked this time yet."
+              />
+            );
+          })}
+        </div>
+      </div>
     </>
   );
 }
 
-export default Booking;
+export default GetBookings;

@@ -13,11 +13,10 @@ function classNames(...classes: any[]) {
 
 export default function Header() {
   const { data: session, status } = useSession();
-  const loading = status === "loading";
   const { scrollYProgress } = useScroll();
   const headerY = useTransform(
     scrollYProgress,
-    [0, 0.2, 0.3],
+    [0, 0.4, 0.6],
     ["0%", "0%", "-100%"]
   );
 
