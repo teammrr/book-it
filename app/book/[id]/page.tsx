@@ -4,7 +4,7 @@ import { useSearchParams } from "next/navigation";
 import ConfirmBookingModal from "@/app/components/ConfirmBookingModal";
 import { useState, useEffect } from "react";
 import { PropagateLoader } from "react-spinners";
-import GetBookings from "@/app/components/GetBookings";
+import GetBookings from "@/app/components/AvailableBookings";
 import SelectStartTime from "@/app/components/SelectStartTime";
 import SelectEndTime from "@/app/components/SelectEndTime";
 import ShowBookingModal from "@/app/components/ShowBookingModal";
@@ -67,14 +67,17 @@ function Booking({ params }: { params: { id: string; name: string } }) {
             </div>
           ) : (
             <div className="mt-4 rounded-lg shadow shadow-black/10 ml-2 mr-2 pt-3 pb-4 ">
-              <div className="flex font-medium justify-between pl-4 pr-6">
-                <span>Start Time</span>
-                <span>End Time</span>
-              </div>
+              <div className="flex font-medium pl-4 pr-6 relative"></div>
               <div className="flex pb-4 pr-4 pl-4 gap-4">
-                <SelectStartTime />
-                <span className=" align-middle flex items-center">👉</span>
-                <SelectEndTime />
+                <div className="col col-span-1">
+                  <span className="">Start Time</span>
+                  <SelectStartTime />
+                </div>
+                <span className="flex align-bottom items-end pb-1 ">👉</span>
+                <div className="col col-span-1">
+                  <span className=" ">End Time</span>
+                  <SelectEndTime />
+                </div>
               </div>
               <div className="flex justify-between pl-4 pr-4 pt-2">
                 <ShowBookingModal />

@@ -1,22 +1,26 @@
 "use client";
-
+import Header from "./components/header";
+import Footer from "./components/footer";
 import { useSession } from "next-auth/react";
 import RoomList from "./components/RoomsList";
 import { redirect } from "next/navigation";
 import Layout from "./components/layout";
-import BookingModal from "./components/ConfirmBookingModal";
 import { useState } from "react";
-
-// import { navigation, classNames } from "./page";
+import { motion, useScroll, useTransform } from "framer-motion";
 
 export default function Home() {
-  const [showModal, setShowModal] = useState(false);
   const { data: session, status } = useSession({
     required: true,
     onUnauthenticated() {
       // The user is not authenticated, handle it here.
     },
   });
+  const { scrollYProgress } = useScroll();
+  const headerY = useTransform(
+    scrollYProgress,
+    [0, 0.5, 0.6],
+    ["0%", "0%", "-100%"]
+  );
 
   if (status === "loading") {
     return redirect("/api/auth/signin");
@@ -24,22 +28,25 @@ export default function Home() {
 
   return (
     <main className="bg-gray-50 min-h-screen">
-      <Layout>
-        <h1 className="text-3xl font-semibold text-gray-800 mt-8 mx-auto lg:px-32 px-5">
-          Hello, {session?.user?.name} 👋
-        </h1>
-        <div className="px-4 space-y-6 ">
-          {/* <BookingForm /> */}
-          <div className="">
-            {/* <BookingModal
-              showModal={showModal}
-              setShowModal={setShowModal}
-            ></BookingModal>
-            {showModal && <BookingModal setShowModal={setShowModal} />} */}
-            <RoomList />
-          </div>
+      <motion.header
+        className="z-50"
+        style={{
+          position: "sticky",
+          top: 0,
+          y: headerY,
+        }}
+      >
+        <Header />
+      </motion.header>
+      <h1 className="text-3xl font-semibold text-gray-800 mt-8 mx-auto lg:px-32 px-5">
+        Hello, {session?.user?.name} 👋
+      </h1>
+      <div className="px-4 space-y-6 ">
+        <div className="">
+          <RoomList />
         </div>
-      </Layout>
+      </div>
+      <Footer />
     </main>
   );
 }
