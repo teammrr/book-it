@@ -2,6 +2,7 @@
 import { useSearchParams } from "next/navigation";
 import BookingStatus from "@/app/components/BookingStatus";
 import { useState, useEffect } from "react";
+import axios from "axios";
 
 function GetBookings({ params }: { params: { id: string; name: string } }) {
   const [bookings, setBookings] = useState<any>([]);
@@ -10,13 +11,12 @@ function GetBookings({ params }: { params: { id: string; name: string } }) {
 
   async function getBooking(id: string) {
     try {
-      const headers = {
-        "Content-Type": "application/json",
-      };
-      // const res = await fetch(`api/bookings/${id}`, { headers });
-      const res = await fetch(`/api/bookings/`, { headers });
-      const data = await res.json();
-      setBookings(data);
+      const res = await axios.get(`/api/bookings/`, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      setBookings(res.data);
     } catch (err) {
       console.log(err);
     }
@@ -59,11 +59,6 @@ function GetBookings({ params }: { params: { id: string; name: string } }) {
       .toString()
       .padStart(2, "0")}`;
   });
-
-  // Get the times that are not booked
-  const availableTimes = allTimes.filter((time) => !bookedTimes.includes(time));
-
-  const allTimeStamps = allTimes.map((time) => timeToTimestamp(time));
 
   // Convert booked times to timestamps
   const bookedTimeStamps = bookings.map(
@@ -109,34 +104,19 @@ function GetBookings({ params }: { params: { id: string; name: string } }) {
   return (
     <>
       <div className="mt-4 justify-center align-middle flex flex-col gap-2">
-        {/* {bookings.map((booking: any) => {
+        {availableTimeRanges.map((range, index) => {
           return (
             <BookingStatus
-              key={booking.name}
-              roomId={booking.roomId}
-              startTime={booking.startTime}
-              endTime={booking.endTime}
-              name={booking.name}
-              status={booking.status}
-              description={booking.description}
+              key={index}
+              roomId={params.id}
+              startTime={range[0]}
+              endTime={range[1]}
+              name={undefined}
+              status="Available"
+              description="Nobody has booked this time yet."
             />
           );
-        })} */}
-        <div className=" justify-center align-middle flex flex-col gap-2">
-          {availableTimeRanges.map((range, index) => {
-            return (
-              <BookingStatus
-                key={index}
-                roomId={params.id}
-                startTime={range[0]}
-                endTime={range[1]}
-                name={undefined}
-                status="Available"
-                description="Nobody has booked this time yet."
-              />
-            );
-          })}
-        </div>
+        })}
       </div>
     </>
   );

@@ -1,7 +1,7 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
 
-export default function ConfirmBookingModal() {
+export default function ConfirmBookingModal({ startTime, endTime }: any) {
   let [isOpen, setIsOpen] = useState(false);
 
   function closeModal() {
@@ -23,7 +23,7 @@ export default function ConfirmBookingModal() {
         <button
           type="button"
           onClick={openModal}
-          className="justify-center rounded-lg border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+          className="justify-center rounded-lg border border-transparent bg-blue-200 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
         >
           Confirm Reservation
         </button>
@@ -71,7 +71,7 @@ export default function ConfirmBookingModal() {
                   <div className="mt-4 flex flex-row-reverse">
                     <button
                       type="button"
-                      className="inline-flex w-full justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                      className="inline-flex w-full justify-center rounded-md border border-transparent bg-blue-50 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
                       onClick={handleBooking}
                     >
                       Got it, thanks!

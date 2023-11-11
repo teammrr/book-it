@@ -12,7 +12,7 @@ for (let i = 9; i <= 19; i += 0.5) {
   rooms.push({ id: rooms.length + 1, name: time, unavailable: false });
 }
 
-function SelectEndTime() {
+function SelectEndTime({ selectedTime, setSelectedTime }: any) {
   const [selectedRoom, setSelectedRoom] = useState(rooms[0]);
   const [query, setQuery] = useState("");
 

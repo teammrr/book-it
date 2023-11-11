@@ -1,6 +1,6 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
-import ListBookings from "./ListBookings";
+import ListBookings from "./UsersBookings";
 
 export default function ShowBookingModal() {
   let [isOpen, setIsOpen] = useState(false);
@@ -24,9 +24,9 @@ export default function ShowBookingModal() {
         <button
           type="button"
           onClick={openModal}
-          className="w-40 justify-center rounded-lg border border-transparent bg-white bg-opacity-80 px-4 py-2 text-sm font-medium text-black hover:bg-blue-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-50 focus-visible:ring-offset-2"
+          className="justify-center rounded-lg border border-transparent bg-white bg-opacity-80 px-4 py-2 text-sm font-medium text-black hover:bg-blue-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-50 focus-visible:ring-offset-2"
         >
-          Show Bookings
+          Show Reservations
         </button>
       </div>
 
@@ -60,11 +60,11 @@ export default function ShowBookingModal() {
                     as="h3"
                     className="text-lg font-medium leading-6 text-gray-900"
                   >
-                    Bookings for this room
+                    Reservations for this room
                   </Dialog.Title>
                   <div className="mt-2">
                     <p className="text-sm text-gray-500">
-                      Lists of bookings here
+                      Lists of reservations here
                     </p>
                     <ListBookings params={{ id: "1", name: "Team" }} />
                   </div>
