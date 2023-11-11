@@ -1,7 +1,8 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
+import ListBookings from "./ListBookings";
 
-export default function ConfirmBookingModal() {
+export default function ShowBookingModal() {
   let [isOpen, setIsOpen] = useState(false);
 
   function closeModal() {
@@ -23,9 +24,9 @@ export default function ConfirmBookingModal() {
         <button
           type="button"
           onClick={openModal}
-          className="justify-center rounded-lg border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+          className="w-40 justify-center rounded-lg border border-transparent bg-white bg-opacity-80 px-4 py-2 text-sm font-medium text-black hover:bg-blue-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-50 focus-visible:ring-offset-2"
         >
-          Confirm Reservation
+          Show Bookings
         </button>
       </div>
 
@@ -59,13 +60,13 @@ export default function ConfirmBookingModal() {
                     as="h3"
                     className="text-lg font-medium leading-6 text-gray-900"
                   >
-                    Reservation successful
+                    Bookings for this room
                   </Dialog.Title>
                   <div className="mt-2">
                     <p className="text-sm text-gray-500">
-                      Your room has been successfully reserved. We&apos;ll
-                      notify you when your room is ready.
+                      Lists of bookings here
                     </p>
+                    <ListBookings params={{ id: "1", name: "Team" }} />
                   </div>
 
                   <div className="mt-4 flex flex-row-reverse">

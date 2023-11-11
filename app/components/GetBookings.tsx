@@ -109,7 +109,7 @@ function GetBookings({ params }: { params: { id: string; name: string } }) {
   return (
     <>
       <div className="mt-4 justify-center align-middle flex flex-col gap-2">
-        {bookings.map((booking: any) => {
+        {/* {bookings.map((booking: any) => {
           return (
             <BookingStatus
               key={booking.name}
@@ -121,7 +121,7 @@ function GetBookings({ params }: { params: { id: string; name: string } }) {
               description={booking.description}
             />
           );
-        })}
+        })} */}
         <div className=" justify-center align-middle flex flex-col gap-2">
           {availableTimeRanges.map((range, index) => {
             return (
