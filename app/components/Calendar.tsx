@@ -30,13 +30,13 @@ export default function Calendar({
   }, [selectedDay, setSelectedDate, formattedDate]);
 
   const renderCustomInput = ({ ref }: any) => (
-    <div className="">
+    <div className="z-4">
       <input
         readOnly
         ref={ref} // necessary
         placeholder="Choose date here"
         value={formattedDate}
-        className="h-9 w-80 text-center rounded-lg bg-white shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75 focus-visible:ring-offset-2 focus-visible:ring-offset-blue-300 sm:text-sm"
+        className="h-9 w-24 text-gray-900 text-sm text-center rounded-lg bg-white shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75 focus-visible:ring-offset-2 focus-visible:ring-offset-blue-300 sm:text-sm"
       />
     </div>
   );

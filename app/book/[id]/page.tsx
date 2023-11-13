@@ -10,6 +10,7 @@ import SelectEndTime from "@/app/components/SelectEndTime";
 import ShowBookingModal from "@/app/components/ShowBookingModal";
 import Calendar from "@/app/components/Calendar";
 import axios from "axios";
+import DescriptionBox from "@/app/components/DescriptionBox";
 
 function Booking({ params }: { params: { id: string; name: string } }) {
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -71,34 +72,37 @@ function Booking({ params }: { params: { id: string; name: string } }) {
             </div>
           ) : (
             <div className="mt-4 rounded-lg shadow shadow-black/10 ml-2 mr-2 pt-3 pb-4 ">
-              <span className="truncate pl-7">Date </span>
-              <div className="flex w-full align-middle justify-center pr-4 pl-4 pb-1">
-                <div className="col col-span-1">
+              <div className="flex pb-2 pr-4 pl-4 gap-4">
+                <div className="col col-span-1 mb-1">
+                  <p className="truncate mb-1 block text-sm font-medium text-gray-900 dark:text-white">
+                    Date{" "}
+                  </p>
                   <Calendar setSelectedDate={setSelectedDate} />
                 </div>
-              </div>
-              <div className="flex relative">
-                <div className="grid gap-6 mb-6 md:grid-cols-2"></div>
-                <div className="flex pb-4 pr-4 pl-4 gap-4">
-                  <div className="col col-span-1">
-                    <span className="truncate">Start Time</span>
-                    <SelectStartTime
-                      userStartTime={selectedStartTime}
-                      setUserStartTime={setSelectedStartTime}
-                    />
-                  </div>
-                  {/* <span className="flex align-middle items-center pb-1 ">
-                    👉
-                  </span> */}
-                  <div className="col col-span-1">
-                    <span className="truncate">End Time</span>
-                    <SelectEndTime
-                      userEndTime={selectedEndTime}
-                      setUserEndTime={setSelectedEndTime}
-                    />
-                  </div>
+                <div className="col col-span-1">
+                  <span className="truncate block text-sm font-medium text-gray-900 dark:text-white">
+                    Start Time
+                  </span>
+                  <SelectStartTime
+                    userStartTime={selectedStartTime}
+                    setUserStartTime={setSelectedStartTime}
+                  />
                 </div>
-              </div>{" "}
+                <div className="col col-span-1">
+                  <span className="truncate block text-sm font-medium text-gray-900 dark:text-white">
+                    End Time
+                  </span>
+                  <SelectEndTime
+                    userEndTime={selectedEndTime}
+                    setUserEndTime={setSelectedEndTime}
+                  />
+                </div>
+              </div>
+              <div className="pb-2 pr-4 pl-4 gap-4">
+                <div className="col col-span-1 mb-1">
+                  <DescriptionBox />
+                </div>
+              </div>
               <div className="flex justify-between z-50 pl-4 pr-4 pt-2">
                 <ShowBookingModal />
                 <ConfirmBookingModal
