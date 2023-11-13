@@ -1,4 +1,4 @@
-import { Fragment, useState } from "react";
+import { Fragment, useState, useEffect } from "react";
 import { Combobox, Transition } from "@headlessui/react";
 import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/20/solid";
 
@@ -13,7 +13,7 @@ for (let i = 9; i <= 19; i += 0.5) {
 }
 
 function SelectEndTime({ selectedTime, setSelectedTime }: any) {
-  const [selectedRoom, setSelectedRoom] = useState(rooms[0]);
+  const [endTime, setEndTime] = useState(rooms[0]);
   const [query, setQuery] = useState("");
 
   const filteredRoom =
@@ -22,10 +22,18 @@ function SelectEndTime({ selectedTime, setSelectedTime }: any) {
       : rooms.filter((room) => {
           return room.name.toLowerCase().includes(query.toLowerCase());
         });
+  useEffect(() => {
+    const currentDate = new Date();
+    const [hours, minutes] = endTime.name.split(":");
+    currentDate.setHours(Number(hours));
+    currentDate.setMinutes(Number(minutes));
+    const unixTimestamp = Math.floor(currentDate.getTime() / 1000);
+    console.log("Unix timestamp:", unixTimestamp);
+  }, [endTime]);
 
   return (
     <div className="flex">
-      <Combobox value={selectedRoom} onChange={setSelectedRoom}>
+      <Combobox value={endTime} onChange={setEndTime}>
         <div className="relative mt-1">
           <div className="relative w-full cursor-default overflow-hidden rounded-lg bg-white text-left shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75 focus-visible:ring-offset-2 focus-visible:ring-offset-blue-300 sm:text-sm">
             <Combobox.Input

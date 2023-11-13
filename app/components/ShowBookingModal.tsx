@@ -15,7 +15,6 @@ export default function ShowBookingModal() {
 
   function handleBooking() {
     closeModal();
-    console.log("Booking confirmed");
   }
 
   return (
