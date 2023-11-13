@@ -1,0 +1,45 @@
+import "@hassanmojab/react-modern-calendar-datepicker/lib/DatePicker.css";
+import DatePicker, {
+  DayValue,
+} from "@hassanmojab/react-modern-calendar-datepicker";
+import { useState, useEffect } from "react";
+
+export default function Calendar({ selectedDate, setSelectedDate }: any) {
+  const [selectedDay, setSelectedDay] = useState<DayValue | null>(null);
+
+  const today = new Date();
+  const minimumDate = {
+    year: today.getFullYear(),
+    month: today.getMonth() + 1,
+    day: today.getDate(),
+  }; // Setting minimum date to current day only
+
+  const renderCustomInput = ({ ref }: any) => (
+    <div className="">
+      <input
+        readOnly
+        ref={ref} // necessary
+        placeholder="Choose date here"
+        value={
+          selectedDay
+            ? `🗓️: ${selectedDay.day}-${selectedDay.month}-${selectedDay.year}`
+            : ""
+        }
+        className="h-9 w-80 text-center rounded-lg bg-white shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75 focus-visible:ring-offset-2 focus-visible:ring-offset-blue-300 sm:text-sm"
+      />
+    </div>
+  );
+
+  return (
+    <DatePicker
+      value={selectedDay}
+      onChange={setSelectedDay}
+      minimumDate={minimumDate}
+      inputPlaceholder="Select a day"
+      colorPrimary="#3D4C83" // added this
+      colorPrimaryLight="rgba(200, 220, 250, 0.4)" // and this
+      renderInput={renderCustomInput} // render a custom input
+      shouldHighlightWeekends
+    />
+  );
+}

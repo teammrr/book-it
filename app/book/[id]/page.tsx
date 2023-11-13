@@ -8,6 +8,7 @@ import GetBookings from "@/app/components/AvailableBookings";
 import SelectStartTime from "@/app/components/SelectStartTime";
 import SelectEndTime from "@/app/components/SelectEndTime";
 import ShowBookingModal from "@/app/components/ShowBookingModal";
+import Calendar from "@/app/components/Calendar";
 import axios from "axios";
 
 function Booking({ params }: { params: { id: string; name: string } }) {
@@ -15,6 +16,7 @@ function Booking({ params }: { params: { id: string; name: string } }) {
   const [bookings, setBookings] = useState<any>();
   const [selectedStartTime, setSelectedStartTime] = useState([0]);
   const [selectedEndTime, setSelectedEndTime] = useState([0]);
+  const [selectedDate, setSelectedDate] = useState([0]);
   const searchParams = useSearchParams();
   const name = searchParams.get("name");
   const monthNames = [
@@ -69,24 +71,37 @@ function Booking({ params }: { params: { id: string; name: string } }) {
             </div>
           ) : (
             <div className="mt-4 rounded-lg shadow shadow-black/10 ml-2 mr-2 pt-3 pb-4 ">
-              <div className="flex font-medium pl-4 pr-6 relative"></div>
-              <div className="flex pb-4 pr-4 pl-4 gap-4">
+              <span className="truncate pl-7">Date </span>
+              <div className="flex w-full align-middle justify-center pr-4 pl-4 pb-1">
                 <div className="col col-span-1">
-                  <span className="">Start Time</span>
-                  <SelectStartTime
-                    selectedTime={selectedStartTime}
-                    setSelectedTime={setSelectedStartTime}
-                  />
-                </div>
-                <span className="flex align-bottom items-end pb-1 ">👉</span>
-                <div className="col col-span-1">
-                  <span className=" ">End Time</span>
-                  <SelectEndTime
-                    selectedTime={selectedEndTime}
-                    setSelectedTime={setSelectedEndTime}
+                  <Calendar
+                    selectedDate={selectedDate}
+                    setSelectedDate={setSelectedDate}
                   />
                 </div>
               </div>
+              <div className="flex relative">
+                <div className="grid gap-6 mb-6 md:grid-cols-2"></div>
+                <div className="flex pb-4 pr-4 pl-4 gap-4">
+                  <div className="col col-span-1">
+                    <span className="truncate">Start Time</span>
+                    <SelectStartTime
+                      selectedTime={selectedStartTime}
+                      setSelectedTime={setSelectedStartTime}
+                    />
+                  </div>
+                  {/* <span className="flex align-middle items-center pb-1 ">
+                    👉
+                  </span> */}
+                  <div className="col col-span-1">
+                    <span className="truncate">End Time</span>
+                    <SelectEndTime
+                      selectedTime={selectedEndTime}
+                      setSelectedTime={setSelectedEndTime}
+                    />
+                  </div>
+                </div>
+              </div>{" "}
               <div className="flex justify-between pl-4 pr-4 pt-2">
                 <ShowBookingModal />
                 <ConfirmBookingModal
