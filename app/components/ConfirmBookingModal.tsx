@@ -14,8 +14,10 @@ export default function ConfirmBookingModal({ startTime, endTime }: any) {
 
   function handleBooking() {
     // TODO : Before closing the modal, show a loading spinner before server responds
-    closeModal();
+    console.log("Start time:", startTime);
+    console.log("End time:", endTime);
     console.log("Booking confirmed");
+    closeModal();
   }
 
   return (

@@ -9,10 +9,10 @@ for (let i = 9; i <= 19; i += 0.5) {
   const time = `${hours.toString().padStart(2, "0")}:${minutes
     .toString()
     .padStart(2, "0")}`;
-  rooms.push({ id: rooms.length + 1, name: time, unavailable: false });
+  rooms.push({ id: rooms.length + 1, time: time, unavailable: false });
 }
 
-function SelectEndTime({ selectedTime, setSelectedTime }: any) {
+function SelectStartTime({ userEndTime, setUserEndTime }: any) {
   const [endTime, setEndTime] = useState(rooms[0]);
   const [query, setQuery] = useState("");
 
@@ -20,15 +20,12 @@ function SelectEndTime({ selectedTime, setSelectedTime }: any) {
     query === ""
       ? rooms
       : rooms.filter((room) => {
-          return room.name.toLowerCase().includes(query.toLowerCase());
+          return room.time.toLowerCase().includes(query.toLowerCase());
         });
+
   useEffect(() => {
-    const currentDate = new Date();
-    const [hours, minutes] = endTime.name.split(":");
-    currentDate.setHours(Number(hours));
-    currentDate.setMinutes(Number(minutes));
-    const unixTimestamp = Math.floor(currentDate.getTime() / 1000);
-    console.log("Unix timestamp:", unixTimestamp);
+    // This code will run whenever startTime changes
+    console.log("Selected end time:", endTime.time);
   }, [endTime]);
 
   return (
@@ -39,7 +36,7 @@ function SelectEndTime({ selectedTime, setSelectedTime }: any) {
             <Combobox.Input
               className="w-full border-none py-2 pl-3 pr-10 text-sm leading-5 text-gray-900 focus:ring-0"
               onChange={(event) => setQuery(event.target.value)}
-              displayValue={(room: { name: string }) => room.name}
+              displayValue={(room: { time: string }) => room.time}
             />
             <Combobox.Button className="absolute inset-y-0 right-0 flex items-center pr-2">
               <ChevronUpDownIcon
@@ -79,7 +76,7 @@ function SelectEndTime({ selectedTime, setSelectedTime }: any) {
                             selected ? "font-medium" : "font-normal"
                           }`}
                         >
-                          {room.name}
+                          {room.time}
                         </span>
                         {selected ? (
                           <span
@@ -103,4 +100,4 @@ function SelectEndTime({ selectedTime, setSelectedTime }: any) {
   );
 }
 
-export default SelectEndTime;
+export default SelectStartTime;

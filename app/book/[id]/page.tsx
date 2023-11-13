@@ -14,9 +14,9 @@ import axios from "axios";
 function Booking({ params }: { params: { id: string; name: string } }) {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [bookings, setBookings] = useState<any>();
-  const [selectedStartTime, setSelectedStartTime] = useState([0]);
-  const [selectedEndTime, setSelectedEndTime] = useState([0]);
-  const [selectedDate, setSelectedDate] = useState([0]);
+  const [selectedStartTime, setSelectedStartTime] = useState();
+  const [selectedEndTime, setSelectedEndTime] = useState();
+  const [selectedDate, setSelectedDate] = useState();
   const searchParams = useSearchParams();
   const name = searchParams.get("name");
   const monthNames = [
@@ -74,10 +74,7 @@ function Booking({ params }: { params: { id: string; name: string } }) {
               <span className="truncate pl-7">Date </span>
               <div className="flex w-full align-middle justify-center pr-4 pl-4 pb-1">
                 <div className="col col-span-1">
-                  <Calendar
-                    selectedDate={selectedDate}
-                    setSelectedDate={setSelectedDate}
-                  />
+                  <Calendar setSelectedDate={setSelectedDate} />
                 </div>
               </div>
               <div className="flex relative">
@@ -86,8 +83,8 @@ function Booking({ params }: { params: { id: string; name: string } }) {
                   <div className="col col-span-1">
                     <span className="truncate">Start Time</span>
                     <SelectStartTime
-                      selectedTime={selectedStartTime}
-                      setSelectedTime={setSelectedStartTime}
+                      userStartTime={selectedStartTime}
+                      setUserStartTime={setSelectedStartTime}
                     />
                   </div>
                   {/* <span className="flex align-middle items-center pb-1 ">
@@ -96,13 +93,13 @@ function Booking({ params }: { params: { id: string; name: string } }) {
                   <div className="col col-span-1">
                     <span className="truncate">End Time</span>
                     <SelectEndTime
-                      selectedTime={selectedEndTime}
-                      setSelectedTime={setSelectedEndTime}
+                      userEndTime={selectedEndTime}
+                      setUserEndTime={setSelectedEndTime}
                     />
                   </div>
                 </div>
               </div>{" "}
-              <div className="flex justify-between pl-4 pr-4 pt-2">
+              <div className="flex justify-between z-50 pl-4 pr-4 pt-2">
                 <ShowBookingModal />
                 <ConfirmBookingModal
                   startTime={selectedStartTime}

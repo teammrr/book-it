@@ -4,15 +4,30 @@ import DatePicker, {
 } from "@hassanmojab/react-modern-calendar-datepicker";
 import { useState, useEffect } from "react";
 
-export default function Calendar({ selectedDate, setSelectedDate }: any) {
-  const [selectedDay, setSelectedDay] = useState<DayValue | null>(null);
-
+export default function Calendar({
+  setSelectedDate,
+}: {
+  setSelectedDate: any;
+}) {
   const today = new Date();
   const minimumDate = {
     year: today.getFullYear(),
     month: today.getMonth() + 1,
     day: today.getDate(),
   }; // Setting minimum date to current day only
+  const [selectedDay, setSelectedDay] = useState<DayValue>(minimumDate);
+  const formattedDate = selectedDay
+    ? `${String(selectedDay.day).padStart(2, "0")}/${String(
+        selectedDay.month
+      ).padStart(2, "0")}/${String(selectedDay.year).slice(-2)}`
+    : "";
+
+  useEffect(() => {
+    if (selectedDay) {
+      setSelectedDate(formattedDate);
+      console.log(`updated date: ${formattedDate}`);
+    }
+  }, [selectedDay, setSelectedDate, formattedDate]);
 
   const renderCustomInput = ({ ref }: any) => (
     <div className="">
@@ -20,11 +35,7 @@ export default function Calendar({ selectedDate, setSelectedDate }: any) {
         readOnly
         ref={ref} // necessary
         placeholder="Choose date here"
-        value={
-          selectedDay
-            ? `🗓️: ${selectedDay.day}-${selectedDay.month}-${selectedDay.year}`
-            : ""
-        }
+        value={formattedDate}
         className="h-9 w-80 text-center rounded-lg bg-white shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75 focus-visible:ring-offset-2 focus-visible:ring-offset-blue-300 sm:text-sm"
       />
     </div>
