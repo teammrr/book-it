@@ -1,7 +1,12 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
 
-export default function ConfirmBookingModal({ startTime, endTime }: any) {
+export default function ConfirmBookingModal({
+  startTime,
+  endTime,
+  date,
+  description,
+}: any) {
   let [isOpen, setIsOpen] = useState(false);
 
   function closeModal() {
@@ -16,6 +21,8 @@ export default function ConfirmBookingModal({ startTime, endTime }: any) {
     // TODO : Before closing the modal, show a loading spinner before server responds
     console.log("Start time:", startTime);
     console.log("End time:", endTime);
+    console.log("Date", date);
+    console.log("Description", description);
     console.log("Booking confirmed");
     closeModal();
   }
@@ -68,6 +75,15 @@ export default function ConfirmBookingModal({ startTime, endTime }: any) {
                     <p className="text-sm text-gray-500">
                       Your room has been successfully reserved. We&apos;ll
                       notify you when your room is ready.
+                    </p>
+                    <p className="mt-2 text-sm font-semibold text-gray-500">
+                      Reservation Details:
+                    </p>
+                    <p className="text-sm text-gray-500">
+                      From {startTime} to {endTime} on {date}
+                    </p>
+                    <p className="text-sm text-gray-500">
+                      Description: {description}
                     </p>
                   </div>
 

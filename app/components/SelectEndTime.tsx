@@ -12,7 +12,7 @@ for (let i = 9; i <= 19; i += 0.5) {
   rooms.push({ id: rooms.length + 1, time: time, unavailable: false });
 }
 
-function SelectStartTime({ userEndTime, setUserEndTime }: any) {
+function SelectStartTime({ setUserEndTime }: any) {
   const [endTime, setEndTime] = useState(rooms[0]);
   const [query, setQuery] = useState("");
 
@@ -25,8 +25,9 @@ function SelectStartTime({ userEndTime, setUserEndTime }: any) {
 
   useEffect(() => {
     // This code will run whenever startTime changes
-    console.log("Selected end time:", endTime.time);
-  }, [endTime]);
+    // console.log("Selected end time:", endTime.time);
+    setUserEndTime(endTime.time);
+  }, [endTime, setUserEndTime]);
 
   return (
     <div className="flex">

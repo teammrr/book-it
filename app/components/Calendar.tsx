@@ -4,11 +4,7 @@ import DatePicker, {
 } from "@hassanmojab/react-modern-calendar-datepicker";
 import { useState, useEffect } from "react";
 
-export default function Calendar({
-  setSelectedDate,
-}: {
-  setSelectedDate: any;
-}) {
+export default function Calendar({ setSelectedDate }: any) {
   const today = new Date();
   const minimumDate = {
     year: today.getFullYear(),
@@ -25,7 +21,6 @@ export default function Calendar({
   useEffect(() => {
     if (selectedDay) {
       setSelectedDate(formattedDate);
-      console.log(`updated date: ${formattedDate}`);
     }
   }, [selectedDay, setSelectedDate, formattedDate]);
 

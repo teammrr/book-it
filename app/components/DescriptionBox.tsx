@@ -1,10 +1,14 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-export default function DescriptionBox() {
+export default function DescriptionBox({ setUserDescription }: any) {
   const [description, setDescription] = useState<string>();
   const handleDescriptionChange = (e: any) => {
     setDescription(e.target.value);
   };
+
+  useEffect(() => {
+    setUserDescription(description);
+  }, [description, setUserDescription]);
 
   return (
     <>

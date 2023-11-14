@@ -18,6 +18,7 @@ function Booking({ params }: { params: { id: string; name: string } }) {
   const [selectedStartTime, setSelectedStartTime] = useState();
   const [selectedEndTime, setSelectedEndTime] = useState();
   const [selectedDate, setSelectedDate] = useState();
+  const [usrDescription, setUsrDescription] = useState();
   const searchParams = useSearchParams();
   const name = searchParams.get("name");
   const monthNames = [
@@ -100,7 +101,7 @@ function Booking({ params }: { params: { id: string; name: string } }) {
               </div>
               <div className="pb-2 pr-4 pl-4 gap-4">
                 <div className="col col-span-1 mb-1">
-                  <DescriptionBox />
+                  <DescriptionBox setUserDescription={setUsrDescription} />
                 </div>
               </div>
               <div className="flex justify-between z-50 pl-4 pr-4 pt-2">
@@ -108,6 +109,8 @@ function Booking({ params }: { params: { id: string; name: string } }) {
                 <ConfirmBookingModal
                   startTime={selectedStartTime}
                   endTime={selectedEndTime}
+                  date={selectedDate}
+                  description={usrDescription}
                 />
               </div>
               <div className="flex pt-4 font-medium justify-between pl-4 pr-6">
