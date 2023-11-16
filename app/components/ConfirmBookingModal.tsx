@@ -1,30 +1,101 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
+import axios from "axios";
+import { useSession } from "next-auth/react";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function ConfirmBookingModal({
+  roomId,
   startTime,
   endTime,
   date,
   description,
 }: any) {
   let [isOpen, setIsOpen] = useState(false);
-
+  const { data: session } = useSession({
+    required: true,
+    onUnauthenticated() {
+      // The user is not authenticated, handle it here.
+    },
+  });
   function closeModal() {
     setIsOpen(false);
   }
 
-  function openModal() {
-    setIsOpen(true);
+  function startToUnix({ startTime, date }: any) {
+    // Convert date from DD/MM/YY to MM/DD/YYYY
+    const [day, month, year] = date.split("/");
+    const formattedDate = `${month}/${day}/20${year}`;
+
+    // Append :00 to startTime to make it HH:MM:SS
+    const formattedTime = `${startTime}:00`;
+
+    const dateTime = new Date(`${formattedDate} ${formattedTime}`);
+    const unixTime = Math.floor(dateTime.getTime() / 1000);
+    return unixTime;
   }
 
-  function handleBooking() {
-    // TODO : Before closing the modal, show a loading spinner before server responds
-    console.log("Start time:", startTime);
-    console.log("End time:", endTime);
-    console.log("Date", date);
-    console.log("Description", description);
-    console.log("Booking confirmed");
-    closeModal();
+  function endToUnix({ endTime, date }: any) {
+    // Convert date from DD/MM/YY to MM/DD/YYYY
+    const [day, month, year] = date.split("/");
+    const formattedDate = `${month}/${day}/20${year}`;
+
+    // Append :00 to startTime to make it HH:MM:SS
+    const formattedTime = `${endTime}:00`;
+
+    const dateTime = new Date(`${formattedDate} ${formattedTime}`);
+    const unixTime = Math.floor(dateTime.getTime() / 1000);
+    return unixTime;
+  }
+
+  function isTimeSlotAvailable(startUnix: string, bookings: any[]): boolean {
+    for (let booking of bookings) {
+      if (startUnix >= booking.startTime && startUnix <= booking.endTime) {
+        toast.error(
+          "This time is not available. Please try selecting different time period."
+        );
+        return false;
+      }
+    }
+    return true;
+  }
+
+  async function openModal() {
+    const startUnix = startToUnix({ startTime, date }).toString();
+    const endUnix = endToUnix({ endTime, date }).toString();
+    const res = await axios.get(`/api/bookings/`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const bookings = res.data;
+
+    const bookingDetails = {
+      roomId: String(roomId),
+      name: String(session?.user?.name),
+      startTime: String(startUnix),
+      endTime: String(endUnix),
+      description: String(description),
+    };
+    if (isTimeSlotAvailable(startUnix, bookings)) {
+      // Proceed with booking
+      const response = await axios.post("/api/bookings", bookingDetails);
+      console.log("Booking confirmed:", response.data);
+      setIsOpen(true);
+    } else {
+      // Show an error message to the user
+      console.error(
+        "Error:",
+        Error("Booking times overlap with an existing booking.")
+      );
+    }
+    // try {
+    //   console.log("checking overlap");
+    //   // await checkOverlap(bookingDetails);
+    // } catch (error) {
+    //   console.error("Error:", error);
+    // }
   }
 
   return (
@@ -91,7 +162,7 @@ export default function ConfirmBookingModal({
                     <button
                       type="button"
                       className="inline-flex w-full justify-center rounded-md border border-transparent bg-blue-50 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                      onClick={handleBooking}
+                      onClick={closeModal}
                     >
                       Got it, thanks!
                     </button>

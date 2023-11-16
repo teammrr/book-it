@@ -1,33 +1,46 @@
 "use client";
-import { useSearchParams } from "next/navigation";
 import BookingStatus from "@/app/components/BookingStatus";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { BeatLoader } from "react-spinners";
 import axios from "axios";
 
-function ListBookings({ params }: { params: { id: string; name: string } }) {
+function ListBookings({ params }: { params: { id: string } }) {
   const [bookings, setBookings] = useState<any>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const searchParams = useSearchParams();
-  const name = searchParams.get("name");
 
-  async function getBooking(id: string) {
+  const getBooking = useCallback(async (id: string) => {
     try {
       const res = await axios.get(`/api/bookings/`, {
         headers: {
           "Content-Type": "application/json",
         },
       });
-      setBookings(res.data);
+      const bookings = res.data;
+      if (bookings) {
+        setMatchingBooking(bookings, id);
+      }
       setIsLoading(false);
     } catch (err) {
       console.log(err);
     }
+  }, []);
+
+  function setMatchingBooking(bookings: any[], id: string) {
+    const matchingBookings = bookings.filter(
+      (booking) => booking.roomId === id
+    );
+    console.log("specific bookings", matchingBookings);
+    setBookings(matchingBookings);
   }
 
   useEffect(() => {
     getBooking(params.id);
-  }, [params.id]);
+    console.log("user booking room id a:", params.id);
+  }, [params.id, getBooking]);
+
+  useEffect(() => {
+    console.log("user bookings updated", bookings);
+  }, [bookings]);
 
   return (
     <>
@@ -46,7 +59,7 @@ function ListBookings({ params }: { params: { id: string; name: string } }) {
                 startTime={booking.startTime}
                 endTime={booking.endTime}
                 name={booking.name}
-                status={booking.status}
+                status={"booked"}
               />
             );
           })}

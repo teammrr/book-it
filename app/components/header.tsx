@@ -119,7 +119,7 @@ export default function Header() {
                         <Menu.Item>
                           {({ active }) => (
                             <a
-                              href="me"
+                              href="/me"
                               className={classNames(
                                 active ? "bg-gray-100" : "",
                                 "block px-4 py-2 text-sm text-[#002D74]"

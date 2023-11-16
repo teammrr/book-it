@@ -6,14 +6,15 @@ interface IRoom extends Document {
   floor: string;
   capacity: number;
   picture: string;
+  id: string;
 }
 
 const roomSchema = new Schema<IRoom>({
   name: { type: String, required: true },
-  description: { type: String, required: true },
+  description: { type: String, required: false },
   floor: { type: String, required: true },
   capacity: { type: Number, required: true },
-  picture: { type: String, required: false },
+  id: { type: String, required: true },
 });
 
 let Room: Model<IRoom> | null = null;

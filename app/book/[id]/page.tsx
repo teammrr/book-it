@@ -2,8 +2,9 @@
 import Layout from "../../components/layout";
 import { useSearchParams } from "next/navigation";
 import ConfirmBookingModal from "@/app/components/ConfirmBookingModal";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { PropagateLoader } from "react-spinners";
+import { ToastContainer } from "react-toastify";
 import GetBookings from "@/app/components/AvailableBookings";
 import SelectStartTime from "@/app/components/SelectStartTime";
 import SelectEndTime from "@/app/components/SelectEndTime";
@@ -21,42 +22,45 @@ function Booking({ params }: { params: { id: string; name: string } }) {
   const [usrDescription, setUsrDescription] = useState();
   const searchParams = useSearchParams();
   const name = searchParams.get("name");
-  const monthNames = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
-  ];
-  const currentDate = new Date();
-  const dateString = `${currentDate.getDate()} ${
-    monthNames[currentDate.getMonth()]
-  } ${currentDate.getFullYear()}`;
+  const today = new Date();
+  const options: Intl.DateTimeFormatOptions = {
+    month: "long",
+    day: "numeric",
+    year: "numeric",
+  };
+  const formattedDate = today.toLocaleDateString("en-US", options);
 
-  async function getBooking(id: string) {
+  const getBooking = useCallback(async (id: string) => {
     try {
       const res = await axios.get(`/api/bookings/`, {
         headers: {
           "Content-Type": "application/json",
         },
       });
-      setBookings(res.data);
+      const bookings = res.data;
+      if (bookings) {
+        setMatchingBooking(bookings, id);
+      }
+      setBookings(bookings);
       setIsLoading(false);
     } catch (err) {
       console.log(err);
     }
+  }, []);
+
+  function setMatchingBooking(bookings: any[], id: string) {
+    const matchingBooking = bookings.find((booking) => booking.roomId === id);
+    setBookings(matchingBooking);
   }
 
   useEffect(() => {
     getBooking(params.id);
-  }, [params.id]);
+    console.log("room id a:", params.id);
+  }, [params.id, getBooking]);
+
+  useEffect(() => {
+    console.log("normal bookings ", bookings);
+  }, [bookings]);
 
   return (
     <>
@@ -66,6 +70,18 @@ function Booking({ params }: { params: { id: string; name: string } }) {
             <h1 className="text-3xl font-semibold text-gray-800 mt-8 mx-auto lg:px-32 px-4">
               {name}
             </h1>
+            <ToastContainer
+              position="top-right"
+              autoClose={5000}
+              hideProgressBar={false}
+              newestOnTop={false}
+              closeOnClick
+              rtl={false}
+              pauseOnFocusLoss
+              draggable
+              pauseOnHover
+              theme="colored"
+            />
           </div>
           {isLoading ? ( // Render a loading spinner if isLoading is true
             <div className="flex justify-center items-center min-h-screen">
@@ -105,22 +121,23 @@ function Booking({ params }: { params: { id: string; name: string } }) {
                 </div>
               </div>
               <div className="flex justify-between z-50 pl-4 pr-4 pt-2">
-                <ShowBookingModal />
+                <ShowBookingModal params={{ id: params.id }} />
                 <ConfirmBookingModal
                   startTime={selectedStartTime}
                   endTime={selectedEndTime}
                   date={selectedDate}
                   description={usrDescription}
+                  roomId={params.id}
                 />
               </div>
               <div className="flex pt-4 font-medium justify-between pl-4 pr-6">
                 <p>
                   Room Schedule :{" "}
-                  <span className="text-gray-700 text-sm">{dateString}</span>
+                  <span className="text-gray-700 text-sm">{formattedDate}</span>
                 </p>
               </div>
               <div className="justify-center align-middle flex flex-col gap-2 mr-2 ml-2">
-                <GetBookings params={{ id: "1", name: "Team" }} />
+                <GetBookings params={{ id: params.id, name: "Team" }} />
               </div>
             </div>
           )}

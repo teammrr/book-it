@@ -1,30 +1,48 @@
 "use client";
-import { useSearchParams } from "next/navigation";
 import BookingStatus from "@/app/components/BookingStatus";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 
 function GetBookings({ params }: { params: { id: string; name: string } }) {
   const [bookings, setBookings] = useState<any>([]);
-  const searchParams = useSearchParams();
-  const name = searchParams.get("name");
 
-  async function getBooking(id: string) {
+  const getBooking = useCallback(async (id: string) => {
     try {
       const res = await axios.get(`/api/bookings/`, {
         headers: {
           "Content-Type": "application/json",
         },
       });
-      setBookings(res.data);
+      const bookings = res.data;
+      if (bookings) {
+        setMatchingBooking(bookings, id);
+      }
     } catch (err) {
       console.log(err);
     }
+  }, []);
+
+  function setMatchingBooking(bookings: any[], id: string) {
+    const matchingBookings = bookings.filter(
+      (booking) => booking.roomId === id
+    );
+    matchingBookings.forEach((booking) => {
+      if (booking.endTime < booking.startTime) {
+        console.log("Invalid booking:", booking);
+      }
+    });
+    console.log("matching bookings avail", matchingBookings);
+    setBookings(matchingBookings);
   }
 
   useEffect(() => {
-    getBooking(params.id);
-  }, [params.id]);
+    getBooking(params.id); // Fetch bookings for room 4
+    console.log("available room id a:", params.id);
+  }, [getBooking, params.id]);
+
+  useEffect(() => {
+    console.log("available bookings updated", bookings);
+  }, [bookings]);
 
   // List of all possible times
   const allTimes = [

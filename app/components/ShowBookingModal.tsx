@@ -2,7 +2,11 @@ import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
 import ListBookings from "./UsersBookings";
 
-export default function ShowBookingModal() {
+export default function ShowBookingModal({
+  params,
+}: {
+  params: { id: string };
+}) {
   let [isOpen, setIsOpen] = useState(false);
 
   function closeModal() {
@@ -65,7 +69,7 @@ export default function ShowBookingModal() {
                     <p className="text-sm text-gray-500">
                       Lists of reservations here
                     </p>
-                    <ListBookings params={{ id: "1", name: "Team" }} />
+                    <ListBookings params={{ id: params.id }} />
                   </div>
 
                   <div className="mt-4 flex flex-row-reverse">

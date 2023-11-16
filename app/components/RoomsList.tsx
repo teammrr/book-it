@@ -10,6 +10,7 @@ interface Rooms {
   floor: string;
   capacity: number;
   picture: string;
+  id: string;
 }
 
 export default function RoomList() {
@@ -78,7 +79,7 @@ export default function RoomList() {
                     <div className="justify-end items-end flex ">
                       <Link
                         href={{
-                          pathname: `/book/${room.name}`,
+                          pathname: `/book/${room.id}`,
                           query: { name: room.name },
                         }}
                         className="px-4 py-2.5 font-medium bg-blue-50 hover:bg-blue-100 transition ease-in-out duration-300  hover:text-blue-600 text-blue-500 rounded-lg text-sm"

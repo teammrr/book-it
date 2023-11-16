@@ -4,15 +4,16 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
   const booking = await req.json();
+  console.log(req.json());
   await connectToDatabase();
   try {
-    await bookings?.create({ booking });
+    await bookings?.create(booking);
     return NextResponse.json(
       { message: "Booking successfully" },
       { status: 201 }
     );
   } catch (err) {
-    return NextResponse.json({ message: "Booking failed" }, { status: 500 });
+    return NextResponse.json({ message: err }, { status: 500 });
   }
 }
 
