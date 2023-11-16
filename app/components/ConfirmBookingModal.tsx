@@ -52,9 +52,6 @@ export default function ConfirmBookingModal({
   function isTimeSlotAvailable(startUnix: string, bookings: any[]): boolean {
     for (let booking of bookings) {
       if (startUnix >= booking.startTime && startUnix <= booking.endTime) {
-        toast.error(
-          "This time is not available. Please try selecting different time period."
-        );
         return false;
       }
     }
@@ -64,13 +61,6 @@ export default function ConfirmBookingModal({
   async function openModal() {
     const startUnix = startToUnix({ startTime, date }).toString();
     const endUnix = endToUnix({ endTime, date }).toString();
-    const res = await axios.get(`/api/bookings/`, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    const bookings = res.data;
-
     const bookingDetails = {
       roomId: String(roomId),
       name: String(session?.user?.name),
@@ -78,24 +68,29 @@ export default function ConfirmBookingModal({
       endTime: String(endUnix),
       description: String(description),
     };
+    const res = await axios.get(`/api/bookings/`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const bookings = res.data;
+
     if (isTimeSlotAvailable(startUnix, bookings)) {
       // Proceed with booking
-      const response = await axios.post("/api/bookings", bookingDetails);
-      console.log("Booking confirmed:", response.data);
-      setIsOpen(true);
+      await fetch("/api/bookings", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(bookingDetails),
+      }),
+        setIsOpen(true);
     } else {
       // Show an error message to the user
-      console.error(
-        "Error:",
-        Error("Booking times overlap with an existing booking.")
+      toast.error(
+        "Reservation time overlaps with another booking. Please try selecting different time period."
       );
     }
-    // try {
-    //   console.log("checking overlap");
-    //   // await checkOverlap(bookingDetails);
-    // } catch (error) {
-    //   console.error("Error:", error);
-    // }
   }
 
   return (

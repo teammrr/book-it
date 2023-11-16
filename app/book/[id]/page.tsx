@@ -80,7 +80,7 @@ function Booking({ params }: { params: { id: string; name: string } }) {
               pauseOnFocusLoss
               draggable
               pauseOnHover
-              theme="colored"
+              // theme="colored"
             />
           </div>
           {isLoading ? ( // Render a loading spinner if isLoading is true
