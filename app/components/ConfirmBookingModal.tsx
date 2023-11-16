@@ -49,6 +49,16 @@ export default function ConfirmBookingModal({
     return unixTime;
   }
 
+  function validateBookingTimes({ startTime, endTime }: any) {
+    const startUnixTime = startToUnix({ startTime });
+    const endUnixTime = endToUnix({ endTime });
+
+    if (startUnixTime >= endUnixTime) {
+      toast.error("Start time must be less than end time");
+      return false;
+    }
+  }
+
   function isTimeSlotAvailable(startUnix: string, bookings: any[]): boolean {
     for (let booking of bookings) {
       if (startUnix >= booking.startTime && startUnix <= booking.endTime) {
@@ -61,6 +71,14 @@ export default function ConfirmBookingModal({
   async function openModal() {
     const startUnix = startToUnix({ startTime, date }).toString();
     const endUnix = endToUnix({ endTime, date }).toString();
+
+    try {
+      validateBookingTimes({ startTime: startUnix, endTime: endUnix });
+    } catch (error) {
+      toast.error("Start time must be less than end time");
+      return;
+    }
+
     const bookingDetails = {
       roomId: String(roomId),
       name: String(session?.user?.name),
