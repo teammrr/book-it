@@ -49,16 +49,6 @@ export default function ConfirmBookingModal({
     return unixTime;
   }
 
-  function validateBookingTimes({ startTime, endTime }: any) {
-    const startUnixTime = startToUnix({ startTime });
-    const endUnixTime = endToUnix({ endTime });
-
-    if (startUnixTime >= endUnixTime) {
-      toast.error("Start time must be less than end time");
-      return false;
-    }
-  }
-
   function isTimeSlotAvailable(startUnix: string, bookings: any[]): boolean {
     for (let booking of bookings) {
       if (startUnix >= booking.startTime && startUnix <= booking.endTime) {
@@ -68,17 +58,17 @@ export default function ConfirmBookingModal({
     return true;
   }
 
+  function validateBookingTimes({ startTime, endTime }: any) {
+    const startUnixTime = startToUnix({ startTime });
+    const endUnixTime = endToUnix({ endTime });
+    if (startUnixTime >= endUnixTime) {
+      toast.error("Start time must be less than end time");
+    }
+  }
+
   async function openModal() {
     const startUnix = startToUnix({ startTime, date }).toString();
     const endUnix = endToUnix({ endTime, date }).toString();
-
-    try {
-      validateBookingTimes({ startTime: startUnix, endTime: endUnix });
-    } catch (error) {
-      toast.error("Start time must be less than end time");
-      return;
-    }
-
     const bookingDetails = {
       roomId: String(roomId),
       name: String(session?.user?.name),
@@ -86,12 +76,18 @@ export default function ConfirmBookingModal({
       endTime: String(endUnix),
       description: String(description),
     };
+
     const res = await axios.get(`/api/bookings/`, {
       headers: {
         "Content-Type": "application/json",
       },
     });
     const bookings = res.data;
+
+    if (startUnix >= endUnix) {
+      toast.error("Start time must be less than end time");
+      return;
+    }
 
     if (isTimeSlotAvailable(startUnix, bookings)) {
       // Proceed with booking
@@ -101,8 +97,8 @@ export default function ConfirmBookingModal({
           "Content-Type": "application/json",
         },
         body: JSON.stringify(bookingDetails),
-      }),
-        setIsOpen(true);
+      });
+      setIsOpen(true);
     } else {
       // Show an error message to the user
       toast.error(
