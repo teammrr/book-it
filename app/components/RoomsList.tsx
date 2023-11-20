@@ -19,7 +19,7 @@ export default function RoomList() {
 
   async function getRooms() {
     console.info(
-      "Built with %c♥%c by teamrr",
+      "Built with %c♥%c by Teamrr",
       "color: #e25555",
       "color: unset"
     );

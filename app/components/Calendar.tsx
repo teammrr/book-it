@@ -4,7 +4,7 @@ import DatePicker, {
 } from "@hassanmojab/react-modern-calendar-datepicker";
 import { useState, useEffect } from "react";
 
-export default function Calendar({ setSelectedDate }: any) {
+export default function Calendar({ setSelectedDate, setEndDateUnix }: any) {
   const today = new Date();
   const minimumDate = {
     year: today.getFullYear(),
@@ -20,9 +20,17 @@ export default function Calendar({ setSelectedDate }: any) {
 
   useEffect(() => {
     if (selectedDay) {
-      setSelectedDate(formattedDate);
+      const date = new Date(
+        selectedDay.year,
+        selectedDay.month - 1,
+        selectedDay.day
+      );
+      const startUnixTimestamp = Math.floor(date.getTime() / 1000);
+      const endUnixTimestamp = startUnixTimestamp + 86400;
+      setSelectedDate(startUnixTimestamp);
+      setEndDateUnix(endUnixTimestamp);
     }
-  }, [selectedDay, setSelectedDate, formattedDate]);
+  }, [selectedDay, setSelectedDate, setEndDateUnix]);
 
   const renderCustomInput = ({ ref }: any) => (
     <div className="z-4">

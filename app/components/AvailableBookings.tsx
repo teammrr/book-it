@@ -2,42 +2,60 @@
 import BookingStatus from "@/app/components/BookingStatus";
 import { useState, useEffect, useCallback } from "react";
 import axios from "axios";
+import { start } from "repl";
 
-function GetBookings({ params }: { params: { id: string; name: string } }) {
+function GetBookings({
+  params,
+}: {
+  params: { id: string; startUnix: any; endUnix: any };
+}) {
   const [bookings, setBookings] = useState<any>([]);
 
-  const getBooking = useCallback(async (id: string) => {
-    try {
-      const res = await axios.get(`/api/bookings/`, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      const bookings = res.data;
-      if (bookings) {
-        setMatchingBooking(bookings, id);
+  const getBooking = useCallback(
+    async (id: string) => {
+      console.log("getBooking", id);
+      try {
+        const res = await axios.get(`/api/bookings/`, {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+        const bookings = res.data;
+        if (bookings) {
+          const startUnix = params.startUnix;
+          const endUnix = params.endUnix;
+          setMatchingBooking(bookings, id, startUnix, endUnix);
+        }
+      } catch (err) {
+        console.log(err);
       }
-    } catch (err) {
-      console.log(err);
-    }
-  }, []);
+    },
+    [params.startUnix, params.endUnix]
+  );
 
-  function setMatchingBooking(bookings: any[], id: string) {
+  function setMatchingBooking(
+    bookings: any[],
+    id: string,
+    startUnix: number,
+    endUnix: number
+  ) {
     const matchingBookings = bookings.filter(
-      (booking) => booking.roomId === id
+      (booking) =>
+        booking.roomId === id &&
+        booking.startTime >= startUnix &&
+        booking.endTime <= endUnix
     );
     matchingBookings.forEach((booking) => {
       if (booking.endTime < booking.startTime) {
         console.log("Invalid booking:", booking);
       }
     });
-    console.log("matching bookings avail", matchingBookings);
+    // console.log("matching bookings avail", matchingBookings);
     setBookings(matchingBookings);
   }
 
   useEffect(() => {
-    getBooking(params.id); // Fetch bookings for room 4
-    console.log("available room id a:", params.id);
+    getBooking(params.id);
   }, [getBooking, params.id]);
 
   useEffect(() => {
@@ -125,6 +143,7 @@ function GetBookings({ params }: { params: { id: string; name: string } }) {
         {availableTimeRanges.map((range, index) => {
           return (
             <BookingStatus
+              // date={params.date}
               key={index}
               roomId={params.id}
               startTime={range[0]}

@@ -2,7 +2,7 @@
 import Layout from "../../components/layout";
 import { useSearchParams } from "next/navigation";
 import ConfirmBookingModal from "@/app/components/ConfirmBookingModal";
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
 import { PropagateLoader } from "react-spinners";
 import { ToastContainer } from "react-toastify";
 import GetBookings from "@/app/components/AvailableBookings";
@@ -10,57 +10,24 @@ import SelectStartTime from "@/app/components/SelectStartTime";
 import SelectEndTime from "@/app/components/SelectEndTime";
 import ShowBookingModal from "@/app/components/ShowBookingModal";
 import Calendar from "@/app/components/Calendar";
-import axios from "axios";
 import DescriptionBox from "@/app/components/DescriptionBox";
 
 function Booking({ params }: { params: { id: string; name: string } }) {
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [bookings, setBookings] = useState<any>();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [selectedStartTime, setSelectedStartTime] = useState();
   const [selectedEndTime, setSelectedEndTime] = useState();
-  const [selectedDate, setSelectedDate] = useState();
+  const [selectedDate, setSelectedDate] = useState("");
+  const [endDateUnix, setEndDateUnix] = useState("");
   const [usrDescription, setUsrDescription] = useState();
   const searchParams = useSearchParams();
   const name = searchParams.get("name");
   const today = new Date();
-  const options: Intl.DateTimeFormatOptions = {
-    month: "long",
-    day: "numeric",
-    year: "numeric",
-  };
-  const formattedDate = today.toLocaleDateString("en-US", options);
-
-  const getBooking = useCallback(async (id: string) => {
-    try {
-      const res = await axios.get(`/api/bookings/`, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      const bookings = res.data;
-      if (bookings) {
-        setMatchingBooking(bookings, id);
-      }
-      setBookings(bookings);
-      setIsLoading(false);
-    } catch (err) {
-      console.log(err);
-    }
-  }, []);
-
-  function setMatchingBooking(bookings: any[], id: string) {
-    const matchingBooking = bookings.find((booking) => booking.roomId === id);
-    setBookings(matchingBooking);
-  }
-
-  useEffect(() => {
-    getBooking(params.id);
-    console.log("room id a:", params.id);
-  }, [params.id, getBooking]);
-
-  useEffect(() => {
-    console.log("normal bookings ", bookings);
-  }, [bookings]);
+  const start = new Date(today.setHours(0, 0, 0, 0));
+  const end = new Date(today.setHours(23, 59, 59, 999));
+  const startUnix = Math.floor(start.getTime() / 1000);
+  const endUnix = Math.floor(end.getTime() / 1000);
+  // console.log(`start ${startUnix} , end ${endUnix}`);
+  console.log(`date: ${selectedDate}, end: ${endDateUnix}`);
 
   return (
     <>
@@ -94,7 +61,10 @@ function Booking({ params }: { params: { id: string; name: string } }) {
                   <p className="truncate mb-1 block text-sm font-medium text-gray-900 dark:text-white">
                     Date{" "}
                   </p>
-                  <Calendar setSelectedDate={setSelectedDate} />
+                  <Calendar
+                    setSelectedDate={setSelectedDate}
+                    setEndDateUnix={setEndDateUnix}
+                  />
                 </div>
                 <div className="col col-span-1">
                   <span className="truncate block text-sm font-medium text-gray-900 dark:text-white">
@@ -117,11 +87,20 @@ function Booking({ params }: { params: { id: string; name: string } }) {
               </div>
               <div className="pb-2 pr-4 pl-4 gap-4">
                 <div className="col col-span-1 mb-1">
-                  <DescriptionBox setUserDescription={setUsrDescription} />
+                  <DescriptionBox
+                    required
+                    setUserDescription={setUsrDescription}
+                  />
                 </div>
               </div>
               <div className="flex justify-between z-50 pl-4 pr-4 pt-2">
-                <ShowBookingModal params={{ id: params.id }} />
+                <ShowBookingModal
+                  params={{
+                    id: params.id,
+                    startUnix: selectedDate,
+                    endUnix: endDateUnix,
+                  }}
+                />
                 <ConfirmBookingModal
                   startTime={selectedStartTime}
                   endTime={selectedEndTime}
@@ -133,11 +112,17 @@ function Booking({ params }: { params: { id: string; name: string } }) {
               <div className="flex pt-4 font-medium justify-between pl-4 pr-6">
                 <p>
                   Room Schedule :{" "}
-                  <span className="text-gray-700 text-sm">{formattedDate}</span>
+                  <span className="text-gray-700 text-sm">{selectedDate}</span>
                 </p>
               </div>
               <div className="justify-center align-middle flex flex-col gap-2 mr-2 ml-2">
-                <GetBookings params={{ id: params.id, name: "Team" }} />
+                <GetBookings
+                  params={{
+                    id: params.id,
+                    startUnix: selectedDate,
+                    endUnix: endDateUnix,
+                  }}
+                />
               </div>
             </div>
           )}

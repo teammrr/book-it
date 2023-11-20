@@ -3,12 +3,12 @@ import axios from "axios";
 import Room from "./Rooms";
 
 interface Room {
-  id: number;
-  picture: string;
-  roomName: string;
+  name: string;
   description: string;
-  roomFloor: string;
-  roomCapacity: number;
+  floor: string;
+  capacity: number;
+  picture: string;
+  id: string;
 }
 
 type RoomListProps = {
@@ -26,7 +26,6 @@ export default function RoomList({ rooms, deleteRoom }: RoomListProps) {
     const headers = {
       "Content-Type": "application/json",
     };
-    console.log("fetching");
     const res = await axios.get("/api/rooms", { headers });
     const data = res.data;
     console.log(data);

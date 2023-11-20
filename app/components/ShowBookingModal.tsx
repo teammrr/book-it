@@ -5,9 +5,10 @@ import ListBookings from "./UsersBookings";
 export default function ShowBookingModal({
   params,
 }: {
-  params: { id: string };
+  params: { id: string; startUnix: any; endUnix: any };
 }) {
   let [isOpen, setIsOpen] = useState(false);
+  console.log("show booking modal", params.id);
 
   function closeModal() {
     setIsOpen(false);
@@ -15,10 +16,6 @@ export default function ShowBookingModal({
 
   function openModal() {
     setIsOpen(true);
-  }
-
-  function handleBooking() {
-    closeModal();
   }
 
   return (
@@ -69,14 +66,20 @@ export default function ShowBookingModal({
                     <p className="text-sm text-gray-500">
                       Lists of reservations here
                     </p>
-                    <ListBookings params={{ id: params.id }} />
+                    <ListBookings
+                      params={{
+                        id: params.id,
+                        startUnix: params.startUnix,
+                        endUnix: params.endUnix,
+                      }}
+                    />
                   </div>
 
                   <div className="mt-4 flex flex-row-reverse">
                     <button
                       type="button"
                       className="inline-flex w-full justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                      onClick={handleBooking}
+                      onClick={closeModal}
                     >
                       Got it, thanks!
                     </button>

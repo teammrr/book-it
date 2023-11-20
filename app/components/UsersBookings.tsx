@@ -4,38 +4,61 @@ import { useState, useEffect, useCallback } from "react";
 import { BeatLoader } from "react-spinners";
 import axios from "axios";
 
-function ListBookings({ params }: { params: { id: string } }) {
+function ListBookings({
+  params,
+}: {
+  params: { id: string; startUnix: any; endUnix: any };
+}) {
   const [bookings, setBookings] = useState<any>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
-  const getBooking = useCallback(async (id: string) => {
-    try {
-      const res = await axios.get(`/api/bookings/`, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      const bookings = res.data;
-      if (bookings) {
-        setMatchingBooking(bookings, id);
+  const getBooking = useCallback(
+    async (id: string) => {
+      console.log("getBooking", id);
+      try {
+        const res = await axios.get(`/api/bookings/`, {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+        const bookings = res.data;
+        if (bookings) {
+          const startUnix = params.startUnix;
+          const endUnix = params.endUnix;
+          setMatchingBooking(bookings, id, startUnix, endUnix);
+        }
+      } catch (err) {
+        console.log(err);
       }
-      setIsLoading(false);
-    } catch (err) {
-      console.log(err);
-    }
-  }, []);
+    },
+    [params.startUnix, params.endUnix]
+  );
 
-  function setMatchingBooking(bookings: any[], id: string) {
+  function setMatchingBooking(
+    bookings: any[],
+    id: string,
+    startUnix: number,
+    endUnix: number
+  ) {
     const matchingBookings = bookings.filter(
-      (booking) => booking.roomId === id
+      (booking) =>
+        booking.roomId === id &&
+        booking.startTime >= startUnix &&
+        booking.endTime <= endUnix
     );
-    console.log("specific bookings", matchingBookings);
+    matchingBookings.forEach((booking) => {
+      if (booking.endTime < booking.startTime) {
+        console.log("Invalid booking:", booking);
+      }
+    });
+    // console.log("matching bookings avail", matchingBookings);
     setBookings(matchingBookings);
+    setIsLoading(false);
   }
 
   useEffect(() => {
     getBooking(params.id);
-    console.log("user booking room id a:", params.id);
+    console.log("user booking :", params.id);
   }, [params.id, getBooking]);
 
   useEffect(() => {

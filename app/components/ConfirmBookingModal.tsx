@@ -21,6 +21,7 @@ export default function ConfirmBookingModal({
   });
   function closeModal() {
     setIsOpen(false);
+    location.reload();
   }
 
   function startToUnix({ startTime, date }: any) {

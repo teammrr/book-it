@@ -1,9 +1,8 @@
-import Image from "next/image";
 import StatusIndicator from "./StatusIndicator";
 import BookedUser from "./BookedUser";
 
 export default function BookingStatus(Bookings: any) {
-  const formattedDate = formatDate(Bookings.startTime);
+  const formattedDate = formatDate(Bookings.date);
   const startTime = new Date(Bookings.startTime * 1000);
   const formattedStartTime = `${startTime
     .getHours()
@@ -35,7 +34,7 @@ export default function BookingStatus(Bookings: any) {
           {formattedStartTime} to {formattedEndTime}
         </p>
         <p className="text-sm font-semibold text-gray-500 truncate">
-          {formattedDate}
+          {Bookings.date}
         </p>
         <span>
           <BookedUser

@@ -14,6 +14,7 @@ const roomSchema = new Schema<IRoom>({
   description: { type: String, required: false },
   floor: { type: String, required: true },
   capacity: { type: Number, required: true },
+  picture: { type: String, required: false },
   id: { type: String, required: true },
 });
 

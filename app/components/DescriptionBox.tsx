@@ -26,6 +26,7 @@ export default function DescriptionBox({ setUserDescription }: any) {
           placeholder="Please describe your reservation details..."
           value={description}
           onChange={handleDescriptionChange}
+          required
         ></textarea>
       </div>
     </>
