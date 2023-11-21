@@ -50,7 +50,7 @@ function ListBookings({
         console.log("Invalid booking:", booking);
       }
     });
-    // console.log("matching bookings avail", matchingBookings);
+    console.log(matchingBookings);
     setBookings(matchingBookings);
     setIsLoading(false);
   }
@@ -71,19 +71,21 @@ function ListBookings({
         </div>
       ) : (
         <div className="mt-4 justify-center align-middle flex flex-col gap-2">
-          {bookings.map((booking: any) => {
-            return (
-              <BookingStatus
-                key={booking.name}
-                description={booking.description}
-                roomId={booking.roomId}
-                startTime={booking.startTime}
-                endTime={booking.endTime}
-                name={booking.name}
-                status={"booked"}
-              />
-            );
-          })}
+          {bookings
+            .sort((a: any, b: any) => a.startTime - b.startTime)
+            .map((booking: any) => {
+              return (
+                <BookingStatus
+                  key={booking.name}
+                  description={booking.description}
+                  roomId={booking.roomId}
+                  startTime={booking.startTime}
+                  endTime={booking.endTime}
+                  name={booking.name}
+                  status={"booked"}
+                />
+              );
+            })}
         </div>
       )}
     </>

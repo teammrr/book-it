@@ -122,7 +122,6 @@ function GetBookings({
     date.setHours(hours + (addHour ? 1 : 0), minutes, 0, 0);
     return date.getTime() / 1000;
   }
-  console.log(availableTimeRanges);
 
   return (
     <>
