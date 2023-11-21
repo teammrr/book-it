@@ -11,9 +11,7 @@ const BookedUser: React.FC<BookingStatusProps> = ({ name, description }) => {
       By: {name}
     </p>
   ) : (
-    <p className="text-sm text-gray-500  dark:text-gray-400">
-      Quicky grab these time slots before someone takes it! 😋
-    </p>
+    <p className="text-sm text-gray-500  dark:text-gray-400"></p>
   );
 };
 

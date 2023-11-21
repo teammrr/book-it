@@ -2,7 +2,6 @@
 import BookingStatus from "@/app/components/BookingStatus";
 import { useState, useEffect, useCallback } from "react";
 import axios from "axios";
-import { start } from "repl";
 
 function GetBookings({
   params,
@@ -46,10 +45,9 @@ function GetBookings({
     );
     matchingBookings.forEach((booking) => {
       if (booking.endTime < booking.startTime) {
-        console.log("Invalid booking:", booking);
+        console.error("Invalid booking:", booking);
       }
     });
-    // console.log("matching bookings avail", matchingBookings);
     setBookings(matchingBookings);
   }
 
@@ -76,7 +74,6 @@ function GetBookings({
   ];
 
   // Get the start times of all bookings
-
   const bookedTimes = bookings.map((booking: any) => {
     const startTime = new Date(booking.startTime * 1000);
     return `${startTime.getHours().toString().padStart(2, "0")}:${startTime
@@ -125,24 +122,25 @@ function GetBookings({
     date.setHours(hours + (addHour ? 1 : 0), minutes, 0, 0);
     return date.getTime() / 1000;
   }
+  console.log(availableTimeRanges);
 
   return (
     <>
       <div className="mt-4 justify-center align-middle flex flex-col gap-2">
-        {availableTimeRanges.map((range, index) => {
-          return (
-            <BookingStatus
-              // date={params.date}
-              key={index}
-              roomId={params.id}
-              startTime={range[0]}
-              endTime={range[1]}
-              name={undefined}
-              status="Available"
-              description="Nobody has booked this time yet."
-            />
-          );
-        })}
+        {availableTimeRanges
+          .filter((range) => Number(range[0]) !== Number(range[1]))
+          .map((range, index) => {
+            return (
+              <BookingStatus
+                // date={params.date}
+                key={index}
+                roomId={params.id}
+                startTime={range[0]}
+                endTime={range[1]}
+                name={undefined}
+              />
+            );
+          })}
       </div>
     </>
   );
