@@ -50,21 +50,21 @@ export default function ConfirmBookingModal({
     return unixTime;
   }
 
-  function isTimeSlotAvailable(startUnix: string, bookings: any[]): boolean {
+  function isTimeSlotAvailable(
+    startUnix: string,
+    endUnix: string,
+    bookings: any[]
+  ): boolean {
+    if (!Array.isArray(bookings)) {
+      console.error("bookings is not an array:", bookings);
+      return false; // or false, depending on what makes sense in your application
+    }
     for (let booking of bookings) {
-      if (startUnix >= booking.startTime && startUnix <= booking.endTime) {
+      if (startUnix < booking.endTime && endUnix > booking.startTime) {
         return false;
       }
     }
     return true;
-  }
-
-  function validateBookingTimes({ startTime, endTime }: any) {
-    const startUnixTime = startToUnix({ startTime });
-    const endUnixTime = endToUnix({ endTime });
-    if (startUnixTime >= endUnixTime) {
-      toast.error("Start time must be less than end time");
-    }
   }
 
   async function openModal() {
@@ -90,7 +90,7 @@ export default function ConfirmBookingModal({
       return;
     }
 
-    if (isTimeSlotAvailable(startUnix, bookings)) {
+    if (isTimeSlotAvailable(startUnix, endUnix, bookings)) {
       // Proceed with booking
       await fetch("/api/bookings", {
         method: "POST",

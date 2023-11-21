@@ -14,7 +14,6 @@ function ListBookings({
 
   const getBooking = useCallback(
     async (id: string) => {
-      console.log("getBooking", id);
       try {
         const res = await axios.get(`/api/bookings/`, {
           headers: {
@@ -58,11 +57,10 @@ function ListBookings({
 
   useEffect(() => {
     getBooking(params.id);
-    console.log("user booking :", params.id);
   }, [params.id, getBooking]);
 
   useEffect(() => {
-    console.log("user bookings updated", bookings);
+    setBookings(bookings);
   }, [bookings]);
 
   return (

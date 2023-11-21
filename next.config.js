@@ -16,5 +16,6 @@ const nextConfig = {
       "coandcoworks.ph",
     ],
   },
+  reactStrictMode: false,
 };
 module.exports = nextConfig;

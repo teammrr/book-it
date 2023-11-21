@@ -17,17 +17,11 @@ function Booking({ params }: { params: { id: string; name: string } }) {
   const [selectedStartTime, setSelectedStartTime] = useState();
   const [selectedEndTime, setSelectedEndTime] = useState();
   const [selectedDate, setSelectedDate] = useState("");
+  const [dateName, setDateName] = useState("");
   const [endDateUnix, setEndDateUnix] = useState("");
   const [usrDescription, setUsrDescription] = useState();
   const searchParams = useSearchParams();
   const name = searchParams.get("name");
-  const today = new Date();
-  const start = new Date(today.setHours(0, 0, 0, 0));
-  const end = new Date(today.setHours(23, 59, 59, 999));
-  const startUnix = Math.floor(start.getTime() / 1000);
-  const endUnix = Math.floor(end.getTime() / 1000);
-  // console.log(`start ${startUnix} , end ${endUnix}`);
-  console.log(`date: ${selectedDate}, end: ${endDateUnix}`);
 
   return (
     <>
@@ -64,6 +58,7 @@ function Booking({ params }: { params: { id: string; name: string } }) {
                   <Calendar
                     setSelectedDate={setSelectedDate}
                     setEndDateUnix={setEndDateUnix}
+                    setDateName={setDateName}
                   />
                 </div>
                 <div className="col col-span-1">
@@ -104,7 +99,7 @@ function Booking({ params }: { params: { id: string; name: string } }) {
                 <ConfirmBookingModal
                   startTime={selectedStartTime}
                   endTime={selectedEndTime}
-                  date={selectedDate}
+                  date={dateName}
                   description={usrDescription}
                   roomId={params.id}
                 />
@@ -112,7 +107,7 @@ function Booking({ params }: { params: { id: string; name: string } }) {
               <div className="flex pt-4 font-medium justify-between pl-4 pr-6">
                 <p>
                   Room Schedule :{" "}
-                  <span className="text-gray-700 text-sm">{selectedDate}</span>
+                  <span className="text-gray-700 text-sm">{dateName}</span>
                 </p>
               </div>
               <div className="justify-center align-middle flex flex-col gap-2 mr-2 ml-2">

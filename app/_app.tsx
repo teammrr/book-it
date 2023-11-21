@@ -1,8 +1,6 @@
 import { SessionProvider } from "next-auth/react";
 import "./globals.css";
 import { useEffect } from "react";
-import type { AppProps } from "next/app";
-import type { Session } from "next-auth";
 const liffId = process.env.AUTH_LIFF_ID;
 
 // Use of the <SessionProvider> is mandatory to allow components that call

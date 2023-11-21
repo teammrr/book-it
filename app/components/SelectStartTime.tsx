@@ -3,7 +3,7 @@ import { Combobox, Transition } from "@headlessui/react";
 import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/20/solid";
 
 const rooms: any[] = [];
-for (let i = 9; i <= 19; i += 0.5) {
+for (let i = 9; i <= 19; i += 1) {
   const hours = Math.floor(i);
   const minutes = (i - hours) * 60;
   const time = `${hours.toString().padStart(2, "0")}:${minutes

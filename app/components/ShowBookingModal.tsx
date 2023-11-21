@@ -8,7 +8,6 @@ export default function ShowBookingModal({
   params: { id: string; startUnix: any; endUnix: any };
 }) {
   let [isOpen, setIsOpen] = useState(false);
-  console.log("show booking modal", params.id);
 
   function closeModal() {
     setIsOpen(false);
