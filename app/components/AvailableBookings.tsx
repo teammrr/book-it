@@ -2,6 +2,7 @@
 import BookingStatus from "@/app/components/BookingStatus";
 import { useState, useEffect, useCallback } from "react";
 import axios from "axios";
+import { PulseLoader } from "react-spinners";
 
 function GetBookings({
   params,
@@ -9,6 +10,7 @@ function GetBookings({
   params: { id: string; startUnix: any; endUnix: any };
 }) {
   const [bookings, setBookings] = useState<any>([]);
+  const [loading, setLoading] = useState<boolean>(true);
 
   const getBooking = useCallback(
     async (id: string) => {
@@ -23,6 +25,7 @@ function GetBookings({
           const startUnix = params.startUnix;
           const endUnix = params.endUnix;
           setMatchingBooking(bookings, id, startUnix, endUnix);
+          setLoading(false);
         }
       } catch (err) {
         console.log(err);
@@ -125,22 +128,28 @@ function GetBookings({
 
   return (
     <>
-      <div className="mt-4 justify-center align-middle flex flex-col gap-2">
-        {availableTimeRanges
-          .filter((range) => Number(range[0]) !== Number(range[1]))
-          .map((range, index) => {
-            return (
-              <BookingStatus
-                // date={params.date}
-                key={index}
-                roomId={params.id}
-                startTime={range[0]}
-                endTime={range[1]}
-                name={undefined}
-              />
-            );
-          })}
-      </div>
+      {loading ? ( // Render a loading spinner if isLoading is true
+        <div className="flex pt-8 pb-6 justify-center items-center">
+          <PulseLoader color="#3676d6" />
+        </div>
+      ) : (
+        <div className="mt-4 justify-center align-middle flex flex-col gap-2">
+          {availableTimeRanges
+            .filter((range) => Number(range[0]) !== Number(range[1]))
+            .map((range, index) => {
+              return (
+                <BookingStatus
+                  // date={params.date}
+                  key={index}
+                  roomId={params.id}
+                  startTime={range[0]}
+                  endTime={range[1]}
+                  name={undefined}
+                />
+              );
+            })}
+        </div>
+      )}
     </>
   );
 }

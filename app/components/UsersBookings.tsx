@@ -50,7 +50,6 @@ function ListBookings({
         console.log("Invalid booking:", booking);
       }
     });
-    console.log(matchingBookings);
     setBookings(matchingBookings);
     setIsLoading(false);
   }
