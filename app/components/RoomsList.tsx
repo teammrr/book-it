@@ -44,7 +44,7 @@ export default function RoomList() {
         </div>
       ) : (
         <div className="items-center flex justify-center">
-          <div className="pt-6 lg:flex lg:flex-row lg:flex-wrap lg:justify-center lg:gap-4  ">
+          <div className="pt-6 flex flex-wrap gap-2  justify-around ">
             {rooms.map((room) => (
               <div
                 key={room.name}

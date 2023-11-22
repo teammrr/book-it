@@ -4,8 +4,6 @@ import Footer from "./components/footer";
 import { useSession } from "next-auth/react";
 import RoomList from "./components/RoomsList";
 import { redirect } from "next/navigation";
-import Layout from "./components/layout";
-import { useState } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 
 export default function Home() {
@@ -38,7 +36,7 @@ export default function Home() {
       >
         <Header />
       </motion.header>
-      <h1 className="text-3xl font-semibold text-gray-800 mt-8 mx-auto lg:px-32 px-5">
+      <h1 className="text-2xl  font-medium text-gray-800 mt-8 mx-4 lg:mx-10 ">
         Hello, {session?.user?.name} 👋
       </h1>
       <div className="px-4 space-y-6 ">
