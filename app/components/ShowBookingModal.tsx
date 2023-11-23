@@ -1,12 +1,16 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
-import ListBookings from "./UsersBookings";
+import MyBookings from "./MyBookings";
+import { useSession } from "next-auth/react";
 
 export default function ShowBookingModal({
   params,
 }: {
   params: { id: string; startUnix: any; endUnix: any };
 }) {
+  const { data: session } = useSession({
+    required: true,
+  });
   let [isOpen, setIsOpen] = useState(false);
 
   function closeModal() {
@@ -23,9 +27,9 @@ export default function ShowBookingModal({
         <button
           type="button"
           onClick={openModal}
-          className="justify-center rounded-lg border border-transparent bg-white bg-opacity-80 px-4 py-2 text-sm font-medium text-black hover:bg-blue-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-50 focus-visible:ring-offset-2"
+          className="justify-center w-40 rounded-lg border border-transparent bg-white bg-opacity-80 px-4 py-2 text-sm font-medium text-black hover:bg-blue-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-50 focus-visible:ring-offset-2"
         >
-          Show Reservations
+          My Reservation
         </button>
       </div>
 
@@ -65,9 +69,10 @@ export default function ShowBookingModal({
                     <p className="text-sm text-gray-500">
                       Lists of reservations here
                     </p>
-                    <ListBookings
+                    <MyBookings
                       params={{
                         id: params.id,
+                        name: session?.user?.name,
                         startUnix: params.startUnix,
                         endUnix: params.endUnix,
                       }}

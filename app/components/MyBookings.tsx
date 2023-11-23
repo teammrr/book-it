@@ -4,14 +4,13 @@ import { useState, useEffect, useCallback } from "react";
 import { BeatLoader } from "react-spinners";
 import axios from "axios";
 
-function ListBookings({
+function MyBookings({
   params,
 }: {
-  params: { id: string; startUnix: any; endUnix: any };
+  params: { id: string; name: any; startUnix: any; endUnix: any };
 }) {
   const [bookings, setBookings] = useState<any>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
-
   const getBooking = useCallback(
     async (id: string) => {
       try {
@@ -22,34 +21,45 @@ function ListBookings({
         });
         const bookings = res.data;
         if (bookings) {
+          const name = params.name;
           const startUnix = params.startUnix;
           const endUnix = params.endUnix;
-          setMatchingBooking(bookings, id, startUnix, endUnix);
+          setMatchingBooking(bookings, id, name, startUnix, endUnix);
         }
       } catch (err) {
         console.log(err);
       }
     },
-    [params.startUnix, params.endUnix]
+    [params.startUnix, params.endUnix, params.name]
   );
 
   function setMatchingBooking(
     bookings: any[],
     id: string,
+    name: any,
     startUnix: number,
     endUnix: number
   ) {
-    const matchingBookings = bookings.filter(
+    let matchingBookings = bookings.filter(
       (booking) =>
         booking.roomId === id &&
+        booking.name === name &&
         booking.startTime >= startUnix &&
         booking.endTime <= endUnix
     );
+
+    matchingBookings.sort((a, b) => {
+      const nameComparison = a.name.localeCompare(b.name);
+      if (nameComparison !== 0) return nameComparison;
+      return a.roomId.localeCompare(b.roomId);
+    });
+
     matchingBookings.forEach((booking) => {
       if (booking.endTime < booking.startTime) {
         console.log("Invalid booking:", booking);
       }
     });
+
     setBookings(matchingBookings);
     setIsLoading(false);
   }
@@ -91,4 +101,4 @@ function ListBookings({
   );
 }
 
-export default ListBookings;
+export default MyBookings;

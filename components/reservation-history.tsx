@@ -37,10 +37,8 @@ export function ReservationHistory() {
     });
   }, [session]);
 
-  console.log(bookings);
-
   return (
-    <div className="flex  lg:mx-4">
+    <div className="flex lg:mx-4">
       <main className="flex-grow max-sm:p-2 pr-6 pl-6 pt-6">
         <div className="flex justify-between items-center mb-4">
           <h1 className="text-2xl max-sm:mt-6 font-medium mt-2 ">
@@ -51,10 +49,11 @@ export function ReservationHistory() {
           <TableHeader>
             <TableRow>
               <TableHead>Date</TableHead>
+              <TableHead>From</TableHead>
+              <TableHead>Til</TableHead>
               <TableHead>Description</TableHead>
-              <TableHead>Duration</TableHead>
-              <TableHead className="text-right">Room</TableHead>
-              <TableHead />
+              <TableHead className="text-center">Room</TableHead>
+              {/* <TableHead /> */}
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -64,24 +63,25 @@ export function ReservationHistory() {
                   {new Date(booking.startTime * 1000).toLocaleDateString()}
                 </TableCell>
 
-                <TableCell>{booking.description}</TableCell>
-                <TableCell className="max-sm:flex max-sm:break-words ">
-                  <span className="px-2 py-1 bg-sky-200 text-sky-900 rounded-md">
+                <TableCell className=" ">
+                  <span className="px-2 py-1 flex max-sm:w-10 w-16 bg-sky-200 text-sky-900 rounded-md">
                     {/* <IconTag className="w-4 h-4 inline-block mr-1" /> */}
                     {new Date(booking.startTime * 1000).toLocaleTimeString([], {
                       hour: "2-digit",
-                      minute: "2-digit",
                     })}{" "}
-                    To{" "}
+                  </span>
+                </TableCell>
+                <TableCell className=" ">
+                  <span className="px-2 py-1 flex max-sm:w-10 w-16 bg-red-200 text-red-900 rounded-md">
                     {new Date(booking.endTime * 1000).toLocaleTimeString([], {
                       hour: "2-digit",
-                      minute: "2-digit",
                     })}
                   </span>
                 </TableCell>
+                <TableCell>{booking.description}</TableCell>
 
-                <TableCell className="text-right">{booking.roomId}</TableCell>
-                <TableCell>
+                <TableCell className="text-center">{booking.roomId}</TableCell>
+                {/* <TableCell>
                   <Popover>
                     <PopoverTrigger>
                       <Button
@@ -106,7 +106,7 @@ export function ReservationHistory() {
                       </button>
                     </PopoverContent>
                   </Popover>
-                </TableCell>
+                </TableCell> */}
               </TableRow>
             ))}
           </TableBody>

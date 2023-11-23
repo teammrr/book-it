@@ -10,8 +10,10 @@ import GetBookings from "@/app/components/AvailableBookings";
 import SelectStartTime from "@/app/components/SelectStartTime";
 import SelectEndTime from "@/app/components/SelectEndTime";
 import ShowBookingModal from "@/app/components/ShowBookingModal";
-import Calendar from "@/app/components/Calendar";
 import DescriptionBox from "@/app/components/DescriptionBox";
+import AntDatepicker from "@/app/components/NewCalendar";
+import Calendar from "@/app/components/Calendar";
+import ListBookings from "@/app/components/UsersBookings";
 
 function Booking({ params }: { params: { id: string; name: string } }) {
   const { data: session } = useSession({
@@ -68,6 +70,11 @@ function Booking({ params }: { params: { id: string; name: string } }) {
                     setEndDateUnix={setEndDateUnix}
                     setDateName={setDateName}
                   />
+                  {/* <AntDatepicker
+                    setSelectedDate={setSelectedDate}
+                    setEndDateUnix={setEndDateUnix}
+                    setDateName={setDateName}
+                  /> */}
                 </div>
                 <div className="col col-span-1">
                   <span className="truncate block text-sm font-medium text-gray-900 dark:text-white">
@@ -96,7 +103,7 @@ function Booking({ params }: { params: { id: string; name: string } }) {
                   />
                 </div>
               </div>
-              <div className="flex justify-between z-50 pl-4 pr-4 pt-2">
+              <div className="flex justify-between pl-4 pr-4 pt-2">
                 <ShowBookingModal
                   params={{
                     id: params.id,
@@ -118,8 +125,15 @@ function Booking({ params }: { params: { id: string; name: string } }) {
                   <span className="text-gray-700 text-sm">{dateName}</span>
                 </p>
               </div>
-              <div className="justify-center align-middle flex flex-col gap-2 mr-2 ml-2">
+              <div className="justify-center align-middle flex flex-col mr-2 ml-2">
                 <GetBookings
+                  params={{
+                    id: params.id,
+                    startUnix: selectedDate,
+                    endUnix: endDateUnix,
+                  }}
+                />
+                <ListBookings
                   params={{
                     id: params.id,
                     startUnix: selectedDate,
