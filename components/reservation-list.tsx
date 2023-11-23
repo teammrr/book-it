@@ -1,5 +1,4 @@
 import { Button } from "@/components/ui/button";
-import Image from "next/image";
 import {
   TableHead,
   TableRow,
@@ -17,7 +16,7 @@ import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import axios from "axios";
 
-export function ReservationHistory() {
+export function ReservationList() {
   const { data: session } = useSession({
     required: true,
   });

@@ -15,9 +15,6 @@ export default function ConfirmBookingModal({
   let [isOpen, setIsOpen] = useState(false);
   const { data: session } = useSession({
     required: true,
-    onUnauthenticated() {
-      // The user is not authenticated, handle it here.
-    },
   });
   function closeModal() {
     setIsOpen(false);

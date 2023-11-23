@@ -5,6 +5,7 @@ import { useSession } from "next-auth/react";
 import RoomList from "./components/RoomsList";
 import { redirect } from "next/navigation";
 import { motion, useScroll, useTransform } from "framer-motion";
+import DarkModeButton from "./components/DarkMode";
 
 export default function Home() {
   const { data: session, status } = useSession({
@@ -25,7 +26,7 @@ export default function Home() {
   }
 
   return (
-    <main className="bg-gray-50 min-h-screen">
+    <main className="bg-gray-50 dark:bg-slate-950 min-h-screen">
       <motion.header
         className="z-50"
         style={{
@@ -36,7 +37,7 @@ export default function Home() {
       >
         <Header />
       </motion.header>
-      <h1 className="text-2xl  font-medium text-gray-800 mt-8 mx-4 lg:mx-10 ">
+      <h1 className="text-2xl font-medium text-gray-800 mt-8 mx-4 lg:mx-10 ">
         Hello, {session?.user?.name} 👋
       </h1>
       <div className="px-4 space-y-6 ">

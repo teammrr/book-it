@@ -28,8 +28,8 @@ export default function MePage() {
 
   return (
     <Layout>
-      <div className="flex items-center justify-center">
-        <div className="max-w-xs mt-48">
+      <div className="flex items-center justify-center h-screen">
+        <div className="max-w-xs ">
           <div className="bg-white shadow-xl rounded-lg py-3">
             <div className="photo-wrapper p-2">
               <Image

@@ -6,7 +6,8 @@ import type {
 import type { NextAuthOptions as NextAuthConfig } from "next-auth";
 import { getServerSession } from "next-auth";
 import User from "@/models/user";
-
+import NextAuth, { Session } from "next-auth";
+import { JWT } from "next-auth/jwt";
 import Google from "next-auth/providers/google";
 import LineProvider from "next-auth/providers/line";
 import { connectToDatabase } from "@/lib/mongodb";
@@ -18,6 +19,9 @@ declare module "next-auth/jwt" {
     /** The user's role. */
     role?: "user";
   }
+}
+interface ExtendedSession extends Session {
+  accessToken?: string;
 }
 export const config = {
   theme: {
@@ -34,7 +38,7 @@ export const config = {
     }),
   ],
   callbacks: {
-    async jwt({ token }) {
+    async jwt({ token, account }) {
       token.role = "user";
       console.log("jwt", token);
 
@@ -51,7 +55,7 @@ export const config = {
             body: JSON.stringify({ name, email, role }),
           });
           if (response.ok) {
-            console.log("ok");
+            token.accessToken = account?.accessToken;
             return token;
           }
         }
@@ -60,30 +64,14 @@ export const config = {
       }
       return token;
     },
-    // async signIn({ account }) {
-    //   console.log("signIn", account);
-    //   try {
-    //     await connectToDatabase();
-    //     console.log("check 1");
-    //     const userExists = await User.findOne({ account });
-    //     if (!userExists) {
-    //       console.log("check 2");
-    //       const response = await fetch(lineUrl, {
-    //         method: "POST",
-    //         headers: { "Content-Type": "application/json" },
-    //         body: JSON.stringify({ account }),
-    //       });
-    //       if (response.ok) {
-    //         console.log("ok");
-    //         return true;
-    //       }
-    //     }
-    //   } catch (error) {
-    //     console.log("check 3");
-    //     console.error("There was an error when creating user", error);
-    //   }
-    //   return true;
-    // },
+    async session({ session, token }) {
+      const sessionWithAccessToken: ExtendedSession = {
+        ...session,
+        accessToken: (token as JWT & { accessToken?: string }).accessToken,
+      };
+
+      return sessionWithAccessToken;
+    },
   },
 } satisfies NextAuthConfig;
 

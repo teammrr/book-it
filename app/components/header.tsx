@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
@@ -72,12 +72,6 @@ export default function Header() {
                         Home
                       </Link>
                       <Link
-                        href="/reservations"
-                        className="text-[#002D74]  hover:text-[#393e46] transition ease-in-out duration-200 block rounded-md px-3 py-2 text-base font-medium"
-                      >
-                        My Reservation
-                      </Link>
-                      <Link
                         href="/history"
                         className="text-[#002D74]  hover:text-[#393e46] transition ease-in-out duration-200 block rounded-md px-3 py-2 text-base font-medium"
                       >
@@ -129,6 +123,19 @@ export default function Header() {
                             </a>
                           )}
                         </Menu.Item>
+                        {/* <Menu.Item>
+                          {({ active }) => (
+                            <button
+                              onClick={toggleDarkMode}
+                              className={classNames(
+                                active ? "bg-gray-100" : "",
+                                "block px-4 py-2 text-sm text-[#002D74]"
+                              )}
+                            >
+                              Switch to {darkMode ? "Light" : "Dark"} Mode
+                            </button>
+                          )}
+                        </Menu.Item> */}
                         <Menu.Item>
                           {({ active }) => (
                             <a
@@ -156,13 +163,6 @@ export default function Header() {
                   className="text-[#002D74]  hover:text-[#393e46] transition ease-in-out duration-200 block rounded-md px-3 py-2 text-base font-medium"
                 >
                   Home
-                </Link>
-                <hr className=" h-0.5 border-t-2 bg-zinc-100 opacity-100 " />
-                <Link
-                  href="/reservations"
-                  className="text-[#002D74]  hover:text-[#393e46] transition ease-in-out duration-200 block rounded-md px-3 py-2 text-base font-medium"
-                >
-                  My Reservation
                 </Link>
                 <hr className=" h-0.5 border-t-2 bg-zinc-100 opacity-100 " />
                 <Link
