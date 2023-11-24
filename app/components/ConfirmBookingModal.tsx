@@ -107,7 +107,7 @@ export default function ConfirmBookingModal({
 
   return (
     <>
-      <div className="">
+      <div className="flex">
         <button
           type="button"
           onClick={openModal}

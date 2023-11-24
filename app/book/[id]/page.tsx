@@ -103,14 +103,14 @@ function Booking({ params }: { params: { id: string; name: string } }) {
                   />
                 </div>
               </div>
-              <div className="flex justify-between pl-4 pr-4 pt-2">
-                <ShowBookingModal
+              <div className="flex justify-end pl-4 pr-4 pt-2">
+                {/* <ShowBookingModal
                   params={{
                     id: params.id,
                     startUnix: selectedDate,
                     endUnix: endDateUnix,
                   }}
-                />
+                /> */}
                 <ConfirmBookingModal
                   startTime={selectedStartTime}
                   endTime={selectedEndTime}
