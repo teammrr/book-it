@@ -89,12 +89,10 @@ export default function ConfirmBookingModal({
 
     if (isTimeSlotAvailable(startUnix, endUnix, bookings)) {
       // Proceed with booking
-      await fetch("/api/bookings", {
-        method: "POST",
+      await axios.post("/api/bookings", bookingDetails, {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(bookingDetails),
       });
       setIsOpen(true);
     } else {

@@ -41,17 +41,13 @@ export const config = {
   callbacks: {
     async jwt({ token, account }) {
       token.role = "user";
-      // console.log("jwt", token);
 
       const { name, email, role } = token;
       try {
         await connectToDatabase();
         const userExists = await User?.findOne({ name: name });
-        console.log("checking if user exists");
-        console.log("checked!", userExists);
 
         if (!userExists) {
-          console.log("creating");
           const response = await axios.post(
             `${process.env.SERVER_URL}/api/auth/user`,
             { name, email, role },
