@@ -11,7 +11,7 @@ export default function Home() {
   const { data: session, status } = useSession({
     required: true,
     onUnauthenticated() {
-      // The user is not authenticated, handle it here.
+      redirect("/api/auth/signin");
     },
   });
   const { scrollYProgress } = useScroll();
@@ -20,10 +20,6 @@ export default function Home() {
     [0, 0.5, 0.6],
     ["0%", "0%", "-100%"]
   );
-
-  if (status === "loading") {
-    return redirect("/api/auth/signin");
-  }
 
   return (
     <main className="bg-gray-50 dark:bg-slate-950 min-h-screen">

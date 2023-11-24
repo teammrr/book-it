@@ -1,13 +1,17 @@
 import { connectToDatabase } from "@/lib/mongodb";
-import User from "@/models/user";
+import User from "@/models/user"; // Renamed to User
 import { NextResponse, NextRequest } from "next/server";
 
 export async function POST(req: NextRequest) {
-  const { name, email, role } = await req.json();
+  const userData = await req.json(); // Renamed to userData
   await connectToDatabase();
-  await User.insertMany({ name, email, role });
-  return NextResponse.json(
-    { message: "User created successfully" },
-    { status: 201 }
-  );
+  try {
+    await User?.create(userData); // Use User.create instead
+    return NextResponse.json(
+      { message: "User Registered successfully" },
+      { status: 201 }
+    );
+  } catch (err) {
+    return NextResponse.json({ message: err }, { status: 500 });
+  }
 }

@@ -6,7 +6,8 @@ import type {
 import type { NextAuthOptions as NextAuthConfig } from "next-auth";
 import { getServerSession } from "next-auth";
 import User from "@/models/user";
-import NextAuth, { Session } from "next-auth";
+import { Session } from "next-auth";
+import axios from "axios";
 import { JWT } from "next-auth/jwt";
 import Google from "next-auth/providers/google";
 import LineProvider from "next-auth/providers/line";
@@ -40,21 +41,26 @@ export const config = {
   callbacks: {
     async jwt({ token, account }) {
       token.role = "user";
-      console.log("jwt", token);
+      // console.log("jwt", token);
 
       const { name, email, role } = token;
       try {
         await connectToDatabase();
-        const userExists = await User.findOne({});
-        console.log(userExists);
+        const userExists = await User?.findOne({ name: name });
+        console.log("checking if user exists");
+        console.log("checked!", userExists);
 
         if (!userExists) {
-          const response = await fetch("/api/auth/user", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ name, email, role }),
-          });
-          if (response.ok) {
+          console.log("creating");
+          const response = await axios.post(
+            `${process.env.SERVER_URL}/api/auth/user`,
+            { name, email, role },
+            {
+              headers: { "Content-Type": "application/json" },
+            }
+          );
+
+          if (response.status === 201) {
             token.accessToken = account?.accessToken;
             return token;
           }

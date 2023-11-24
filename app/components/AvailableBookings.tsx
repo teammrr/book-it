@@ -130,7 +130,7 @@ function GetBookings({
     <>
       {loading ? ( // Render a loading spinner if isLoading is true
         <div className="flex pt-8 pb-6 justify-center items-center">
-          <PulseLoader color="#3676d6" />
+          {/* <PulseLoader color="#3676d6" /> */}
         </div>
       ) : (
         <div className="mt-4 justify-center align-middle flex flex-col gap-2">
