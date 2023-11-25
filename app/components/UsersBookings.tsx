@@ -3,6 +3,7 @@ import BookingStatus from "@/app/components/BookingStatus";
 import { useState, useEffect, useCallback } from "react";
 import { BeatLoader } from "react-spinners";
 import axios from "axios";
+import fetchBookings from "./FetchBookings";
 
 function ListBookings({
   params,
@@ -14,20 +15,11 @@ function ListBookings({
 
   const getBooking = useCallback(
     async (id: string) => {
-      try {
-        const res = await axios.get(`/api/bookings/`, {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
-        const bookings = res.data;
-        if (bookings) {
-          const startUnix = params.startUnix;
-          const endUnix = params.endUnix;
-          setMatchingBooking(bookings, id, startUnix, endUnix);
-        }
-      } catch (err) {
-        console.log(err);
+      const bookings = await fetchBookings();
+      if (bookings) {
+        const startUnix = params.startUnix;
+        const endUnix = params.endUnix;
+        setMatchingBooking(bookings, id, startUnix, endUnix);
       }
     },
     [params.startUnix, params.endUnix]

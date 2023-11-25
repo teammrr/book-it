@@ -28,10 +28,11 @@ export default function AntDatepicker({
 
   return (
     <DatePicker
-      className="h-9 w-24 text-gray-900 text-sm text-center rounded-lg bg-white shadow-md "
+      className="h-9 w-24 text-gray-900 text-sm text-center border border-transparent rounded-lg bg-white shadow-md "
       onChange={onChange}
       defaultValue={dayjs()}
       format={dateFormat}
+      disabledDate={(current) => current && current < dayjs().startOf("day")}
     />
   );
 }

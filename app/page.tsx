@@ -5,7 +5,6 @@ import { useSession } from "next-auth/react";
 import RoomList from "./components/RoomsList";
 import { redirect } from "next/navigation";
 import { motion, useScroll, useTransform } from "framer-motion";
-import DarkModeButton from "./components/DarkMode";
 
 export default function Home() {
   const { data: session, status } = useSession({

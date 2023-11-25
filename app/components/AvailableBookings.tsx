@@ -3,6 +3,7 @@ import BookingStatus from "@/app/components/BookingStatus";
 import { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import { PulseLoader } from "react-spinners";
+import fetchBookings from "./FetchBookings";
 
 function GetBookings({
   params,
@@ -14,21 +15,12 @@ function GetBookings({
 
   const getBooking = useCallback(
     async (id: string) => {
-      try {
-        const res = await axios.get(`/api/bookings/`, {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
-        const bookings = res.data;
-        if (bookings) {
-          const startUnix = params.startUnix;
-          const endUnix = params.endUnix;
-          setMatchingBooking(bookings, id, startUnix, endUnix);
-          setLoading(false);
-        }
-      } catch (err) {
-        console.log(err);
+      const bookings = await fetchBookings();
+      if (bookings) {
+        const startUnix = params.startUnix;
+        const endUnix = params.endUnix;
+        setMatchingBooking(bookings, id, startUnix, endUnix);
+        setLoading(false);
       }
     },
     [params.startUnix, params.endUnix]
@@ -138,14 +130,16 @@ function GetBookings({
             .filter((range) => Number(range[0]) !== Number(range[1]))
             .map((range, index) => {
               return (
-                <BookingStatus
-                  // date={params.date}
-                  key={index}
-                  roomId={params.id}
-                  startTime={range[0]}
-                  endTime={range[1]}
-                  name={undefined}
-                />
+                <>
+                  <BookingStatus
+                    // date={params.date}
+                    key={index}
+                    roomId={params.id}
+                    startTime={range[0]}
+                    endTime={range[1]}
+                    name={undefined}
+                  />
+                </>
               );
             })}
         </div>

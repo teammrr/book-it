@@ -4,6 +4,7 @@ import axios from "axios";
 import { useSession } from "next-auth/react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import fetchBookings from "./FetchBookings";
 
 export default function ConfirmBookingModal({
   roomId,
@@ -13,6 +14,7 @@ export default function ConfirmBookingModal({
   description,
 }: any) {
   let [isOpen, setIsOpen] = useState(false);
+
   const { data: session } = useSession({
     required: true,
   });
@@ -47,12 +49,36 @@ export default function ConfirmBookingModal({
     return unixTime;
   }
 
+  function canCreateBooking(
+    newBookingStart: string,
+    newBookingEnd: string,
+    bookings: any[]
+  ) {
+    // Sort bookings by start time
+    bookings.sort((a, b) => a.startTime - b.startTime);
+    // Find the last booking that ends before the new booking starts
+    const lastBooking = bookings
+      .reverse()
+      .find((booking) => booking.endTime < newBookingStart);
+    // Find the first booking that starts after the new booking ends
+    const nextBooking = bookings.find(
+      (booking) => booking.startTime > newBookingEnd
+    );
+
+    // If the new booking's start time is equal to or after the end time of the last booking
+    // AND the new booking's end time is equal to or before the start time of the next booking
+    // then the new booking does not overlap and can be created
+    return (
+      (!lastBooking || newBookingStart > lastBooking.endTime) &&
+      (!nextBooking || newBookingEnd < nextBooking.startTime)
+    );
+  }
+
   function isTimeSlotAvailable(
     startUnix: string,
     endUnix: string,
     bookings: any[]
   ): boolean {
-    console.log(startUnix, endUnix);
     if (!Array.isArray(bookings)) {
       console.error("bookings is not an array:", bookings);
       return false; // or false, depending on what makes sense in your application
@@ -61,15 +87,13 @@ export default function ConfirmBookingModal({
       if (booking.roomId !== roomId) {
         continue;
       }
-      if (startUnix <= booking.endTime && endUnix > booking.startTime) {
-        console.log("Time slot is not available");
+      if (startUnix < booking.endTime && endUnix > booking.startTime) {
         return false;
       }
     }
     return true;
   }
 
-  const [bookings, setBookings] = useState([]);
   async function openModal() {
     const startUnix = startToUnix({ startTime, date }).toString();
     const endUnix = endToUnix({ endTime, date }).toString();
@@ -81,22 +105,20 @@ export default function ConfirmBookingModal({
       description: String(description),
     };
 
-    try {
-      if (startUnix >= endUnix) {
-        toast.error("Start time must be less than end time");
-        return;
-      }
-      const res = await axios.get(`/api/bookings/`, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      setBookings(res.data);
-    } catch (err) {
-      toast.error("Something went wrong. Please try again later.");
+    if (startUnix >= endUnix) {
+      toast.error("Start time must be less than end time");
+      return;
     }
 
-    if (isTimeSlotAvailable(startUnix, endUnix, bookings)) {
+    const bookings = await fetchBookings();
+
+    if (!isTimeSlotAvailable(startUnix, endUnix, bookings)) {
+      toast.error(
+        "This time slot has been reserved. Please select another time."
+      );
+      return;
+    }
+    if (canCreateBooking(startUnix, endUnix, bookings)) {
       // Proceed with booking
       try {
         await axios.post("/api/bookings", bookingDetails, {
@@ -106,13 +128,10 @@ export default function ConfirmBookingModal({
         });
         setIsOpen(true);
       } catch (err) {
-        toast.error("Something went wrong. Please try again later.");
+        console.error("Something went wrong. Please try again later.");
       }
     } else {
-      // Show an error message to the user
-      toast.error(
-        "Reservation time overlaps with another booking. Please try selecting different time period."
-      );
+      toast.error("Error: Something went wrong.");
     }
   }
 
@@ -167,8 +186,8 @@ export default function ConfirmBookingModal({
                     <p className="mt-2 text-sm font-semibold text-gray-500">
                       Reservation For: {description}
                     </p>
-                    <div className="mt-2  flex justify-between align-center items-center">
-                      <p className="text-sm flex w-32 align-center   text-gray-500">
+                    <div className="mt-2 flex justify-between align-center items-center">
+                      <p className="text-sm flex w-22 align-center   text-gray-500">
                         <span className=" align-center border border-transparent">
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -187,7 +206,7 @@ export default function ConfirmBookingModal({
                         </span>
                         {startTime} to {endTime}
                       </p>
-                      <p className="text-sm w-32 flex  align-center  text-gray-500">
+                      <p className="text-sm w-40 flex  align-center  text-gray-500">
                         <span className=" align-center border border-transparent">
                           <svg
                             xmlns="http://www.w3.org/2000/svg"

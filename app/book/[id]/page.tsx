@@ -43,7 +43,7 @@ function Booking({ params }: { params: { id: string; name: string } }) {
             </h1>
             <ToastContainer
               position="top-right"
-              autoClose={5000}
+              autoClose={3000}
               hideProgressBar={false}
               newestOnTop={false}
               closeOnClick
@@ -65,16 +65,16 @@ function Booking({ params }: { params: { id: string; name: string } }) {
                   <p className="truncate mb-1 block text-sm font-medium text-gray-900 dark:text-white">
                     Date{" "}
                   </p>
-                  <Calendar
-                    setSelectedDate={setSelectedDate}
-                    setEndDateUnix={setEndDateUnix}
-                    setDateName={setDateName}
-                  />
-                  {/* <AntDatepicker
+                  {/* <Calendar
                     setSelectedDate={setSelectedDate}
                     setEndDateUnix={setEndDateUnix}
                     setDateName={setDateName}
                   /> */}
+                  <AntDatepicker
+                    setSelectedDate={setSelectedDate}
+                    setEndDateUnix={setEndDateUnix}
+                    setDateName={setDateName}
+                  />
                 </div>
                 <div className="col col-span-1">
                   <span className="truncate block text-sm font-medium text-gray-900 dark:text-white">
