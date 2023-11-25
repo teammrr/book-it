@@ -52,18 +52,24 @@ export default function ConfirmBookingModal({
     endUnix: string,
     bookings: any[]
   ): boolean {
+    console.log(startUnix, endUnix);
     if (!Array.isArray(bookings)) {
       console.error("bookings is not an array:", bookings);
       return false; // or false, depending on what makes sense in your application
     }
     for (let booking of bookings) {
-      if (startUnix < booking.endTime && endUnix > booking.startTime) {
+      if (booking.roomId !== roomId) {
+        continue;
+      }
+      if (startUnix <= booking.endTime && endUnix > booking.startTime) {
+        console.log("Time slot is not available");
         return false;
       }
     }
     return true;
   }
 
+  const [bookings, setBookings] = useState([]);
   async function openModal() {
     const startUnix = startToUnix({ startTime, date }).toString();
     const endUnix = endToUnix({ endTime, date }).toString();
@@ -75,26 +81,33 @@ export default function ConfirmBookingModal({
       description: String(description),
     };
 
-    const res = await axios.get(`/api/bookings/`, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    const bookings = res.data;
-
-    if (startUnix >= endUnix) {
-      toast.error("Start time must be less than end time");
-      return;
-    }
-
-    if (isTimeSlotAvailable(startUnix, endUnix, bookings)) {
-      // Proceed with booking
-      await axios.post("/api/bookings", bookingDetails, {
+    try {
+      if (startUnix >= endUnix) {
+        toast.error("Start time must be less than end time");
+        return;
+      }
+      const res = await axios.get(`/api/bookings/`, {
         headers: {
           "Content-Type": "application/json",
         },
       });
-      setIsOpen(true);
+      setBookings(res.data);
+    } catch (err) {
+      toast.error("Something went wrong. Please try again later.");
+    }
+
+    if (isTimeSlotAvailable(startUnix, endUnix, bookings)) {
+      // Proceed with booking
+      try {
+        await axios.post("/api/bookings", bookingDetails, {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+        setIsOpen(true);
+      } catch (err) {
+        toast.error("Something went wrong. Please try again later.");
+      }
     } else {
       // Show an error message to the user
       toast.error(
@@ -147,20 +160,53 @@ export default function ConfirmBookingModal({
                   >
                     Reservation successful
                   </Dialog.Title>
-                  <div className="mt-2">
+                  <div className="mt-2 ">
                     <p className="text-sm text-gray-500">
-                      Your room has been successfully reserved. We&apos;ll
-                      notify you when your room is ready.
+                      Your room has been successfully reserved.
                     </p>
                     <p className="mt-2 text-sm font-semibold text-gray-500">
-                      Reservation Details:
+                      Reservation For: {description}
                     </p>
-                    <p className="text-sm text-gray-500">
-                      From {startTime} to {endTime} on {date}
-                    </p>
-                    <p className="text-sm text-gray-500">
-                      Description: {description}
-                    </p>
+                    <div className="mt-2  flex justify-between align-center items-center">
+                      <p className="text-sm flex w-32 align-center   text-gray-500">
+                        <span className=" align-center border border-transparent">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            strokeWidth="1.5"
+                            stroke="currentColor"
+                            className="w-4 h-4 "
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"
+                            />
+                          </svg>
+                        </span>
+                        {startTime} to {endTime}
+                      </p>
+                      <p className="text-sm w-32 flex  align-center  text-gray-500">
+                        <span className=" align-center border border-transparent">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            strokeWidth="1.5"
+                            stroke="currentColor"
+                            className="w-4 h-4"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5m-9-6h.008v.008H12v-.008zM12 15h.008v.008H12V15zm0 2.25h.008v.008H12v-.008zM9.75 15h.008v.008H9.75V15zm0 2.25h.008v.008H9.75v-.008zM7.5 15h.008v.008H7.5V15zm0 2.25h.008v.008H7.5v-.008zm6.75-4.5h.008v.008h-.008v-.008zm0 2.25h.008v.008h-.008V15zm0 2.25h.008v.008h-.008v-.008zm2.25-4.5h.008v.008H16.5v-.008zm0 2.25h.008v.008H16.5V15z"
+                            />
+                          </svg>
+                        </span>
+                        {date}
+                      </p>
+                    </div>
                   </div>
 
                   <div className="mt-4 flex flex-row-reverse">

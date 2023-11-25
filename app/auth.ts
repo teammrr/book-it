@@ -12,7 +12,6 @@ import { JWT } from "next-auth/jwt";
 import Google from "next-auth/providers/google";
 import LineProvider from "next-auth/providers/line";
 import { connectToDatabase } from "@/lib/mongodb";
-import { signIn } from "next-auth/react";
 
 // Read more at: https://next-auth.js.org/getting-started/typescript#module-augmentation
 declare module "next-auth/jwt" {

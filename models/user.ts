@@ -8,7 +8,7 @@ interface Iuser extends Document {
 
 const UserSchema = new Schema<Iuser>(
   {
-    email: { type: String, required: true },
+    email: { type: String, required: false },
     name: { type: String, required: true },
     role: { type: String, required: false },
   },
