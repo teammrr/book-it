@@ -4,25 +4,50 @@ import { useState, useEffect, useCallback } from "react";
 import { BeatLoader } from "react-spinners";
 import axios from "axios";
 import { useSession } from "next-auth/react";
+import fetchBookings from "./FetchBookings";
 
-function MyBookings() {
+function TodayBookings() {
   const { data: session } = useSession({
     required: true,
   });
   const [bookings, setBookings] = useState<any>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+
+  const handleDelete = async (id: string) => {
+    try {
+      await axios.delete(`/api/bookings/${id}`);
+      // Remove the deleted booking from the state
+      setBookings(bookings.filter((booking: any) => booking._id !== id));
+    } catch (err) {
+      console.error("Error deleting booking", err);
+    }
+  };
+
   useEffect(() => {
-    axios.get("/api/bookings").then((response) => {
-      const data = response.data;
+    const fetchAndSortBookings = async () => {
+      const today = new Date();
+      today.setHours(0, 0, 0, 0); // set the time to 00:00:00
+      const data = await fetchBookings();
+      const now = new Date().getTime(); // get the current time
+
       const userBookings = data.filter(
-        (booking: any) => booking.name === session?.user?.name
+        (booking: any) =>
+          booking.name === session?.user?.name &&
+          new Date(parseInt(booking.startTime) * 1000).setHours(0, 0, 0, 0) ===
+            today.getTime() &&
+          now >= parseInt(booking.startTime) * 1000 && // check if the current time is after the start time
+          now <= parseInt(booking.endTime) * 1000 // check if the current time is before the end time
       );
+
       userBookings.sort(
-        (a: any, b: any) => Number(b.startTime) - Number(a.startTime)
+        (a: any, b: any) => parseInt(b.startTime) - parseInt(a.startTime)
       );
+
       setBookings(userBookings);
       setIsLoading(false);
-    });
+    };
+
+    fetchAndSortBookings();
   }, [session]);
 
   useEffect(() => {
@@ -41,7 +66,7 @@ function MyBookings() {
             .sort((a: any, b: any) => b.startTime - a.startTime)
             .map((booking: any) => {
               return (
-                <>
+                <div key={booking._id}>
                   <BookingStatusHistory
                     key={booking.name + booking.startTime + booking.endTime}
                     description={booking.description}
@@ -51,7 +76,10 @@ function MyBookings() {
                     name={booking.name}
                     status={"booked"}
                   />
-                </>
+                  <button onClick={() => handleDelete(booking._id)}>
+                    Delete
+                  </button>
+                </div>
               );
             })}
         </div>
@@ -60,4 +88,4 @@ function MyBookings() {
   );
 }
 
-export default MyBookings;
+export default TodayBookings;

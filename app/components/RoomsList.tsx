@@ -50,7 +50,7 @@ export default function RoomList() {
                 key={room.name}
                 className="flex flex-col justify-center pb-5  "
               >
-                <div className="max-w-lg rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] transition ease-in-out ß duration-500 ">
+                <div className="max-w-lg rounded-lg bg-[#E1E7EE] shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] transition ease-in-out ß duration-500 ">
                   <div
                     className="relative overflow-hidden bg-cover bg-no-repeat"
                     data-te-ripple-init
@@ -82,7 +82,7 @@ export default function RoomList() {
                           pathname: `/book/${room.id}`,
                           query: { name: room.name },
                         }}
-                        className="px-4 py-2.5 font-medium bg-blue-50 hover:bg-blue-100 transition ease-in-out duration-300  hover:text-blue-600 text-blue-500 rounded-lg text-sm"
+                        className="flex rounded-lg border border-transparent bg-[#546A8C] px-4 py-2 text-sm font-medium text-slate-100 transition ease-in-out duration-200 hover:bg-[#3b4c63] focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-900 focus-visible:ring-offset-2 shadow shadow-black/10 "
                       >
                         📘 {room.name}
                       </Link>

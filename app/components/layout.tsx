@@ -1,5 +1,5 @@
 import Header from "./header";
-import Footer from "./footer";
+
 import type { ReactNode } from "react";
 import { motion } from "framer-motion";
 
@@ -20,8 +20,7 @@ export default function Layout({ children }: { children: ReactNode }) {
         animate="enter"
         transition={{ type: "spring", bounce: 0.5 }}
       >
-        <main className="bg-gray-50 text-black min-h-max">{children}</main>
-        <Footer />
+        <main className="bg-[#ECEFF4] text-black min-h-max">{children}</main>
       </motion.main>
     </>
   );

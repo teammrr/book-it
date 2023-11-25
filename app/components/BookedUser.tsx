@@ -5,13 +5,13 @@ interface BookingStatusProps {
 
 const BookedUser: React.FC<BookingStatusProps> = ({ name, description }) => {
   return name !== undefined ? (
-    <p className="text-sm text-gray-500 dark:text-gray-400">
+    <p className="text-sm text-[#546C8C] dark:text-gray-400">
       {description}
       <br />
       By: {name}
     </p>
   ) : (
-    <p className="text-sm text-gray-500  dark:text-gray-400"></p>
+    <p className="text-sm text-[#546C8C]  dark:text-gray-400"></p>
   );
 };
 

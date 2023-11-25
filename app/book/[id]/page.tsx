@@ -35,10 +35,10 @@ function Booking({ params }: { params: { id: string; name: string } }) {
 
   return (
     <>
-      <main className="bg-gray-50">
+      <main className="">
         <Layout>
           <div className="mt-5 mb-5">
-            <h1 className="text-2xl font-medium text-gray-800 mt-8 mx-4 lg:mx-10 ">
+            <h1 className="text-2xl font-medium text-[#040506] mt-8 mx-4 lg:mx-10 ">
               {name}
             </h1>
             <ToastContainer
@@ -59,7 +59,7 @@ function Booking({ params }: { params: { id: string; name: string } }) {
               <PropagateLoader color="#3676d6" />
             </div>
           ) : (
-            <div className="mt-4 rounded-lg shadow shadow-black/10 lg:mx-10 mx-2 pt-3 pb-4 ">
+            <div className="mt-4 bg-[] rounded-lg shadow shadow-black/10 lg:mx-10 mx-2 pt-3 pb-4 ">
               <div className="flex pb-2 pr-4 pl-4 gap-4">
                 <div className="col col-span-1 mb-1">
                   <p className="truncate mb-1 block text-sm font-medium text-gray-900 dark:text-white">
@@ -117,6 +117,7 @@ function Booking({ params }: { params: { id: string; name: string } }) {
                   date={dateName}
                   description={usrDescription}
                   roomId={params.id}
+                  roomName={name}
                 />
               </div>
               <div className="flex pt-4 font-medium justify-between pl-4 pr-6">

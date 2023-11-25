@@ -21,7 +21,7 @@ export default function Home() {
   );
 
   return (
-    <main className="bg-gray-50 dark:bg-slate-950 min-h-screen">
+    <main className="bg-[#ECEFF4] dark:bg-slate-950 min-h-screen">
       <motion.header
         className="z-50"
         style={{

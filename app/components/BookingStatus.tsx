@@ -26,7 +26,7 @@ export default function BookingStatus(Bookings: any) {
   }
 
   return (
-    <div className="flex items-center space-x-2 pt-2 pb-2 pr-4 pl-4 rounded-lg shadow shadow-black/8">
+    <div className="flex bg-[#E1E7EE] items-center space-x-2 pt-2 pb-2 pr-4 pl-4 rounded-lg shadow shadow-black/8">
       {" "}
       {/* Add your desired width and height here */}
       <div className="flex-1 min-w-0">

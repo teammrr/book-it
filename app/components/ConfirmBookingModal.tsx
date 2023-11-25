@@ -7,11 +7,13 @@ import "react-toastify/dist/ReactToastify.css";
 import fetchBookings from "./FetchBookings";
 
 export default function ConfirmBookingModal({
+  resrvId,
   roomId,
   startTime,
   endTime,
   date,
   description,
+  roomName,
 }: any) {
   let [isOpen, setIsOpen] = useState(false);
 
@@ -47,6 +49,10 @@ export default function ConfirmBookingModal({
     const dateTime = new Date(`${formattedDate} ${formattedTime}`);
     const unixTime = Math.floor(dateTime.getTime() / 1000);
     return unixTime;
+  }
+
+  function generateReservationId() {
+    return Math.floor(10000000 + Math.random() * 90000000);
   }
 
   function canCreateBooking(
@@ -98,12 +104,15 @@ export default function ConfirmBookingModal({
     const startUnix = startToUnix({ startTime, date }).toString();
     const endUnix = endToUnix({ endTime, date }).toString();
     const bookingDetails = {
+      resrvId: String(generateReservationId()),
       roomId: String(roomId),
+      roomName: String(roomName),
       name: String(session?.user?.name),
       startTime: String(startUnix),
       endTime: String(endUnix),
       description: String(description),
     };
+    console.log(bookingDetails);
 
     if (startUnix >= endUnix) {
       toast.error("Start time must be less than end time");
@@ -141,7 +150,7 @@ export default function ConfirmBookingModal({
         <button
           type="button"
           onClick={openModal}
-          className="flex rounded-lg border border-transparent bg-blue-200 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+          className="flex rounded-lg border border-transparent bg-[#546A8C] px-4 py-2 text-sm font-medium text-slate-100 transition ease-in-out duration-200 hover:bg-[#3b4c63] focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-900 focus-visible:ring-offset-2 shadow shadow-black/10 "
         >
           Confirm Reservation
         </button>
@@ -184,10 +193,10 @@ export default function ConfirmBookingModal({
                       Your room has been successfully reserved.
                     </p>
                     <p className="mt-2 text-sm font-semibold text-gray-500">
-                      Reservation For: {description}
+                      Description: {description}
                     </p>
-                    <div className="mt-2 flex justify-between align-center items-center">
-                      <p className="text-sm flex w-22 align-center   text-gray-500">
+                    <div className="mt-2 flex flex-row justify-between ">
+                      <p className="text-sm flex w-36 align-center   text-gray-500">
                         <span className=" align-center border border-transparent">
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -206,7 +215,7 @@ export default function ConfirmBookingModal({
                         </span>
                         {startTime} to {endTime}
                       </p>
-                      <p className="text-sm w-40 flex  align-center  text-gray-500">
+                      <p className="text-sm w-36 flex  align-center  text-gray-500">
                         <span className=" align-center border border-transparent">
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -224,6 +233,32 @@ export default function ConfirmBookingModal({
                           </svg>
                         </span>
                         {date}
+                      </p>
+                    </div>
+                    <div className="mt-1">
+                      <p className="text-sm w-36 flex  align-center  text-gray-500">
+                        <span className=" align-center border border-transparent">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            strokeWidth="1.5"
+                            stroke="currentColor"
+                            className="w-4 h-4"
+                          >
+                            <path
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"
+                            />
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"
+                            />
+                          </svg>
+                        </span>
+                        {roomName}
                       </p>
                     </div>
                   </div>

@@ -34,7 +34,7 @@ export default function Header() {
           </div>
         </>
       )}
-      <Disclosure as="nav" className="bg-gray-100 shadow-lg">
+      <Disclosure as="nav" className="bg-[#ECEFF4] shadow-lg">
         {({ open }) => (
           <>
             <div className="mx-auto px-2 sm:px-6 lg:px-8">
