@@ -21,25 +21,32 @@ function ListBookings({
           booking.endTime <= endUnix
       );
       setBookings(matchingBookings);
+      console.log("matching bookings", matchingBookings);
       setIsLoading(false);
     },
     []
   );
-  const getBooking = useCallback(
-    async (id: string) => {
-      const bookings = await fetchBookings();
-      if (bookings) {
-        const startUnix = params.startUnix;
-        const endUnix = params.endUnix;
-        setMatchingBooking(bookings, id, startUnix, endUnix);
-      }
-    },
-    [params.startUnix, params.endUnix, setMatchingBooking]
-  );
 
   useEffect(() => {
-    getBooking(params.id);
-  }, [params.id, getBooking]);
+    let isMounted = true;
+
+    const fetchBooking = async () => {
+      console.log("fetching");
+      const bookings = await fetchBookings();
+      console.log("fetched successfully", bookings);
+      if (bookings && isMounted) {
+        const startUnix = params.startUnix;
+        const endUnix = params.endUnix;
+        setMatchingBooking(bookings, params.id, startUnix, endUnix);
+      }
+    };
+
+    fetchBooking();
+
+    return () => {
+      isMounted = false;
+    };
+  }, [params.id, params.startUnix, params.endUnix, setMatchingBooking]);
 
   useEffect(() => {
     setBookings(bookings);
