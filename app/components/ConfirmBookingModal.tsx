@@ -130,7 +130,7 @@ export default function ConfirmBookingModal({
       try {
         await axios.post("/api/bookings", bookingDetails, {
           headers: {
-            "Content-Type": "application/json",
+            "Content-Type": "application/json;charset=utf-8",
           },
         });
         setIsOpen(true);
