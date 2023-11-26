@@ -7,7 +7,6 @@ import "react-toastify/dist/ReactToastify.css";
 import fetchBookings from "./FetchBookings";
 
 export default function ConfirmBookingModal({
-  resrvId,
   roomId,
   startTime,
   endTime,
@@ -112,7 +111,6 @@ export default function ConfirmBookingModal({
       endTime: String(endUnix),
       description: String(description),
     };
-    console.log(bookingDetails);
 
     if (startUnix >= endUnix) {
       toast.error("Start time must be less than end time");
@@ -247,8 +245,8 @@ export default function ConfirmBookingModal({
                             className="w-4 h-4"
                           >
                             <path
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
                               d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"
                             />
                             <path

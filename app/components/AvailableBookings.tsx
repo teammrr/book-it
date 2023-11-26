@@ -1,7 +1,6 @@
 "use client";
 import BookingStatus from "@/app/components/BookingStatus";
 import { useState, useEffect, useCallback } from "react";
-import axios from "axios";
 import { PulseLoader } from "react-spinners";
 import fetchBookings from "./FetchBookings";
 
@@ -68,15 +67,6 @@ function GetBookings({
     "18:00",
   ];
 
-  // Get the start times of all bookings
-  const bookedTimes = bookings.map((booking: any) => {
-    const startTime = new Date(booking.startTime * 1000);
-    return `${startTime.getHours().toString().padStart(2, "0")}:${startTime
-      .getMinutes()
-      .toString()
-      .padStart(2, "0")}`;
-  });
-
   // Convert booked times to timestamps
   const bookedTimeStamps = bookings.map(
     (booking: { startTime: any; endTime: any }) => ({
@@ -130,16 +120,13 @@ function GetBookings({
             .filter((range) => Number(range[0]) !== Number(range[1]))
             .map((range, index) => {
               return (
-                <>
-                  <BookingStatus
-                    // date={params.date}
-                    key={index}
-                    roomId={params.id}
-                    startTime={range[0]}
-                    endTime={range[1]}
-                    name={undefined}
-                  />
-                </>
+                <BookingStatus
+                  key={`${range[0]}-${range[1]}`}
+                  roomId={params.id}
+                  startTime={range[0]}
+                  endTime={range[1]}
+                  name={undefined}
+                />
               );
             })}
         </div>
