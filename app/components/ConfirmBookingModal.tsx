@@ -127,6 +127,7 @@ export default function ConfirmBookingModal({
     }
     if (canCreateBooking(startUnix, endUnix, bookings)) {
       // Proceed with booking
+      console.log("booking", bookingDetails);
       try {
         await axios.post("/api/bookings", bookingDetails, {
           headers: {

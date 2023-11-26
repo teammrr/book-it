@@ -4,7 +4,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
   const booking = await req.json();
-  console.log(req.json());
+  console.log("request:", booking);
   await connectToDatabase();
   try {
     await bookings?.create(booking);
