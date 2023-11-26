@@ -2,7 +2,6 @@
 import BookingStatus from "@/app/components/BookingStatus";
 import { useState, useEffect, useCallback } from "react";
 import { BeatLoader } from "react-spinners";
-import axios from "axios";
 import fetchBookings from "./FetchBookings";
 
 function ListBookings({
@@ -13,6 +12,19 @@ function ListBookings({
   const [bookings, setBookings] = useState<any>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
+  const setMatchingBooking = useCallback(
+    (bookings: any[], id: string, startUnix: number, endUnix: number) => {
+      const matchingBookings = bookings.filter(
+        (booking) =>
+          booking.roomId === id &&
+          booking.startTime >= startUnix &&
+          booking.endTime <= endUnix
+      );
+      setBookings(matchingBookings);
+      setIsLoading(false);
+    },
+    []
+  );
   const getBooking = useCallback(
     async (id: string) => {
       const bookings = await fetchBookings();
@@ -22,29 +34,8 @@ function ListBookings({
         setMatchingBooking(bookings, id, startUnix, endUnix);
       }
     },
-    [params.startUnix, params.endUnix]
+    [params.startUnix, params.endUnix, setMatchingBooking]
   );
-
-  function setMatchingBooking(
-    bookings: any[],
-    id: string,
-    startUnix: number,
-    endUnix: number
-  ) {
-    const matchingBookings = bookings.filter(
-      (booking) =>
-        booking.roomId === id &&
-        booking.startTime >= startUnix &&
-        booking.endTime <= endUnix
-    );
-    matchingBookings.forEach((booking) => {
-      if (booking.endTime < booking.startTime) {
-        console.log("Invalid booking:", booking);
-      }
-    });
-    setBookings(matchingBookings);
-    setIsLoading(false);
-  }
 
   useEffect(() => {
     getBooking(params.id);
