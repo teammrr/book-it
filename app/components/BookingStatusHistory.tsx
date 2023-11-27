@@ -35,7 +35,7 @@ export default function BookingStatusHistory(Bookings: any) {
               <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
                 {roomName}
               </Table.Cell>
-              <Table.Cell>
+              <Table.Cell className=" p-0 truncate">
                 {formattedStartTime} to {formattedEndTime}
               </Table.Cell>
               <Table.Cell>{description}</Table.Cell>

@@ -40,12 +40,12 @@ export function ReservationHistory() {
             </div>
           </div> */}
         </div>
-        <div className="rounded-lg shadow shadow-black/10 lg:mx-10 mx-2 pb-4 ">
+        <div className="rounded-lg lg:mx-10 mx-1 pb-4 ">
           <h1 className="text-2xl font-medium text-gray-800 pt-2 mx-4 ">
             {" "}
-            History
+            Reservation History
           </h1>
-          <div className="flex ">
+          <div className="flex pt-2 ">
             <MyBookings />
           </div>
         </div>
