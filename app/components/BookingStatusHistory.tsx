@@ -3,6 +3,7 @@ import BookedUser from "./BookedUser";
 
 export default function BookingStatusHistory(Bookings: any) {
   const formattedDate = formatDate(Bookings.date);
+  const roomName = Bookings.roomName;
   const description = Bookings.description;
   const startTime = new Date(Bookings.startTime * 1000);
   const formattedStartTime = `${startTime
@@ -32,7 +33,7 @@ export default function BookingStatusHistory(Bookings: any) {
       {/* Add your desired width and height here */}
       <div className="flex-1 min-w-0">
         <p className="font-semibold text-md text-gray-900 truncate ">
-          {description}
+          {roomName}
         </p>
         <div className=" flex justify-between align-center items-center">
           <p className="text-sm w-40 flex  align-center  text-gray-500">
