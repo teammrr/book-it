@@ -5,7 +5,6 @@ import { BeatLoader } from "react-spinners";
 import axios from "axios";
 import { useSession } from "next-auth/react";
 import fetchBookings from "./FetchBookings";
-import { Button } from "antd";
 
 function TodayBookings() {
   const { data: session } = useSession({
@@ -31,7 +30,7 @@ function TodayBookings() {
       today.setHours(0, 0, 0, 0); // set the time to 00:00:00
       const data = await fetchBookings();
       const now = new Date().getTime(); // get the current time
-      if (data && isMounted) {
+      if (bookings && isMounted) {
         const userBookings = data.filter(
           (booking: any) =>
             booking.name === session?.user?.name &&
@@ -48,9 +47,10 @@ function TodayBookings() {
         userBookings.sort(
           (a: any, b: any) => parseInt(b.startTime) - parseInt(a.startTime)
         );
-        console.log("userBookings", userBookings);
+
         setBookings(userBookings);
       }
+
       setIsLoading(false);
     };
 
@@ -88,15 +88,9 @@ function TodayBookings() {
                     roomName={booking.roomName}
                     status={"booked"}
                   />
-                  <div className="flex items-end justify-end">
-                    <Button
-                      type="primary"
-                      danger
-                      onClick={() => handleDelete(booking._id)}
-                    >
-                      Cancel
-                    </Button>
-                  </div>
+                  <button onClick={() => handleDelete(booking._id)}>
+                    Delete
+                  </button>
                 </div>
               );
             })}

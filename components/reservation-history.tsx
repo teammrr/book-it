@@ -28,17 +28,17 @@ export function ReservationHistory() {
     <div className="flex lg:mx-4">
       <main className="max-sm:p-2 pr-6 pl-6 pt-6">
         <div className="flex justify-between items-center mb-4">
-          <div>
+          {/* <div>
             <h1 className="text-2xl font-medium text-gray-800 mt-8 mx-4 lg:mx-10 ">
               {" "}
-              My reservations
+              Today&apos;s reservation
             </h1>
             <div className="rounded-lg shadow shadow-black/10 lg:mx-10 mx-2 pb-4 ">
               <div className="flex ">
                 <TodayBookings />
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
         <div className="rounded-lg shadow shadow-black/10 lg:mx-10 mx-2 pb-4 ">
           <h1 className="text-2xl font-medium text-gray-800 pt-2 mx-4 ">

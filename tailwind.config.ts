@@ -16,11 +16,12 @@ const config: Config = {
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
+      fontFamily: {
+        primary: ["Poppins"],
+      },
     },
-    // fontFamily: {
-    //   serif: ["Ubuntu", "sans-serif"],
-    // },
   },
   plugins: [require("flowbite/plugin"), require("tailwindcss-animate")],
 };
+
 export default config;

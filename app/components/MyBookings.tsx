@@ -43,7 +43,12 @@ function MyBookings() {
               return (
                 <>
                   <BookingStatusHistory
-                    key={booking.resrvId + booking.startTime + booking.endTime}
+                    key={
+                      booking.name +
+                      booking.startTime +
+                      booking.endTime +
+                      booking.roomName
+                    }
                     description={booking.description}
                     roomId={booking.roomId}
                     startTime={booking.startTime}

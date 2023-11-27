@@ -1,9 +1,8 @@
-import StatusIndicator from "./StatusIndicator";
-import BookedUser from "./BookedUser";
+import { Table } from "flowbite-react";
 
 export default function BookingStatusHistory(Bookings: any) {
-  const formattedDate = formatDate(Bookings.date);
   const roomName = Bookings.roomName;
+  const resrvId = Bookings.resrvId;
   const description = Bookings.description;
   const startTime = new Date(Bookings.startTime * 1000);
   const formattedStartTime = `${startTime
@@ -17,21 +16,42 @@ export default function BookingStatusHistory(Bookings: any) {
     .toString()
     .padStart(2, "0")}:${endTime.getMinutes().toString().padStart(2, "0")}`;
 
-  function formatDate(unixTimestamp: number) {
-    const date = new Date(unixTimestamp * 1000);
-    const options: Intl.DateTimeFormatOptions = {
-      weekday: "long",
-      month: "long",
-      day: "numeric",
-    };
-    return date.toLocaleString("en-US", options);
-  }
-
-  // {startTime.toDateString()}
-  // {formattedStartTime} to {formattedEndTime}
   return (
     <>
-      <h1>Hello</h1>
+      <div className=" overflow-x-auto">
+        <Table>
+          <Table.Head>
+            <Table.HeadCell>{startTime.toDateString()}</Table.HeadCell>
+            <Table.HeadCell>Time</Table.HeadCell>
+            <Table.HeadCell>description</Table.HeadCell>
+            {/* <Table.HeadCell>Reservation ID</Table.HeadCell> */}
+
+            {/* <Table.HeadCell>
+              <span className="sr-only">Edit</span>
+            </Table.HeadCell> */}
+          </Table.Head>
+          <Table.Body className="divide-y">
+            <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
+              <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
+                {roomName}
+              </Table.Cell>
+              <Table.Cell>
+                {formattedStartTime} to {formattedEndTime}
+              </Table.Cell>
+              <Table.Cell>{description}</Table.Cell>
+              {/* <Table.Cell>{resrvId}</Table.Cell> */}
+              {/* <Table.Cell>
+                <a
+                  href="#"
+                  className="font-medium text-red-600 hover:underline dark:text-red-500"
+                >
+                  Cancel
+                </a>
+              </Table.Cell> */}
+            </Table.Row>
+          </Table.Body>
+        </Table>
+      </div>
     </>
   );
 }

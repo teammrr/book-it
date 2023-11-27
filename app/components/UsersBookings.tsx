@@ -65,7 +65,12 @@ function ListBookings({
             .map((booking: any) => {
               return (
                 <BookingStatus
-                  key={booking.resrvId}
+                  key={
+                    booking.name +
+                    booking.startTime +
+                    booking.endTime +
+                    booking.roomName
+                  }
                   description={booking.description}
                   roomId={booking.roomId}
                   startTime={booking.startTime}

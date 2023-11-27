@@ -3,6 +3,7 @@ import Header from "./components/header";
 import Footer from "./components/footer";
 import { useSession } from "next-auth/react";
 import RoomList from "./components/RoomsList";
+import TodayBookings from "./components/TodayBookings";
 import { redirect } from "next/navigation";
 import { motion, useScroll, useTransform } from "framer-motion";
 
@@ -32,9 +33,15 @@ export default function Home() {
       >
         <Header />
       </motion.header>
-      <h1 className="text-2xl font-medium text-gray-800 mt-8 mx-4 lg:mx-10 ">
+      <h1 className="text-2xl font-semibold text-gray-800 mt-8 mx-4 lg:mx-10 ">
         Hello, {session?.user?.name} 👋
       </h1>
+      <div>
+        <h1 className="text-xl font-medium text-gray-800 mt-4 mx-4 lg:mx-10 ">
+          My upcoming reservation
+        </h1>
+        <TodayBookings />
+      </div>
       <div className="px-4 space-y-6 ">
         <div className="">
           <RoomList />

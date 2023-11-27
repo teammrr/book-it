@@ -1,10 +1,9 @@
 import "./globals.css";
 import { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter, Poppins } from "next/font/google";
 import AuthProvider from "./context/AuthProvider";
 import { getServerSession } from "next-auth";
 import { config } from "./auth";
-// import { Providers } from "./components/providers";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -27,7 +26,7 @@ export default async function RootLayout({
   return (
     <html lang="en" className="">
       <body className={inter.className}>
-        <main className="bg-[#ECEFF4] dark:bg-slate-950 min-h-screen">
+        <main className="bg-[#ECEFF4] font-primary dark:bg-slate-950 min-h-screen">
           <AuthProvider session={session}>{children}</AuthProvider>
         </main>
       </body>
