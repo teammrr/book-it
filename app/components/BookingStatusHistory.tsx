@@ -18,7 +18,7 @@ export default function BookingStatusHistory(Bookings: any) {
 
   return (
     <>
-      <div className=" overflow-x-auto">
+      <div className="shadow-sm overflow-x-auto">
         <Table>
           <Table.Head>
             <Table.HeadCell>{startTime.toDateString()}</Table.HeadCell>

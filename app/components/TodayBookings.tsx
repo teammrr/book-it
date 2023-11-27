@@ -24,41 +24,31 @@ function TodayBookings() {
   };
 
   useEffect(() => {
-    let isMounted = true;
     const fetchAndSortBookings = async () => {
       const today = new Date();
       today.setHours(0, 0, 0, 0); // set the time to 00:00:00
       const data = await fetchBookings();
       const now = new Date().getTime(); // get the current time
-      if (bookings && isMounted) {
-        const userBookings = data.filter(
-          (booking: any) =>
-            booking.name === session?.user?.name &&
-            new Date(parseInt(booking.startTime) * 1000).setHours(
-              0,
-              0,
-              0,
-              0
-            ) === today.getTime() &&
-            now >= parseInt(booking.startTime) * 1000 && // check if the current time is after the start time
-            now <= parseInt(booking.endTime) * 1000 // check if the current time is before the end time
-        );
 
-        userBookings.sort(
-          (a: any, b: any) => parseInt(b.startTime) - parseInt(a.startTime)
-        );
+      const userBookings = data.filter(
+        (booking: any) =>
+          booking.name === session?.user?.name &&
+          new Date(parseInt(booking.startTime) * 1000).setHours(0, 0, 0, 0) ===
+            today.getTime() &&
+          now >= parseInt(booking.startTime) * 1000 && // check if the current time is after the start time
+          now <= parseInt(booking.endTime) * 1000 // check if the current time is before the end time
+      );
 
-        setBookings(userBookings);
-      }
+      userBookings.sort(
+        (a: any, b: any) => parseInt(b.startTime) - parseInt(a.startTime)
+      );
 
+      setBookings(userBookings);
+      console.log(userBookings);
       setIsLoading(false);
     };
 
     fetchAndSortBookings();
-
-    return () => {
-      isMounted = false;
-    };
   }, [session]);
 
   useEffect(() => {
@@ -77,15 +67,14 @@ function TodayBookings() {
             .sort((a: any, b: any) => b.startTime - a.startTime)
             .map((booking: any) => {
               return (
-                <div key={booking.resrvId}>
+                <div key={booking._id}>
                   <BookingStatusHistory
-                    key={booking.resrvId + booking.startTime + booking.endTime}
+                    key={booking.name + booking.startTime + booking.endTime}
                     description={booking.description}
                     roomId={booking.roomId}
                     startTime={booking.startTime}
                     endTime={booking.endTime}
                     name={booking.name}
-                    roomName={booking.roomName}
                     status={"booked"}
                   />
                   <button onClick={() => handleDelete(booking._id)}>
