@@ -5,6 +5,7 @@ import { BeatLoader } from "react-spinners";
 import axios from "axios";
 import { useSession } from "next-auth/react";
 import fetchBookings from "./FetchBookings";
+import { Button } from "antd";
 
 function TodayBookings() {
   const { data: session } = useSession({
@@ -87,9 +88,15 @@ function TodayBookings() {
                     roomName={booking.roomName}
                     status={"booked"}
                   />
-                  <button onClick={() => handleDelete(booking._id)}>
-                    Delete
-                  </button>
+                  <div className="flex items-end justify-end">
+                    <Button
+                      type="primary"
+                      danger
+                      onClick={() => handleDelete(booking._id)}
+                    >
+                      Cancel
+                    </Button>
+                  </div>
                 </div>
               );
             })}
