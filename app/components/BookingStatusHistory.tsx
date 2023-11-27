@@ -2,6 +2,7 @@ import { Table } from "flowbite-react";
 
 export default function BookingStatusHistory(Bookings: any) {
   const roomName = Bookings.roomName;
+  console.log(roomName);
   const resrvId = Bookings.resrvId;
   const description = Bookings.description;
   const startTime = new Date(Bookings.startTime * 1000);
@@ -32,13 +33,13 @@ export default function BookingStatusHistory(Bookings: any) {
           </Table.Head>
           <Table.Body className="divide-y">
             <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
-              <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
+              <Table.Cell className="whitespace-nowrap font-medium text-zinc-900 dark:text-white">
                 {roomName}
               </Table.Cell>
-              <Table.Cell className=" p-0 truncate">
+              <Table.Cell className=" p-0 truncate text-zinc-900 ">
                 {formattedStartTime} to {formattedEndTime}
               </Table.Cell>
-              <Table.Cell>{description}</Table.Cell>
+              <Table.Cell className="text-zinc-900 ">{description}</Table.Cell>
               {/* <Table.Cell>{resrvId}</Table.Cell> */}
               {/* <Table.Cell>
                 <a

@@ -5,6 +5,7 @@ import { useSession } from "next-auth/react";
 import RoomList from "./components/RoomsList";
 import TodayBookings from "./components/TodayBookings";
 import { redirect } from "next/navigation";
+import { useState, useEffect } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 
 export default function Home() {
@@ -20,6 +21,14 @@ export default function Home() {
     [0, 0.5, 0.6],
     ["0%", "0%", "-100%"]
   );
+
+  // Define a state variable to track whether there are any bookings
+  const [hasBookings, setHasBookings] = useState(true);
+
+  // Define a callback function to update the state variable
+  const handleBookingsChange = (bookings: any[]) => {
+    setHasBookings(bookings.length > 0);
+  };
 
   return (
     <main className="bg-[#ECEFF4] dark:bg-slate-950 min-h-screen">
@@ -37,15 +46,18 @@ export default function Home() {
         Hello, {session?.user?.name} 👋
       </h1>
       <div>
-        <h1 className="text-xl font-medium text-gray-800 mt-4 mx-4 lg:mx-10 ">
-          My upcoming reservation
-        </h1>
-        <TodayBookings />
+        {hasBookings && ( // Conditionally render based on whether there are any bookings
+          <div>
+            <h1 className="text-xl font-medium text-gray-800 mt-4 mx-4 lg:mx-10 ">
+              Upcoming reservation
+            </h1>
+            <TodayBookings onBookingsChange={handleBookingsChange} />{" "}
+            {/* Pass the callback function as a prop */}
+          </div>
+        )}
       </div>
-      <div className="px-4 space-y-6 ">
-        <div className="">
-          <RoomList />
-        </div>
+      <div className="px-4 space-y-4">
+        <RoomList />
       </div>
       <Footer />
     </main>

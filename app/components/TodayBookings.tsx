@@ -28,23 +28,23 @@ function TodayBookings() {
       const today = new Date();
       today.setHours(0, 0, 0, 0); // set the time to 00:00:00
       const data = await fetchBookings();
+      console.log(data);
       const now = new Date().getTime(); // get the current time
-
       const userBookings = data.filter(
         (booking: any) =>
           booking.name === session?.user?.name &&
           new Date(parseInt(booking.startTime) * 1000).setHours(0, 0, 0, 0) ===
             today.getTime() &&
-          now >= parseInt(booking.startTime) * 1000 && // check if the current time is after the start time
           now <= parseInt(booking.endTime) * 1000 // check if the current time is before the end time
       );
+      console.log("user bookings before sort", userBookings);
 
       userBookings.sort(
         (a: any, b: any) => parseInt(b.startTime) - parseInt(a.startTime)
       );
 
       setBookings(userBookings);
-      console.log(userBookings);
+      console.log("user bookings", userBookings);
       setIsLoading(false);
     };
 
@@ -62,7 +62,7 @@ function TodayBookings() {
           <BeatLoader color="#3676d6" />
         </div>
       ) : (
-        <div className="mt-2 justify-center align-middle flex flex-col gap-2">
+        <div className="mt-2 pt-2 pl-4 pr-4 justify-center align-middle flex flex-col gap-2">
           {bookings
             .sort((a: any, b: any) => b.startTime - a.startTime)
             .map((booking: any) => {
@@ -75,11 +75,12 @@ function TodayBookings() {
                     startTime={booking.startTime}
                     endTime={booking.endTime}
                     name={booking.name}
+                    roomName={booking.roomName}
                     status={"booked"}
                   />
-                  <button onClick={() => handleDelete(booking._id)}>
+                  {/* <button onClick={() => handleDelete(booking._id)}>
                     Delete
-                  </button>
+                  </button> */}
                 </div>
               );
             })}
