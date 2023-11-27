@@ -51,8 +51,8 @@ export default function Home() {
             <h1 className="text-xl font-medium text-gray-800 mt-4 mx-4 lg:mx-10 ">
               Upcoming reservation
             </h1>
-            <TodayBookings onBookingsChange={handleBookingsChange} />{" "}
-            {/* Pass the callback function as a prop */}
+            <TodayBookings /> {/* Pass the callback function as a prop */}
+            {/* onBookingsChange={handleBookingsChange} */}
           </div>
         )}
       </div>
