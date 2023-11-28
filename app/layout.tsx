@@ -4,6 +4,7 @@ import { Inter, Poppins } from "next/font/google";
 import AuthProvider from "./context/AuthProvider";
 import { getServerSession } from "next-auth";
 import { config } from "./auth";
+import { Analytics } from "@vercel/analytics/react";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -27,7 +28,10 @@ export default async function RootLayout({
     <html lang="en" className="">
       <body className={inter.className}>
         <main className="bg-[#ECEFF4] font-primary dark:bg-slate-950 min-h-screen">
-          <AuthProvider session={session}>{children}</AuthProvider>
+          <AuthProvider session={session}>
+            {children}
+            <Analytics />
+          </AuthProvider>
         </main>
       </body>
     </html>
