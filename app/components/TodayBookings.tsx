@@ -28,7 +28,6 @@ function TodayBookings() {
       const today = new Date();
       today.setHours(0, 0, 0, 0); // set the time to 00:00:00
       const data = await fetchBookings();
-      console.log(data);
       const now = new Date().getTime(); // get the current time
       const userBookings = data.filter(
         (booking: any) =>
@@ -37,14 +36,12 @@ function TodayBookings() {
             today.getTime() &&
           now <= parseInt(booking.endTime) * 1000 // check if the current time is before the end time
       );
-      console.log("user bookings before sort", userBookings);
 
       userBookings.sort(
         (a: any, b: any) => parseInt(b.startTime) - parseInt(a.startTime)
       );
 
       setBookings(userBookings);
-      console.log("user bookings", userBookings);
       setIsLoading(false);
     };
 
@@ -61,31 +58,36 @@ function TodayBookings() {
         <div className="flex pt-10 pb-8 justify-center items-center">
           <BeatLoader color="#3676d6" />
         </div>
-      ) : (
-        <div className="mt-2 pt-2 pl-4 pr-4 justify-center align-middle flex flex-col gap-2">
-          {bookings
-            .sort((a: any, b: any) => b.startTime - a.startTime)
-            .map((booking: any) => {
-              return (
-                <div key={booking._id}>
-                  <BookingStatusHistory
-                    key={booking.name + booking.startTime + booking.endTime}
-                    description={booking.description}
-                    roomId={booking.roomId}
-                    startTime={booking.startTime}
-                    endTime={booking.endTime}
-                    name={booking.name}
-                    roomName={booking.roomName}
-                    status={"booked"}
-                  />
-                  {/* <button onClick={() => handleDelete(booking._id)}>
+      ) : bookings.length > 0 ? ( // Check if bookings array has any elements
+        <>
+          <h1 className="text-xl font-medium text-gray-800 mt-4 mx-4 lg:mx-10 ">
+            Upcoming reservation
+          </h1>
+          <div className="mt-2 pt-2 pl-10 pr-10 justify-center align-middle flex flex-col gap-2">
+            {bookings
+              .sort((a: any, b: any) => b.startTime - a.startTime)
+              .map((booking: any) => {
+                return (
+                  <div key={booking._id}>
+                    <BookingStatusHistory
+                      key={booking.name + booking.startTime + booking.endTime}
+                      description={booking.description}
+                      roomId={booking.roomId}
+                      startTime={booking.startTime}
+                      endTime={booking.endTime}
+                      name={booking.name}
+                      roomName={booking.roomName}
+                      status={"booked"}
+                    />
+                    {/* <button onClick={() => handleDelete(booking._id)}>
                     Delete
                   </button> */}
-                </div>
-              );
-            })}
-        </div>
-      )}
+                  </div>
+                );
+              })}
+          </div>
+        </>
+      ) : null}
     </>
   );
 }

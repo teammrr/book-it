@@ -40,6 +40,7 @@ export const config = {
   callbacks: {
     async jwt({ token, account }) {
       token.role = "user";
+      console.log("token", token);
 
       const { name, email, role } = token;
       try {

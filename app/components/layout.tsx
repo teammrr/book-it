@@ -18,7 +18,7 @@ export default function Layout({ children }: { children: ReactNode }) {
         variants={variants}
         initial="hidden"
         animate="enter"
-        transition={{ type: "spring", bounce: 0.5 }}
+        transition={{ type: "spring", bounce: 0.25, duration: 0.5 }}
       >
         <main className="bg-[#ECEFF4] text-black min-h-max">{children}</main>
       </motion.main>

@@ -36,7 +36,7 @@ function MyBookings() {
           <BeatLoader color="#3676d6" />
         </div>
       ) : (
-        <div className="mt-2 justify-center align-middle flex flex-col gap-2">
+        <div className="justify-center align-middle flex flex-col gap-2">
           {bookings
             .sort((a: any, b: any) => b.startTime - a.startTime)
             .map((booking: any) => {

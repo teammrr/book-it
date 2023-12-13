@@ -5,13 +5,11 @@ import { redirect, useSearchParams } from "next/navigation";
 import ConfirmBookingModal from "@/app/components/ConfirmBookingModal";
 import { useState } from "react";
 import { PropagateLoader } from "react-spinners";
-import { ToastContainer } from "react-toastify";
 import GetBookings from "@/app/components/AvailableBookings";
 import SelectStartTime from "@/app/components/SelectStartTime";
 import SelectEndTime from "@/app/components/SelectEndTime";
 import DescriptionBox from "@/app/components/DescriptionBox";
 import AntDatepicker from "@/app/components/NewCalendar";
-import Calendar from "@/app/components/Calendar";
 import ListBookings from "@/app/components/UsersBookings";
 
 function Booking({ params }: { params: { id: string; name: string } }) {
@@ -40,18 +38,6 @@ function Booking({ params }: { params: { id: string; name: string } }) {
             <h1 className="text-2xl font-medium text-[#040506] mt-8 mx-4 lg:mx-10 ">
               {name}
             </h1>
-            <ToastContainer
-              position="top-right"
-              autoClose={3000}
-              hideProgressBar={false}
-              newestOnTop={false}
-              closeOnClick
-              rtl={false}
-              pauseOnFocusLoss
-              draggable
-              pauseOnHover
-              // theme="colored"
-            />
           </div>
           {isLoading ? ( // Render a loading spinner if isLoading is true
             <div className="flex justify-center items-center min-h-screen">
@@ -64,6 +50,7 @@ function Booking({ params }: { params: { id: string; name: string } }) {
                   <p className="truncate mb-1 block text-sm font-medium text-gray-900 dark:text-white">
                     Date{" "}
                   </p>
+
                   {/* <Calendar
                     setSelectedDate={setSelectedDate}
                     setEndDateUnix={setEndDateUnix}

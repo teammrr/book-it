@@ -2,8 +2,7 @@ import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
 import axios from "axios";
 import { useSession } from "next-auth/react";
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { useToast, ToastPosition } from "@chakra-ui/react";
 import fetchBookings from "./FetchBookings";
 
 export default function ConfirmBookingModal({
@@ -15,7 +14,12 @@ export default function ConfirmBookingModal({
   roomName,
 }: any) {
   let [isOpen, setIsOpen] = useState(false);
-
+  const toast = useToast();
+  const defaultToastProps = {
+    position: "top-right" as ToastPosition,
+    duration: 5000,
+    isClosable: true,
+  };
   const { data: session } = useSession({
     required: true,
   });
@@ -113,16 +117,24 @@ export default function ConfirmBookingModal({
     };
 
     if (startUnix >= endUnix) {
-      toast.error("Start time must be less than end time");
+      toast({
+        title: "Invalid Time.",
+        description: "Start time must be less than end time.",
+        status: "warning",
+        ...defaultToastProps,
+      });
       return;
     }
 
     const bookings = await fetchBookings();
 
     if (!isTimeSlotAvailable(startUnix, endUnix, bookings)) {
-      toast.error(
-        "This time slot has been reserved. Please select another time."
-      );
+      toast({
+        title: "Booking Conflict",
+        description: "This time slot has been reserved.",
+        status: "error",
+        ...defaultToastProps,
+      });
       return;
     }
     if (canCreateBooking(startUnix, endUnix, bookings)) {
@@ -137,9 +149,20 @@ export default function ConfirmBookingModal({
         setIsOpen(true);
       } catch (err) {
         console.error("Something went wrong. Please try again later.");
+        toast({
+          title: "Error",
+          description: `Something went wrong, error: ${err}`,
+          status: "error",
+          ...defaultToastProps,
+        });
       }
     } else {
-      toast.error("Error: Something went wrong.");
+      toast({
+        title: "Error",
+        description: "Something went wrong. Please try again.",
+        status: "error",
+        ...defaultToastProps,
+      });
     }
   }
 

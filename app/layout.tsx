@@ -5,6 +5,7 @@ import AuthProvider from "./context/AuthProvider";
 import { getServerSession } from "next-auth";
 import { config } from "./auth";
 import { Analytics } from "@vercel/analytics/react";
+import { Providers } from "./providers";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -29,7 +30,7 @@ export default async function RootLayout({
       <body className={inter.className}>
         <main className="bg-[#ECEFF4] font-primary dark:bg-slate-950 min-h-screen">
           <AuthProvider session={session}>
-            {children}
+            <Providers>{children}</Providers>
             <Analytics />
           </AuthProvider>
         </main>

@@ -8,6 +8,9 @@ export default function History() {
     <Layout>
       <>
         <div>
+          <h1 className="text-2xl font-semibold text-[#040506] mt-6 mx-4 lg:mx-10 ">
+            Reservation History
+          </h1>
           <ReservationHistory />
         </div>
       </>

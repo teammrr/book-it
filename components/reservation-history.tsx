@@ -26,7 +26,7 @@ export function ReservationHistory() {
 
   return (
     <div className="flex lg:mx-4">
-      <main className="max-sm:p-2 pr-6 pl-6 pt-6">
+      <main className="max-sm:p-2 pr-6 pl-6 ">
         <div className="flex justify-between items-center mb-4">
           {/* <div>
             <h1 className="text-2xl font-medium text-gray-800 mt-8 mx-4 lg:mx-10 ">
@@ -40,14 +40,8 @@ export function ReservationHistory() {
             </div>
           </div> */}
         </div>
-        <div className="rounded-lg lg:mx-10 mx-1 pb-4 ">
-          <h1 className="text-2xl font-medium text-gray-800 pt-2 mx-1 ">
-            {" "}
-            Reservation History
-          </h1>
-          <div className=" pt-2 ">
-            <MyBookings />
-          </div>
+        <div className="  ">
+          <MyBookings />
         </div>
       </main>
     </div>

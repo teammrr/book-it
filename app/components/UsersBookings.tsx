@@ -21,7 +21,6 @@ function ListBookings({
           booking.endTime <= endUnix
       );
       setBookings(matchingBookings);
-      console.log("matching bookings", matchingBookings);
       setIsLoading(false);
     },
     []
@@ -31,13 +30,13 @@ function ListBookings({
     let isMounted = true;
 
     const fetchBooking = async () => {
-      console.log("fetching");
       const bookings = await fetchBookings();
-      console.log("fetched successfully", bookings);
+      setIsLoading(true);
       if (bookings && isMounted) {
         const startUnix = params.startUnix;
         const endUnix = params.endUnix;
         setMatchingBooking(bookings, params.id, startUnix, endUnix);
+        setIsLoading(false);
       }
     };
 
