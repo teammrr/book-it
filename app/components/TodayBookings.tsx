@@ -1,6 +1,6 @@
 "use client";
 import BookingStatusHistory from "./BookingStatusHistory";
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
 import { BeatLoader } from "react-spinners";
 import axios from "axios";
 import { useSession } from "next-auth/react";
@@ -56,7 +56,7 @@ function TodayBookings() {
     <>
       {isLoading ? ( // Render a loading spinner if isLoading is true
         <div className="flex pt-10 pb-8 justify-center items-center">
-          <BeatLoader color="#3676d6" />
+          {/* <BeatLoader color="#3676d6" /> */}
         </div>
       ) : bookings.length > 0 ? ( // Check if bookings array has any elements
         <>

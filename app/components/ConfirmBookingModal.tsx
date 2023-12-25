@@ -116,6 +116,16 @@ export default function ConfirmBookingModal({
       description: String(description),
     };
 
+    if (!description) {
+      toast({
+        title: "Mhmmm!",
+        description: "Description is required. Please try again",
+        status: "warning",
+        ...defaultToastProps,
+      });
+      return;
+    }
+
     if (startUnix >= endUnix) {
       toast({
         title: "Invalid Time.",
@@ -130,7 +140,7 @@ export default function ConfirmBookingModal({
 
     if (!isTimeSlotAvailable(startUnix, endUnix, bookings)) {
       toast({
-        title: "Booking Conflict",
+        title: "Whoops!",
         description: "This time slot has been reserved.",
         status: "error",
         ...defaultToastProps,

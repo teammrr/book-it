@@ -13,7 +13,7 @@ import AntDatepicker from "@/app/components/NewCalendar";
 import ListBookings from "@/app/components/UsersBookings";
 
 function Booking({ params }: { params: { id: string; name: string } }) {
-  const { data: session } = useSession({
+  useSession({
     required: true,
     onUnauthenticated() {
       redirect("/api/auth/signin");

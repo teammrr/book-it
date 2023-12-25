@@ -2,7 +2,6 @@ import { Table } from "flowbite-react";
 
 export default function BookingStatusHistory(Bookings: any) {
   const roomName = Bookings.roomName;
-  console.log(roomName);
   const resrvId = Bookings.resrvId;
   const description = Bookings.description;
   const startTime = new Date(Bookings.startTime * 1000);
