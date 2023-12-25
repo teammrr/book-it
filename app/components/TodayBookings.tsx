@@ -55,15 +55,13 @@ function TodayBookings() {
   return (
     <>
       {isLoading ? ( // Render a loading spinner if isLoading is true
-        <div className="flex pt-10 pb-8 justify-center items-center">
-          {/* <BeatLoader color="#3676d6" /> */}
-        </div>
+        <></>
       ) : bookings.length > 0 ? ( // Check if bookings array has any elements
         <>
           <h1 className="text-xl font-medium text-gray-800 mt-4 mx-4 lg:mx-10 ">
             Upcoming reservation
           </h1>
-          <div className="mt-2 pt-2 pl-10 pr-10 justify-center align-middle flex flex-col gap-2">
+          <div className="pl-4 pr-4 pt-4 justify-center align-middle flex flex-col gap-2">
             {bookings
               .sort((a: any, b: any) => b.startTime - a.startTime)
               .map((booking: any) => {

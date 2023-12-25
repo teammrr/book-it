@@ -40,7 +40,7 @@ export default function Home() {
       <div>
         <TodayBookings /> {/* Pass the callback function as a prop */}
       </div>
-      <div className="lg:px-10 px-4 space-y-4">
+      <div className=" px-3 ">
         <RoomList />
       </div>
       <Footer />
