@@ -44,7 +44,7 @@ export default function RoomList() {
         </div>
       ) : (
         <div className="items-center flex justify-center">
-          <div className=" flex flex-wrap justify-center mt-2">
+          <div className=" grid grid-flow-row gap-8 pt-2  sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {rooms.map((room) => (
               <div key={room.name} className="flex flex-col justify-center p-2">
                 <div className="max-w-lg rounded-lg bg-[#E1E7EE] shadow-lg transition ease-in-out duration-500 ">
