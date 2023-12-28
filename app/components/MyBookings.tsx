@@ -1,5 +1,5 @@
 "use client";
-import BookingStatusHistory from "./BookingStatusHistory";
+import BookingStatusHistory from "./BookingStatusHistory.1";
 import { useState, useEffect, useCallback } from "react";
 import { BeatLoader } from "react-spinners";
 import axios from "axios";

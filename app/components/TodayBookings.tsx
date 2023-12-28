@@ -1,5 +1,5 @@
 "use client";
-import BookingStatusHistory from "./BookingStatusHistory";
+import UpcomingRsrvModal from "./UpcomingRsrvModal";
 import { useState, useEffect } from "react";
 import { BeatLoader } from "react-spinners";
 import axios from "axios";
@@ -12,6 +12,7 @@ function TodayBookings() {
   });
   const [bookings, setBookings] = useState<any>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [openModalId, setOpenModalId] = useState<string | null>(null);
 
   const handleDelete = async (id: string) => {
     try {
@@ -57,25 +58,25 @@ function TodayBookings() {
       {isLoading ? ( // Render a loading spinner if isLoading is true
         <></>
       ) : bookings.length > 0 ? ( // Check if bookings array has any elements
-        <>
-          <h1 className="text-xl font-medium text-gray-800 mt-4 mx-4 lg:mx-10 ">
-            Upcoming reservation
+        <div className=" gap-2 justify">
+          <h1 className="text-xl font-medium text-gray-800 mt-1 pl-4 lg:pl-10">
+            Today&apos;s Upcoming Reservation
           </h1>
-          <div className="pl-4 pr-4 pt-4 justify-center align-middle flex flex-col gap-2">
+          <div className="pt-1 pl-4 lg:pl-10 flex flex-row gap-2">
             {bookings
               .sort((a: any, b: any) => b.startTime - a.startTime)
               .map((booking: any) => {
                 return (
                   <div key={booking._id}>
-                    <BookingStatusHistory
+                    <UpcomingRsrvModal
                       key={booking.name + booking.startTime + booking.endTime}
+                      roomName={booking.roomName}
                       description={booking.description}
-                      roomId={booking.roomId}
                       startTime={booking.startTime}
                       endTime={booking.endTime}
-                      name={booking.name}
-                      roomName={booking.roomName}
-                      status={"booked"}
+                      isOpen={openModalId === booking._id}
+                      onOpen={() => setOpenModalId(booking._id)}
+                      onClose={() => setOpenModalId(null)}
                     />
                     {/* <button onClick={() => handleDelete(booking._id)}>
                     Delete
@@ -84,7 +85,7 @@ function TodayBookings() {
                 );
               })}
           </div>
-        </>
+        </div>
       ) : null}
     </>
   );

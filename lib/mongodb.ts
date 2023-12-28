@@ -8,7 +8,6 @@ export const connectToDatabase = async () => {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     } as mongoose.ConnectOptions);
-    console.log(`MongoDB connected: ${db.connection.host}`);
   } catch (error) {
     console.error(error);
   }

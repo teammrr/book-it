@@ -4,6 +4,7 @@ import { useEffect } from "react";
 const liffId = process.env.AUTH_LIFF_ID;
 import { ThemeProvider } from "next-themes";
 import { ChakraProvider } from "@chakra-ui/react";
+import customTheme from "./components/theme";
 
 // Use of the <SessionProvider> is mandatory to allow components that call
 // `useSession()` anywhere in your application to access the `session` object.
@@ -27,7 +28,7 @@ export default function App({ Component, pageProps }: any) {
       <script src="https://static.line-scdn.net/liff/edge/2.1/liff.js" async />
       <SessionProvider>
         <ThemeProvider attribute="class">
-          <ChakraProvider>
+          <ChakraProvider theme={customTheme}>
             <Component {...pageProps} />
           </ChakraProvider>
         </ThemeProvider>
