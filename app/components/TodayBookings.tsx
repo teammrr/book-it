@@ -53,11 +53,16 @@ function TodayBookings() {
     setBookings(bookings);
   }, [bookings]);
 
+  const isCurrentBooking = ({ startTime, endTime }: any) => {
+    const now = Date.now() / 1000; // Convert current time to seconds
+    return now >= startTime && now <= endTime;
+  };
+
   return (
     <>
-      {isLoading ? ( // Render a loading spinner if isLoading is true
+      {isLoading ? (
         <></>
-      ) : bookings.length > 0 ? ( // Check if bookings array has any elements
+      ) : bookings.length > 0 ? (
         <div className=" gap-2 justify">
           <h1 className="text-xl font-medium text-gray-800 mt-1 pl-4 lg:pl-10">
             Today&apos;s Upcoming Reservation
@@ -66,6 +71,7 @@ function TodayBookings() {
             {bookings
               .sort((a: any, b: any) => a.startTime - b.startTime)
               .map((booking: any) => {
+                const currentBooking = isCurrentBooking(booking);
                 return (
                   <div key={booking._id}>
                     <UpcomingRsrvModal
@@ -77,10 +83,8 @@ function TodayBookings() {
                       isOpen={openModalId === booking._id}
                       onOpen={() => setOpenModalId(booking._id)}
                       onClose={() => setOpenModalId(null)}
+                      status={currentBooking ? "green" : "facebook"}
                     />
-                    {/* <button onClick={() => handleDelete(booking._id)}>
-                    Delete
-                  </button> */}
                   </div>
                 );
               })}

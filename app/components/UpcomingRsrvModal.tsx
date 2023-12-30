@@ -19,6 +19,7 @@ interface BookingProps {
   startTime: number;
   endTime: number;
   isOpen: boolean;
+  status: string;
   onOpen: () => void;
   onClose: () => void;
 }
@@ -31,6 +32,7 @@ export default function UpcomingRsrvModal({
   isOpen,
   onOpen,
   onClose,
+  status,
 }: BookingProps) {
   const initialFocusRef = useRef<HTMLButtonElement>(null);
 
@@ -57,7 +59,7 @@ export default function UpcomingRsrvModal({
         onClose={onClose}
       >
         <PopoverTrigger>
-          <Button size={"sm"} colorScheme="facebook">
+          <Button size={"sm"} colorScheme={status}>
             {formattedStartTime} to {formattedEndTime}
           </Button>
         </PopoverTrigger>
