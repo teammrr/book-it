@@ -33,13 +33,17 @@ export default function UpcomingRsrvModal({
   onClose,
 }: BookingProps) {
   const initialFocusRef = useRef<HTMLButtonElement>(null);
+
   const formattedStartTime = new Date(startTime * 1000).toLocaleTimeString([], {
     hour: "2-digit",
     minute: "2-digit",
+    hour12: false,
   });
+
   const formattedEndTime = new Date(endTime * 1000).toLocaleTimeString([], {
     hour: "2-digit",
     minute: "2-digit",
+    hour12: false,
   });
 
   return (

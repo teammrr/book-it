@@ -15,6 +15,16 @@ export default function Calendar({
     month: today.getMonth() + 1,
     day: today.getDate(),
   }; // Setting minimum date to current day only
+
+  const maximumDate = new Date();
+  maximumDate.setDate(today.getDate() + 7); // Add 7 days to current date
+
+  const maximumDateObject = {
+    year: maximumDate.getFullYear(),
+    month: maximumDate.getMonth() + 1,
+    day: maximumDate.getDate(),
+  }; // Allows user to only book up to 7 days in advance
+
   const [selectedDay, setSelectedDay] = useState<DayValue>(minimumDate);
   const formattedDate = selectedDay
     ? `${String(selectedDay.day).padStart(2, "0")}/${String(
@@ -60,6 +70,7 @@ export default function Calendar({
       value={selectedDay}
       onChange={setSelectedDay}
       minimumDate={minimumDate}
+      maximumDate={maximumDateObject}
       inputPlaceholder="Select a day"
       colorPrimary="#3D4C83" // added this
       colorPrimaryLight="rgba(200, 220, 250, 0.4)" // and this

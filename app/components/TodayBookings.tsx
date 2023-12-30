@@ -62,9 +62,9 @@ function TodayBookings() {
           <h1 className="text-xl font-medium text-gray-800 mt-1 pl-4 lg:pl-10">
             Today&apos;s Upcoming Reservation
           </h1>
-          <div className="pt-1 pl-4 lg:pl-10 flex flex-row gap-2">
+          <div className="pt-1 pl-4 lg:pl-10 flex flex-wrap gap-2">
             {bookings
-              .sort((a: any, b: any) => b.startTime - a.startTime)
+              .sort((a: any, b: any) => a.startTime - b.startTime)
               .map((booking: any) => {
                 return (
                   <div key={booking._id}>
