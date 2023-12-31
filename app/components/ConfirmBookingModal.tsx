@@ -4,6 +4,7 @@ import axios from "axios";
 import { useSession } from "next-auth/react";
 import { useToast, ToastPosition } from "@chakra-ui/react";
 import fetchBookings from "./FetchBookings";
+import { set } from "mongoose";
 
 export default function ConfirmBookingModal({
   roomId,
@@ -118,6 +119,7 @@ export default function ConfirmBookingModal({
     };
 
     if (!description) {
+      setIsButtonClicked(false);
       toast({
         title: "Mhmmm!",
         description: "Description is required. Please try again",
@@ -128,6 +130,7 @@ export default function ConfirmBookingModal({
     }
 
     if (startUnix >= endUnix) {
+      setIsButtonClicked(false);
       toast({
         title: "Invalid Time.",
         description: "Start time must be less than end time.",
@@ -140,6 +143,7 @@ export default function ConfirmBookingModal({
     const bookings = await fetchBookings();
 
     if (!isTimeSlotAvailable(startUnix, endUnix, bookings)) {
+      setIsButtonClicked(false);
       toast({
         title: "Whoops!",
         description: "This time slot has been reserved.",
