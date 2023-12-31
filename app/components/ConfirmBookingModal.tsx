@@ -14,6 +14,7 @@ export default function ConfirmBookingModal({
   roomName,
 }: any) {
   let [isOpen, setIsOpen] = useState(false);
+  const [isButtonClicked, setIsButtonClicked] = useState(false);
   const toast = useToast();
   const defaultToastProps = {
     position: "top-right" as ToastPosition,
@@ -176,15 +177,28 @@ export default function ConfirmBookingModal({
     }
   }
 
+  const handleButtonClicked = () => {
+    setIsButtonClicked(true);
+    openModal();
+  };
+
   return (
     <>
       <div className="flex">
         <button
           type="button"
-          onClick={openModal}
+          onClick={handleButtonClicked}
+          disabled={isButtonClicked}
           className="flex rounded-lg border border-transparent bg-[#546A8C] px-4 py-2 text-sm font-medium text-slate-100 transition ease-in-out duration-200 hover:bg-[#3b4c63] focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-900 focus-visible:ring-offset-2 shadow shadow-black/10 "
         >
-          Confirm Reservation
+          {isButtonClicked ? (
+            <>
+              <div className="h-5 w-5 mr-2 border-t-transparent border-solid animate-spin rounded-full border-white border-4"></div>
+              Processing
+            </>
+          ) : (
+            "Confirm Reservation"
+          )}
         </button>
       </div>
 

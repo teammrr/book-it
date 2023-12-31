@@ -35,18 +35,20 @@ export default function UpcomingRsrvModal({
   status,
 }: BookingProps) {
   const initialFocusRef = useRef<HTMLButtonElement>(null);
-
   const formattedStartTime = new Date(startTime * 1000).toLocaleTimeString([], {
     hour: "2-digit",
     minute: "2-digit",
     hour12: false,
   });
-
   const formattedEndTime = new Date(endTime * 1000).toLocaleTimeString([], {
     hour: "2-digit",
     minute: "2-digit",
     hour12: false,
   });
+
+  //TODO Create a function to edit the reservation details
+  //TODO Create a function to cancel the reservation
+  // TODO Create a function to send a reminder line message to the user
 
   return (
     <>

@@ -14,16 +14,6 @@ function TodayBookings() {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [openModalId, setOpenModalId] = useState<string | null>(null);
 
-  const handleDelete = async (id: string) => {
-    try {
-      await axios.delete(`/api/bookings/${id}`);
-      // Remove the deleted booking from the state
-      setBookings(bookings.filter((booking: any) => booking._id !== id));
-    } catch (err) {
-      console.error("Error deleting booking", err);
-    }
-  };
-
   useEffect(() => {
     const fetchAndSortBookings = async () => {
       const today = new Date();
