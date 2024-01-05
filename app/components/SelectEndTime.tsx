@@ -25,7 +25,6 @@ function SelectStartTime({ setUserEndTime }: any) {
 
   useEffect(() => {
     // This code will run whenever startTime changes
-    // console.log("Selected end time:", endTime.time);
     setUserEndTime(endTime.time);
   }, [endTime, setUserEndTime]);
 

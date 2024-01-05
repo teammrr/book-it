@@ -1,12 +1,11 @@
 "use client";
 import Header from "./components/header";
 import Footer from "./components/footer";
-import { useSession } from "next-auth/react";
 import RoomList from "./components/RoomsList";
 import TodayBookings from "./components/TodayBookings";
+import { useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
 import { motion, useScroll, useTransform } from "framer-motion";
-import Layout from "./components/layout";
 
 export default function Home() {
   const { data: session } = useSession({

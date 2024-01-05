@@ -10,7 +10,6 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
   } else {
     const booking = await req.json();
-    console.log("request:", booking);
     await connectToDatabase();
     try {
       await bookings?.create(booking);

@@ -2,12 +2,13 @@
 import BookingStatus from "@/app/components/BookingStatus";
 import { useState, useEffect, useCallback } from "react";
 import { BeatLoader } from "react-spinners";
-import fetchBookings from "./FetchBookings";
 
 function ListBookings({
   params,
+  bookings: initialBookings,
 }: {
   params: { id: string; startUnix: any; endUnix: any };
+  bookings: any[];
 }) {
   const [bookings, setBookings] = useState<any>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -27,29 +28,16 @@ function ListBookings({
   );
 
   useEffect(() => {
-    let isMounted = true;
-
-    const fetchBooking = async () => {
-      const bookings = await fetchBookings();
-      setIsLoading(true);
-      if (bookings && isMounted) {
-        const startUnix = params.startUnix;
-        const endUnix = params.endUnix;
-        setMatchingBooking(bookings, params.id, startUnix, endUnix);
-        setIsLoading(false);
-      }
-    };
-
-    fetchBooking();
-
-    return () => {
-      isMounted = false;
-    };
-  }, [params.id, params.startUnix, params.endUnix, setMatchingBooking]);
-
-  useEffect(() => {
-    setBookings(bookings);
-  }, [bookings]);
+    const startUnix = params.startUnix;
+    const endUnix = params.endUnix;
+    setMatchingBooking(initialBookings, params.id, startUnix, endUnix);
+  }, [
+    params.id,
+    params.startUnix,
+    params.endUnix,
+    setMatchingBooking,
+    initialBookings,
+  ]);
 
   return (
     <>

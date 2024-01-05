@@ -1,13 +1,12 @@
 import { SessionProvider } from "next-auth/react";
 import "./globals.css";
 import { useEffect } from "react";
-const liffId = process.env.AUTH_LIFF_ID;
 import { ThemeProvider } from "next-themes";
-import { ChakraProvider } from "@chakra-ui/react";
-import customTheme from "./components/theme";
+import { Providers } from "./providers";
 
 // Use of the <SessionProvider> is mandatory to allow components that call
 // `useSession()` anywhere in your application to access the `session` object.
+const liffId = process.env.AUTH_LIFF_ID;
 export default function App({ Component, pageProps }: any) {
   useEffect(() => {
     (async () => {
@@ -22,15 +21,15 @@ export default function App({ Component, pageProps }: any) {
       }
     })();
   }, []);
-
-  return (
+  Error: return (
     <>
       <script src="https://static.line-scdn.net/liff/edge/2.1/liff.js" async />
+
       <SessionProvider>
         <ThemeProvider attribute="class">
-          <ChakraProvider theme={customTheme}>
+          <Providers>
             <Component {...pageProps} />
-          </ChakraProvider>
+          </Providers>
         </ThemeProvider>
       </SessionProvider>
     </>

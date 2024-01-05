@@ -4,6 +4,7 @@ interface Iuser extends Document {
   email: string;
   name: string;
   role: string;
+  year: string;
 }
 
 const UserSchema = new Schema<Iuser>(

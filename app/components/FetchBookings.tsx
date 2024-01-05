@@ -1,5 +1,4 @@
 import axios from "axios";
-import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 async function fetchBookings() {

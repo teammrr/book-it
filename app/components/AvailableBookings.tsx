@@ -2,28 +2,23 @@
 import BookingStatus from "@/app/components/BookingStatus";
 import { useState, useEffect, useCallback } from "react";
 import { PulseLoader } from "react-spinners";
-import fetchBookings from "./FetchBookings";
 
 function GetBookings({
   params,
+  bookings: initialBookings,
 }: {
   params: { id: string; startUnix: any; endUnix: any };
+  bookings: any[];
 }) {
-  const [bookings, setBookings] = useState<any>([]);
   const [loading, setLoading] = useState<boolean>(true);
+  const [bookings, setBookings] = useState(initialBookings);
 
-  const getBooking = useCallback(
-    async (id: string) => {
-      const bookings = await fetchBookings();
-      if (bookings) {
-        const startUnix = params.startUnix;
-        const endUnix = params.endUnix;
-        setMatchingBooking(bookings, id, startUnix, endUnix);
-        setLoading(false);
-      }
-    },
-    [params.startUnix, params.endUnix]
-  );
+  useEffect(() => {
+    const startUnix = params.startUnix;
+    const endUnix = params.endUnix;
+    setMatchingBooking(bookings, params.id, startUnix, endUnix);
+    setLoading(false);
+  }, [params.startUnix, params.endUnix, bookings, params.id]);
 
   function setMatchingBooking(
     bookings: any[],
@@ -44,10 +39,6 @@ function GetBookings({
     });
     setBookings(matchingBookings);
   }
-
-  useEffect(() => {
-    getBooking(params.id);
-  }, [getBooking, params.id]);
 
   useEffect(() => {
     setBookings(bookings);
@@ -121,7 +112,7 @@ function GetBookings({
             .map((range, index) => {
               return (
                 <BookingStatus
-                  key={`${range[0]}-${range[1]}`}
+                  key={`${range[0]}-${range[1]}-${index}`}
                   roomId={params.id}
                   startTime={range[0]}
                   endTime={range[1]}

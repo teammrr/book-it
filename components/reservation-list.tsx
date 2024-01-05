@@ -36,8 +36,6 @@ export function ReservationList() {
     });
   }, [session]);
 
-  console.log(bookings);
-
   return (
     <div className="flex  lg:mx-4">
       <main className="flex-grow max-sm:p-2 pr-6 pl-6 pt-6">

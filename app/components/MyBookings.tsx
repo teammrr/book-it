@@ -1,14 +1,21 @@
 "use client";
 import BookingStatusHistory from "./BookingStatusHistory.1";
+import axios from "axios";
 import { useState, useEffect, useCallback } from "react";
 import { BeatLoader } from "react-spinners";
-import axios from "axios";
 import { useSession } from "next-auth/react";
+import { useToast, ToastPosition } from "@chakra-ui/react";
 
 function MyBookings() {
   const { data: session } = useSession({
     required: true,
   });
+  const toast = useToast();
+  const defaultToastProps = {
+    position: "top-right" as ToastPosition,
+    duration: 5000,
+    isClosable: true,
+  };
   const [bookings, setBookings] = useState<any>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   useEffect(() => {

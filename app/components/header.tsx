@@ -1,8 +1,8 @@
 import Link from "next/link";
-import { Fragment, useState } from "react";
+import { Fragment } from "react";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
-import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import Image from "next/image";
 import styles from "./header.module.css";
 
@@ -115,7 +115,7 @@ export default function Header() {
                             <a
                               className={classNames(
                                 active ? "bg-gray-100" : "",
-                                "block px-4 py-2 text-sm text-[#002D74]"
+                                "block px-4 py-2 text-sm text-[#002D74] "
                               )}
                             >
                               {session?.user?.name || "Not Signed In"}

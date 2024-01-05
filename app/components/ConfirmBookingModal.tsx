@@ -13,6 +13,7 @@ export default function ConfirmBookingModal({
   date,
   description,
   roomName,
+  onConfirm,
 }: any) {
   let [isOpen, setIsOpen] = useState(false);
   const [isButtonClicked, setIsButtonClicked] = useState(false);
@@ -27,7 +28,8 @@ export default function ConfirmBookingModal({
   });
   function closeModal() {
     setIsOpen(false);
-    location.reload();
+    setIsButtonClicked(false);
+    onConfirm();
   }
 
   function startToUnix({ startTime, date }: any) {

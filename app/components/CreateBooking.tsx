@@ -9,7 +9,6 @@ export default async function CreateBooking(
   const startTime = Math.floor(Date.now() / 1000); // current time in Unix timestamp
   const endTime = startTime + 60 * 60; // for example, 1 hour later
 
-  console.log(`Start: ${startTime},End: ${endTime}`);
   const bookingDetails = {
     roomId,
     startTime,
@@ -21,7 +20,6 @@ export default async function CreateBooking(
 
   try {
     const response = await axios.post("api/bookings", bookingDetails);
-    console.log(response.data);
   } catch (error) {
     console.error(error);
   }
