@@ -8,7 +8,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
   return (
     <>
       <SWRConfig value={{ provider: () => new Map() }}>
-        <ChakraProvider>{children}</ChakraProvider>;
+        <ChakraProvider>{children}</ChakraProvider>
       </SWRConfig>
     </>
   );

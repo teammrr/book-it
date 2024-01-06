@@ -1,8 +1,6 @@
 "use client";
 import UpcomingRsrvModal from "./UpcomingRsrvModal";
 import { useState, useEffect } from "react";
-import { BeatLoader } from "react-spinners";
-import axios from "axios";
 import { useSession } from "next-auth/react";
 import fetchBookings from "./FetchBookings";
 

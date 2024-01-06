@@ -1,44 +1,50 @@
 "use client";
-import BookingStatus from "@/app/components/BookingStatus";
 import { useState, useEffect, useCallback } from "react";
-import { PulseLoader } from "react-spinners";
+import BookingStatus from "@/app/components/BookingStatus";
 
 function GetBookings({
   params,
   bookings: initialBookings,
+  onReady,
 }: {
   params: { id: string; startUnix: any; endUnix: any };
   bookings: any[];
+  onReady: () => void;
 }) {
-  const [loading, setLoading] = useState<boolean>(true);
-  const [bookings, setBookings] = useState(initialBookings);
+  const [bookings, setBookings] = useState<any>([]);
+
+  const setMatchingBooking = useCallback(
+    (bookings: any[], id: string, startUnix: number, endUnix: number) => {
+      const matchingBookings = bookings.filter((booking) => {
+        return (
+          booking.roomId === id &&
+          booking.startTime >= startUnix &&
+          booking.endTime <= endUnix &&
+          booking.startTime !== booking.endTime
+        );
+      });
+      matchingBookings.forEach((booking) => {
+        if (booking.endTime < booking.startTime) {
+          console.error("Invalid booking:", booking);
+        }
+      });
+      setBookings(matchingBookings);
+      onReady();
+    },
+    [onReady]
+  );
 
   useEffect(() => {
     const startUnix = params.startUnix;
     const endUnix = params.endUnix;
-    setMatchingBooking(bookings, params.id, startUnix, endUnix);
-    setLoading(false);
-  }, [params.startUnix, params.endUnix, bookings, params.id]);
-
-  function setMatchingBooking(
-    bookings: any[],
-    id: string,
-    startUnix: number,
-    endUnix: number
-  ) {
-    const matchingBookings = bookings.filter(
-      (booking) =>
-        booking.roomId === id &&
-        booking.startTime >= startUnix &&
-        booking.endTime <= endUnix
-    );
-    matchingBookings.forEach((booking) => {
-      if (booking.endTime < booking.startTime) {
-        console.error("Invalid booking:", booking);
-      }
-    });
-    setBookings(matchingBookings);
-  }
+    setMatchingBooking(initialBookings, params.id, startUnix, endUnix);
+  }, [
+    params.id,
+    params.startUnix,
+    params.endUnix,
+    setMatchingBooking,
+    initialBookings,
+  ]);
 
   useEffect(() => {
     setBookings(bookings);
@@ -59,6 +65,13 @@ function GetBookings({
   ];
 
   // Convert booked times to timestamps
+  function timeToTimestamp(time: string, addHour = false) {
+    const [hours, minutes] = time.split(":").map(Number);
+    const date = new Date();
+    date.setHours(hours + (addHour ? 1 : 0), minutes, 0, 0);
+    return date.getTime() / 1000;
+  }
+
   const bookedTimeStamps = bookings.map(
     (booking: { startTime: any; endTime: any }) => ({
       start: booking.startTime,
@@ -92,36 +105,23 @@ function GetBookings({
     timeToTimestamp(allTimes[allTimes.length - 1], true),
   ]);
 
-  function timeToTimestamp(time: string, addHour = false) {
-    const [hours, minutes] = time.split(":").map(Number);
-    const date = new Date();
-    date.setHours(hours + (addHour ? 1 : 0), minutes, 0, 0);
-    return date.getTime() / 1000;
-  }
-
   return (
     <>
-      {loading ? ( // Render a loading spinner if isLoading is true
-        <div className="flex pt-8 pb-6 justify-center items-center">
-          {/* <PulseLoader color="#3676d6" /> */}
-        </div>
-      ) : (
-        <div className="mt-4 justify-center align-middle flex flex-col gap-2">
-          {availableTimeRanges
-            .filter((range) => Number(range[0]) !== Number(range[1]))
-            .map((range, index) => {
-              return (
-                <BookingStatus
-                  key={`${range[0]}-${range[1]}-${index}`}
-                  roomId={params.id}
-                  startTime={range[0]}
-                  endTime={range[1]}
-                  name={undefined}
-                />
-              );
-            })}
-        </div>
-      )}
+      <div className="mt-4 justify-center align-middle flex flex-col gap-2">
+        {availableTimeRanges
+          .filter((range) => Number(range[0]) !== Number(range[1]))
+          .map((range, index) => {
+            return (
+              <BookingStatus
+                key={`${range[0]}-${range[1]}-${index}`}
+                roomId={params.id}
+                startTime={range[0]}
+                endTime={range[1]}
+                name={undefined}
+              />
+            );
+          })}
+      </div>
     </>
   );
 }

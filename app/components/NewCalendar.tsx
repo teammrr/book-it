@@ -32,7 +32,12 @@ export default function AntDatepicker({
       onChange={onChange}
       defaultValue={dayjs()}
       format={dateFormat}
-      disabledDate={(current) => current && current < dayjs().startOf("day")}
+      disabledDate={(current) => {
+        // Disable dates that are less than today or more than 14 days from today
+        const today = dayjs().startOf("day");
+        const twoWeeksFromNow = dayjs().add(14, "day").endOf("day");
+        return current && (current < today || current > twoWeeksFromNow);
+      }}
     />
   );
 }

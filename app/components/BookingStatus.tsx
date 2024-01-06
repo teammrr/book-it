@@ -2,6 +2,8 @@ import StatusIndicator from "./StatusIndicator";
 import BookedUser from "./BookedUser";
 
 export default function BookingStatus(Bookings: any) {
+  // console.log("start time recieved", Bookings.startTime);
+  // console.log("end time recieved", Bookings.endTime);
   const formattedDate = formatDate(Bookings.date);
   const startTime = new Date(Bookings.startTime * 1000);
   const formattedStartTime = `${startTime
@@ -24,17 +26,16 @@ export default function BookingStatus(Bookings: any) {
     };
     return date.toLocaleString("en-US", options);
   }
+  // console.log(formattedStartTime, formattedEndTime);
+  if (formattedStartTime === formattedEndTime) {
+    return null;
+  }
 
   return (
     <div className="flex bg-[#E1E7EE] items-center space-x-2 pt-2 pb-2 pr-4 pl-4 rounded-lg shadow shadow-black/8">
-      {" "}
-      {/* Add your desired width and height here */}
       <div className="flex-1 min-w-0">
         <p className="font-semibold text-md text-gray-900 truncate ">
           {formattedStartTime} to {formattedEndTime}
-        </p>
-        <p className="text-sm font-semibold text-gray-500 truncate">
-          {Bookings.date}
         </p>
         <span>
           <BookedUser
