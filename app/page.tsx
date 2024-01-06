@@ -34,7 +34,10 @@ export default function Home() {
         <Header />
       </motion.header>
       <h1 className="text-2xl font-semibold text-gray-800 mt-6 mx-4 lg:mx-10 ">
-        Hello, {session?.user?.name} 👋
+        Hello,{" "}
+        {session?.user?.name
+          ? session.user.name + " 👋"
+          : "You are not logged in"}
       </h1>
       <div>
         <TodayBookings /> {/* Pass the callback function as a prop */}
