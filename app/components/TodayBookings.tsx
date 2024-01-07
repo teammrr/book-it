@@ -18,7 +18,7 @@ function TodayBookings() {
     return data;
   };
 
-  const { data, error } = useSWR("/api/bookings", fetcher);
+  const { data, error, mutate } = useSWR("/api/bookings", fetcher);
   const isLoading = !data && !error;
   let bookings = [];
   if (data) {
@@ -43,6 +43,11 @@ function TodayBookings() {
     return now >= startTime && now <= endTime;
   };
 
+  function handleOnClose() {
+    mutate();
+    setOpenModalId(null);
+  }
+
   return (
     <>
       {isLoading ? (
@@ -66,9 +71,9 @@ function TodayBookings() {
                       startTime={booking.startTime}
                       endTime={booking.endTime}
                       resrvId={booking.resrvId}
-                      isOpen={openModalId === booking._id}
-                      onOpen={() => setOpenModalId(booking._id)}
-                      onClose={() => setOpenModalId(null)}
+                      isOpen={openModalId === booking.resrvId}
+                      onOpen={() => setOpenModalId(booking.resrvId)}
+                      onClose={handleOnClose}
                       status={currentBooking ? "green" : "facebook"}
                     />
                   </div>
