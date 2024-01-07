@@ -59,7 +59,13 @@ export default function ConfirmBookingModal({
   }
 
   function generateReservationId() {
-    return Math.floor(10000000 + Math.random() * 90000000);
+    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    let result = "";
+    for (let i = 0; i < 2; i++) {
+      result += chars[Math.floor(Math.random() * chars.length)];
+    }
+    result += Math.floor(1000 + Math.random() * 9000).toString();
+    return result;
   }
 
   function canCreateBooking(

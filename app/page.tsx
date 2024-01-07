@@ -15,10 +15,16 @@ export default function Home() {
     },
   });
   const { scrollYProgress } = useScroll();
+  const isDesktop = window.innerWidth > 800; // Adjust this value as needed
+
   const headerY = useTransform(
     scrollYProgress,
     [0, 0.5, 0.6],
-    ["0%", "0%", "-100%"]
+    [
+      isDesktop ? "0%" : "0%",
+      isDesktop ? "0%" : "0%",
+      isDesktop ? "0%" : "-100%",
+    ]
   );
 
   return (

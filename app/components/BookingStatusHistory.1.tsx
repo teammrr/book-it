@@ -25,13 +25,9 @@ export default function BookingStatusHistory(Bookings: any) {
             <Table.HeadCell>Time</Table.HeadCell>
             <Table.HeadCell>description</Table.HeadCell>
             {/* <Table.HeadCell>Reservation ID</Table.HeadCell> */}
-
-            <Table.HeadCell>
-              <span className="sr-only">Edit</span>
-            </Table.HeadCell>
           </Table.Head>
           <Table.Body className="divide-y">
-            <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
+            <Table.Row className="bg-white  dark:bg-gray-800">
               <Table.Cell className="whitespace-nowrap font-medium text-zinc-900 dark:text-white">
                 {roomName}
               </Table.Cell>
@@ -42,14 +38,6 @@ export default function BookingStatusHistory(Bookings: any) {
                 {description}
               </Table.Cell>
               {/* <Table.Cell>{resrvId}</Table.Cell> */}
-              <Table.Cell>
-                <a
-                  href="#"
-                  className="font-medium text-red-600 hover:underline dark:text-red-500"
-                >
-                  Cancel
-                </a>
-              </Table.Cell>
             </Table.Row>
           </Table.Body>
         </Table>

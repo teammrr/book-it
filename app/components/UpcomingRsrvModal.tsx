@@ -10,14 +10,15 @@ import {
   PopoverBody,
   Button,
   ButtonGroup,
-  extendTheme,
 } from "@chakra-ui/react";
+import CancelReservation from "./CancelReservation";
 
 interface BookingProps {
   roomName: string;
   description: string;
   startTime: number;
   endTime: number;
+  resrvId: string;
   isOpen: boolean;
   status: string;
   onOpen: () => void;
@@ -29,6 +30,7 @@ export default function UpcomingRsrvModal({
   description,
   startTime,
   endTime,
+  resrvId,
   isOpen,
   onOpen,
   onClose,
@@ -81,9 +83,10 @@ export default function UpcomingRsrvModal({
           >
             <ButtonGroup size="sm">
               <Button colorScheme="blue">Edit</Button>
-              <Button colorScheme="red" ref={initialFocusRef}>
+              <CancelReservation onCancel={() => onClose()} resrvId={resrvId} />
+              {/* <Button colorScheme="red" ref={initialFocusRef}>
                 Cancel Reservation
-              </Button>
+              </Button> */}
             </ButtonGroup>
           </PopoverFooter>
         </PopoverContent>

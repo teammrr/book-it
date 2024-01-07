@@ -43,11 +43,14 @@ export async function DELETE(req: NextRequest) {
   if (!token) {
     return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
   } else {
-    const { id } = await req.json();
+    const { name, resrvId } = await req.json();
     await connectToDatabase();
     try {
-      const booking = await bookings?.findOneAndDelete({ id });
-      return NextResponse.json(booking);
+      await bookings?.findOneAndDelete({ resrvId });
+      return NextResponse.json(
+        { message: "Canceled successfully" },
+        { status: 200 }
+      );
     } catch (err) {
       return NextResponse.json(
         { message: "Failed to delete" },
