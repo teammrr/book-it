@@ -1,7 +1,6 @@
+import useSwr from "swr";
 import axios from "axios";
 import RoomCard from "./PropComponent/RoomCard";
-import { Skeleton, Stack } from "@chakra-ui/react";
-import useSwr from "swr";
 import { useToast, ToastPosition } from "@chakra-ui/react";
 import RoomCardSkeleton from "./skeleton/RoomCard";
 

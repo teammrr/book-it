@@ -1,11 +1,11 @@
 "use client";
+import { useSession } from "next-auth/react";
+import { redirect } from "next/navigation";
+import { motion, useScroll, useTransform } from "framer-motion";
 import Header from "./components/header";
 import Footer from "./components/footer";
 import RoomList from "./components/RoomsList";
 import TodayBookings from "./components/TodayBookings";
-import { useSession } from "next-auth/react";
-import { redirect } from "next/navigation";
-import { motion, useScroll, useTransform } from "framer-motion";
 
 export default function Home() {
   const { data: session } = useSession({
@@ -16,7 +16,6 @@ export default function Home() {
   });
   const { scrollYProgress } = useScroll();
   const isDesktop = window.innerWidth > 800; // Adjust this value as needed
-
   const headerY = useTransform(
     scrollYProgress,
     [0, 0.5, 0.6],
@@ -26,7 +25,6 @@ export default function Home() {
       isDesktop ? "0%" : "-100%",
     ]
   );
-
   return (
     <main className="bg-[#ECEFF4] dark:bg-slate-950 min-h-screen">
       <motion.header
@@ -46,7 +44,7 @@ export default function Home() {
           : "You are not logged in"}
       </h1>
       <div>
-        <TodayBookings /> {/* Pass the callback function as a prop */}
+        <TodayBookings />
       </div>
       <div className=" px-3 ">
         <RoomList />

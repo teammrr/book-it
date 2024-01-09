@@ -1,10 +1,10 @@
+import axios from "axios";
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
-import axios from "axios";
 import { useSession } from "next-auth/react";
 import { useToast, ToastPosition } from "@chakra-ui/react";
 import fetchBookings from "./FetchBookings";
-import { set } from "mongoose";
+import ConfirmDetailsModal from "./PropComponent/ConfirmDetailsModal";
 
 export default function ConfirmBookingModal({
   roomId,
@@ -17,6 +17,7 @@ export default function ConfirmBookingModal({
 }: any) {
   let [isOpen, setIsOpen] = useState(false);
   const [isButtonClicked, setIsButtonClicked] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const toast = useToast();
   const defaultToastProps = {
     position: "top-right" as ToastPosition,
@@ -190,8 +191,8 @@ export default function ConfirmBookingModal({
   }
 
   const handleButtonClicked = () => {
+    setIsModalOpen(true);
     setIsButtonClicked(true);
-    openModal();
   };
 
   return (
@@ -209,9 +210,21 @@ export default function ConfirmBookingModal({
               Processing
             </>
           ) : (
-            "Confirm Reservation"
+            "Reserve Room"
           )}
         </button>
+        {isModalOpen && (
+          <ConfirmDetailsModal
+            isOpen={isModalOpen}
+            setIsOpen={setIsModalOpen}
+            startTime={startTime}
+            endTime={endTime}
+            date={date}
+            description={description}
+            roomName={roomName}
+            onConfirm={openModal}
+          />
+        )}
       </div>
 
       <Transition appear show={isOpen} as={Fragment}>

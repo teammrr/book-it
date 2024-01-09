@@ -82,7 +82,7 @@ export default function UpcomingRsrvModal({
             pb={4}
           >
             <ButtonGroup size="sm">
-              <Button colorScheme="blue">Edit</Button>
+              {/* <Button colorScheme="blue">Edit</Button> */}
               <CancelReservation onCancel={() => onClose()} resrvId={resrvId} />
               {/* <Button colorScheme="red" ref={initialFocusRef}>
                 Cancel Reservation

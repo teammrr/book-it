@@ -1,7 +1,6 @@
 import { connectToDatabase } from "@/lib/mongodb";
 import bookings from "@/models/bookings";
 import { NextRequest, NextResponse } from "next/server";
-// import { getServerSession } from "next-auth/next";
 import { getToken } from "next-auth/jwt";
 
 export async function POST(req: NextRequest) {
@@ -43,7 +42,7 @@ export async function DELETE(req: NextRequest) {
   if (!token) {
     return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
   } else {
-    const { name, resrvId } = await req.json();
+    const { name, resrvId } = await req.json(); // can make an update to the model to include name to check if the user is the one who booked it.
     await connectToDatabase();
     try {
       await bookings?.findOneAndDelete({ resrvId });
@@ -60,13 +59,27 @@ export async function DELETE(req: NextRequest) {
   }
 }
 
-// export async function PUT(req: NextRequest) {
-//   const room = await req.json();
-//   await connectToDatabase();
-//   const updatedRoom = await bookings.findOneAndUpdate(
-//     { id },
-//     { roomId, date, startTime, endTime },
-//     { new: true }
-//   );
-//   return NextResponse.json(updatedRoom);
-// }
+export async function PATCH(req: NextRequest) {
+  const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
+  if (!token) {
+    return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+  } else {
+    const booking = await req.json();
+    await connectToDatabase();
+    try {
+      await bookings?.findOneAndUpdate(
+        { resrvId: booking.resrvId },
+        { $set: { description: booking.description } }
+      );
+      return NextResponse.json(
+        { message: "Updated successfully" },
+        { status: 200 }
+      );
+    } catch (err) {
+      return NextResponse.json(
+        { message: "Failed to update" },
+        { status: 500 }
+      );
+    }
+  }
+}
