@@ -1,5 +1,4 @@
 import MyBookings from "@/app/components/MyBookings";
-import TodayBookings from "@/app/components/TodayBookings";
 import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import axios from "axios";
@@ -26,21 +25,9 @@ export function ReservationHistory() {
 
   return (
     <div className="flex lg:mx-4">
-      <main className="max-sm:p-2 pr-6 pl-6 ">
-        <div className="flex justify-between items-center mb-4">
-          {/* <div>
-            <h1 className="text-2xl font-medium text-gray-800 mt-8 mx-4 lg:mx-10 ">
-              {" "}
-              Today&apos;s reservation
-            </h1>
-            <div className="rounded-lg lg:mx-10 mx-1 pb-4 ">
-              <div className="flex ">
-                <TodayBookings />
-              </div>
-            </div>
-          </div> */}
-        </div>
-        <div className="  ">
+      <main className="max-sm:p-2 pr-6 pl-6 overflow-x-auto ">
+        <div className="flex justify-between items-center mb-4"></div>
+        <div>
           <MyBookings />
         </div>
       </main>

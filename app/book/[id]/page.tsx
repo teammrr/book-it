@@ -20,12 +20,6 @@ function Booking({ params }: { params: { id: string; name: string } }) {
       redirect("/api/auth/signin");
     },
   });
-  const toast = useToast();
-  const defaultToastProps = {
-    position: "top-right" as ToastPosition,
-    duration: 5000,
-    isClosable: true,
-  };
   const [selectedStartTime, setSelectedStartTime] = useState();
   const [selectedEndTime, setSelectedEndTime] = useState();
   const [selectedDate, setSelectedDate] = useState("");
@@ -34,6 +28,12 @@ function Booking({ params }: { params: { id: string; name: string } }) {
   const [usrDescription, setUsrDescription] = useState();
   const searchParams = useSearchParams();
   const name = searchParams.get("name");
+  const toast = useToast();
+  const defaultToastProps = {
+    position: "top-right" as ToastPosition,
+    duration: 5000,
+    isClosable: true,
+  };
   const {
     data: bookings,
     error,
@@ -57,7 +57,6 @@ function Booking({ params }: { params: { id: string; name: string } }) {
 
   const handleData = async () => {
     try {
-      // After a successful booking, mutate the bookings data
       await mutate();
     } catch (err) {
       toast({

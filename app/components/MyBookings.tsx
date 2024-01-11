@@ -1,74 +1,57 @@
 "use client";
-import BookingStatusHistory from "./BookingStatusHistory.1";
-import axios from "axios";
-import { useState, useEffect } from "react";
+import useSWR from "swr";
+import fetchBookings from "./FetchBookings";
 import { BeatLoader } from "react-spinners";
 import { useSession } from "next-auth/react";
-import { useToast, ToastPosition } from "@chakra-ui/react";
+import BookingStatusHistory from "./BookingHistory";
 
 function MyBookings() {
   const { data: session } = useSession({
     required: true,
   });
-  const toast = useToast();
-  const defaultToastProps = {
-    position: "top-right" as ToastPosition,
-    duration: 5000,
-    isClosable: true,
-  };
-  const [bookings, setBookings] = useState<any>([]);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-  useEffect(() => {
-    axios.get("/api/bookings").then((response) => {
-      const data = response.data;
-      const userBookings = data.filter(
-        (booking: any) => booking.name === session?.user?.name
-      );
-      userBookings.sort(
-        (a: any, b: any) => Number(b.startTime) - Number(a.startTime)
-      );
-      setBookings(userBookings);
-      setIsLoading(false);
-    });
-  }, [session]);
+  const {
+    data: allReservations,
+    error,
+    mutate,
+  } = useSWR("/api/bookings", fetchBookings);
 
-  useEffect(() => {
-    setBookings(bookings);
-  }, [bookings]);
+  // Filter the reservations to only include those that match the session name
+  const reservations = allReservations?.filter(
+    (booking: any) => booking.name === session?.user?.name
+  );
+
+  const mutateData = () => {
+    mutate();
+  };
+
+  if (error) {
+    console.log(error);
+    return null; // Return null instead of console.log
+  }
+
+  if (!reservations) {
+    return (
+      <div className="flex w-screen pt-10 pb-8 justify-center items-center">
+        <BeatLoader color="#3676d6" />
+      </div>
+    );
+  }
 
   return (
     <>
-      {isLoading ? ( // Render a loading spinner if isLoading is true
-        <div className="flex pt-10 pb-8 justify-center items-center">
-          <BeatLoader color="#3676d6" />
-        </div>
-      ) : (
-        <div className="justify-center align-middle flex flex-col gap-2">
-          {bookings
-            .sort((a: any, b: any) => b.startTime - a.startTime)
-            .map((booking: any) => {
-              return (
-                <>
-                  <BookingStatusHistory
-                    key={
-                      booking.name +
-                      booking.startTime +
-                      booking.endTime +
-                      booking.roomName
-                    }
-                    description={booking.description}
-                    roomId={booking.roomId}
-                    startTime={booking.startTime}
-                    endTime={booking.endTime}
-                    name={booking.name}
-                    roomName={booking.roomName}
-                    status={"booked"}
-                  />
-                </>
-              );
-            })}
-        </div>
-      )}
+      <div className="justify-center overflow-x-auto align-middle flex flex-col gap-2">
+        {reservations
+          .sort((a: any, b: any) => b.startTime - a.startTime)
+          .map((reservation: any) => {
+            return (
+              <BookingStatusHistory
+                key={reservation.resrvId}
+                reservation={reservation}
+                mutateData={mutateData}
+              />
+            );
+          })}
+      </div>
     </>
   );
 }

@@ -223,6 +223,7 @@ export default function ConfirmBookingModal({
             description={description}
             roomName={roomName}
             onConfirm={openModal}
+            isClose={() => setIsButtonClicked(false)}
           />
         )}
       </div>

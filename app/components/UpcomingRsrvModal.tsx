@@ -78,7 +78,7 @@ export default function UpcomingRsrvModal({
             border="0"
             display="flex"
             alignItems="center"
-            justifyContent="space-between"
+            justifyContent="flex-end"
             pb={4}
           >
             <ButtonGroup size="sm">

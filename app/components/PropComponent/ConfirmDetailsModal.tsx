@@ -1,5 +1,4 @@
 import { Dialog, Transition } from "@headlessui/react";
-import { Divider } from "@chakra-ui/react";
 import { Fragment } from "react";
 
 export default function ConfirmDetailsModal({
@@ -11,8 +10,10 @@ export default function ConfirmDetailsModal({
   description,
   roomName,
   onConfirm,
+  isClose,
 }: any) {
   function closeModal() {
+    isClose();
     setIsOpen(false);
   }
 
