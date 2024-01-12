@@ -1,5 +1,5 @@
 "use client";
-import UpcomingRsrvModal from "./UpcomingRsrvModal";
+import UpcomingRsrvModal from "./PropComponent/UpcomingRsrvModal";
 import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import fetchBookings from "./FetchBookings";

@@ -18,9 +18,11 @@ import * as React from "react";
 
 export default function CancelReservation({
   resrvId,
+  size,
   onCancel,
 }: {
   resrvId: string;
+  size: string;
   onCancel: () => void;
 }) {
   const { data: session } = useSession({
@@ -69,7 +71,7 @@ export default function CancelReservation({
 
   return (
     <>
-      <Button size="sm" colorScheme="red" onClick={onOpen}>
+      <Button size={`${size}`} colorScheme="red" onClick={onOpen}>
         Cancel Reservation
       </Button>
 

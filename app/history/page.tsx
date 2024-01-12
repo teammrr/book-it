@@ -1,7 +1,6 @@
 "use client";
-
 import Layout from "../components/layout";
-import { ReservationHistory } from "@/components/reservation-history";
+import { ReservationHistory } from "@/app/components/ReservationHistory";
 
 export default function History() {
   return (

@@ -11,7 +11,7 @@ import {
   Button,
   ButtonGroup,
 } from "@chakra-ui/react";
-import CancelReservation from "./CancelReservation";
+import CancelReservation from "../CancelReservation";
 
 interface BookingProps {
   roomName: string;
@@ -83,7 +83,11 @@ export default function UpcomingRsrvModal({
           >
             <ButtonGroup size="sm">
               {/* <Button colorScheme="blue">Edit</Button> */}
-              <CancelReservation onCancel={() => onClose()} resrvId={resrvId} />
+              <CancelReservation
+                size="sm"
+                onCancel={() => onClose()}
+                resrvId={resrvId}
+              />
               {/* <Button colorScheme="red" ref={initialFocusRef}>
                 Cancel Reservation
               </Button> */}

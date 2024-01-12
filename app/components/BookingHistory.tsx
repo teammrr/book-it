@@ -2,6 +2,7 @@ import axios from "axios";
 import { useSession } from "next-auth/react";
 import { Table } from "flowbite-react";
 import { Button, useToast, ToastPosition, Tag } from "@chakra-ui/react";
+import CancelReservation from "./CancelReservation";
 
 export default function BookingStatusHistory({
   reservation,
@@ -34,6 +35,10 @@ export default function BookingStatusHistory({
   const currentDate = new Date();
   // Check if the reservation has already ended
   const hasEnded = endTime < currentDate;
+
+  function mutateRsrv() {
+    mutateData();
+  }
 
   async function handleCancel(resrvId: any) {
     const cancelDetails = {
@@ -88,21 +93,21 @@ export default function BookingStatusHistory({
               </Table.Cell>
               <Table.Cell className=" ">
                 {!hasEnded ? (
-                  <Button
+                  <CancelReservation
+                    resrvId={reservation.resrvId}
                     size={"xs"}
-                    colorScheme="red"
-                    onClick={() => handleCancel(reservation.resrvId)}
-                  >
-                    Cancel
-                  </Button>
+                    onCancel={() => mutateRsrv()}
+                  />
                 ) : (
-                  <Button
-                    isDisabled
-                    size={"xs"}
-                    colorScheme="red"
-                    onClick={() => handleCancel(reservation.resrvId)}
-                  >
-                    Cancel
+                  // <Button
+                  //   size={"xs"}
+                  //   colorScheme="red"
+                  //   onClick={() => handleCancel(reservation.resrvId)}
+                  // >
+                  //   Cancel
+                  // </Button>
+                  <Button isDisabled size={"xs"} colorScheme="red">
+                    Cancel Reservation
                   </Button>
                 )}
               </Table.Cell>
