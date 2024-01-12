@@ -7,7 +7,7 @@ export default function History() {
     <Layout>
       <>
         <div>
-          <h1 className="text-2xl font-semibold text-[#040506] mt-6 mx-4 lg:mx-10 ">
+          <h1 className="text-2xl font-semibold text-[#040506] mt-6 mx-4 lg:mx-10 lg:flex lg:justify-center lg:items-center">
             Reservation History
           </h1>
           <div className="overflow-x-auto lg:flex lg:justify-center lg:items-center">
