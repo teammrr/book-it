@@ -48,8 +48,6 @@ export default function UpcomingRsrvModal({
     hour12: false,
   });
 
-  //TODO Create a function to edit the reservation details
-  //TODO Create a function to cancel the reservation
   // TODO Create a function to send a reminder line message to the user
 
   return (
