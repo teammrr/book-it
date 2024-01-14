@@ -1,7 +1,4 @@
 # Room Reservation System with Next.js
-
-![d7kyHK1.jpeg](https://sv1.picz.in.th/images/2024/01/14/d7kyHK1.jpeg)
-
 ## Table of Contents
 
 - [About](#about)
