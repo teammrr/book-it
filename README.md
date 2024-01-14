@@ -1,6 +1,6 @@
 # Room Reservation System with Next.js
 
-![Project Image](https://sv1.picz.in.th/images/2024/01/14/d7kyHK1.jpeg)
+![d7kyHK1.jpeg](https://sv1.picz.in.th/images/2024/01/14/d7kyHK1.jpeg)
 
 ## Table of Contents
 
