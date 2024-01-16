@@ -13,7 +13,7 @@ interface RoomProps {
 export default function RoomCard(room: RoomProps) {
   return (
     <div key={room.name} className="flex flex-col justify-center p-2">
-      <div className="max-w-lg rounded-lg bg-[#E1E7EE] shadow-lg transition ease-in-out duration-500 ">
+      <div className="max-w-lg rounded-lg bg-[#E1E7EE] shadow-sm transition ease-in-out duration-500 ">
         <div
           className="relative overflow-hidden bg-cover bg-no-repeat"
           data-te-ripple-init

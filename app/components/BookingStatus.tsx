@@ -32,7 +32,11 @@ export default function BookingStatus(Bookings: any) {
   }
 
   return (
-    <div className="flex bg-[#E1E7EE] items-center space-x-2 pt-2 pb-2 pr-4 pl-4 rounded-lg shadow shadow-black/8">
+    <div
+      className={`flex border-4 ${
+        Bookings.status === "booked" ? "border-l-red-800" : "border-l-green-800"
+      } bg-[#E1E7EE] items-center space-x-2 pt-2 pb-2 pr-4 pl-4 rounded-lg `}
+    >
       <div className="flex-1 min-w-0">
         <p className="font-semibold text-md text-gray-900 truncate ">
           {formattedStartTime} to {formattedEndTime}
@@ -44,7 +48,6 @@ export default function BookingStatus(Bookings: any) {
           />
         </span>
       </div>
-      <StatusIndicator status={Bookings.status} />
     </div>
   );
 }

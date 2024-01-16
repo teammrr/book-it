@@ -191,7 +191,7 @@ export default function ConfirmBookingModal({
   }
 
   const handleButtonClicked = () => {
-    setIsModalOpen(true);
+    // setIsModalOpen(true);
     setIsButtonClicked(true);
   };
 
@@ -202,7 +202,9 @@ export default function ConfirmBookingModal({
           type="button"
           onClick={handleButtonClicked}
           disabled={isButtonClicked}
-          className="flex rounded-lg border border-transparent bg-[#546A8C] px-4 py-2 text-sm font-medium text-slate-100 transition ease-in-out duration-200 hover:bg-[#3b4c63] focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-900 focus-visible:ring-offset-2 shadow shadow-black/10 "
+          className={`flex rounded-lg border border-transparent bg-[#546A8C] text-sm font-medium text-slate-100 transition-all ease-in-out duration-200 hover:bg-[#3b4c63] focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-900 focus-visible:ring-offset-2 shadow shadow-black/10 ${
+            isButtonClicked ? "px-5 py-2" : "px-4 py-2"
+          }`}
         >
           {isButtonClicked ? (
             <>

@@ -39,7 +39,7 @@ function MyBookings() {
 
   return (
     <>
-      <div className="justify-center overflow-x-auto align-middle flex flex-col gap-2">
+      <div className="justify-center pb-2 overflow-x-auto align-middle flex flex-col gap-2">
         {reservations
           .sort((a: any, b: any) => b.startTime - a.startTime)
           .map((reservation: any) => {

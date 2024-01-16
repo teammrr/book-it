@@ -6,7 +6,7 @@ import { getServerSession } from "next-auth";
 import { config } from "./auth";
 import { Analytics } from "@vercel/analytics/react";
 import { Providers } from "./providers";
-
+import "rsuite/dist/rsuite-no-reset.min.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
