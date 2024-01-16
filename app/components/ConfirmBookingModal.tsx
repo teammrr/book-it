@@ -191,7 +191,7 @@ export default function ConfirmBookingModal({
   }
 
   const handleButtonClicked = () => {
-    // setIsModalOpen(true);
+    setIsModalOpen(true);
     setIsButtonClicked(true);
   };
 
