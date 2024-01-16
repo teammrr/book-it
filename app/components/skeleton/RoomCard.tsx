@@ -3,7 +3,7 @@ import { Skeleton, SkeletonCircle, SkeletonText } from "@chakra-ui/react";
 export default function RoomCardSkeleton() {
   return (
     <div className="flex flex-col justify-center">
-      <div className="max-w-lg rounded-lg bg-[#E1E7EE] shadow-lg transition ease-in-out duration-500 ">
+      <div className="max-w-lg rounded-lg bg-[#E1E7EE] shadow-sm transition ease-in-out duration-500 ">
         <div
           className="relative overflow-hidden bg-cover bg-no-repeat"
           data-te-ripple-init
