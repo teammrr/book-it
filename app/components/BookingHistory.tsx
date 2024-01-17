@@ -3,6 +3,8 @@ import { useSession } from "next-auth/react";
 import { Table } from "flowbite-react";
 import { Button, useToast, ToastPosition, Tag } from "@chakra-ui/react";
 import CancelReservation from "./CancelReservation";
+import { Menu, MenuButton, MenuList, MenuItem } from "@chakra-ui/react";
+import { ChevronDownIcon } from "@chakra-ui/icons";
 
 export default function BookingStatusHistory({
   reservation,
@@ -72,49 +74,40 @@ export default function BookingStatusHistory({
 
   return (
     <>
-      <div className="shadow-sm overflow-x-auto">
-        <Table>
-          <Table.Head>
-            <Table.HeadCell>{startTime.toDateString()}</Table.HeadCell>
-            <Table.HeadCell>Time</Table.HeadCell>
-            <Table.HeadCell>description</Table.HeadCell>
-            <Table.HeadCell>Action</Table.HeadCell>
-          </Table.Head>
-          <Table.Body className="divide-y">
-            <Table.Row className="bg-white  dark:bg-gray-800">
-              <Table.Cell className="whitespace-nowrap font-medium text-zinc-900 dark:text-white">
-                {reservation.roomName}
-              </Table.Cell>
-              <Table.Cell className=" p-0 truncate text-zinc-900 ">
-                {formattedStartTime} to {formattedEndTime}
-              </Table.Cell>
-              <Table.Cell className="text-zinc-900 text-ellipsis overflow-hidden">
-                {reservation.description}
-              </Table.Cell>
-              <Table.Cell className=" ">
-                {!hasEnded ? (
-                  <CancelReservation
-                    resrvId={reservation.resrvId}
-                    size={"xs"}
-                    onCancel={() => mutateRsrv()}
-                  />
-                ) : (
-                  // <Button
-                  //   size={"xs"}
-                  //   colorScheme="red"
-                  //   onClick={() => handleCancel(reservation.resrvId)}
-                  // >
-                  //   Cancel
-                  // </Button>
-                  <Button isDisabled size={"xs"} colorScheme="red">
-                    Cancel Reservation
-                  </Button>
-                )}
-              </Table.Cell>
-            </Table.Row>
-          </Table.Body>
-        </Table>
-      </div>
+      <Table>
+        <Table.Head>
+          <Table.HeadCell>{startTime.toDateString()}</Table.HeadCell>
+          <Table.HeadCell>Time</Table.HeadCell>
+          <Table.HeadCell>description</Table.HeadCell>
+          <Table.HeadCell>Action</Table.HeadCell>
+        </Table.Head>
+        <Table.Body className="divide-y">
+          <Table.Row className="bg-white  dark:bg-gray-800">
+            <Table.Cell className="whitespace-nowrap font-medium text-zinc-900 dark:text-white">
+              {reservation.roomName}
+            </Table.Cell>
+            <Table.Cell className=" p-0 truncate text-zinc-900 ">
+              {formattedStartTime} to {formattedEndTime}
+            </Table.Cell>
+            <Table.Cell className="text-zinc-900 text-ellipsis overflow-hidden">
+              {reservation.description}
+            </Table.Cell>
+            <Table.Cell className=" ">
+              {!hasEnded ? (
+                <CancelReservation
+                  resrvId={reservation.resrvId}
+                  size={"xs"}
+                  onCancel={() => mutateRsrv()}
+                />
+              ) : (
+                <Button isDisabled size={"xs"} colorScheme="red">
+                  Cancel
+                </Button>
+              )}
+            </Table.Cell>
+          </Table.Row>
+        </Table.Body>
+      </Table>
     </>
   );
 }

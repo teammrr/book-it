@@ -72,7 +72,7 @@ export default function CancelReservation({
   return (
     <>
       <Button size={`${size}`} colorScheme="red" onClick={onOpen}>
-        Cancel Reservation
+        Cancel
       </Button>
 
       <AlertDialog

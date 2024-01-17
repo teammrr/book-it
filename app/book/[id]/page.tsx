@@ -2,7 +2,7 @@
 import { useSession } from "next-auth/react";
 import { redirect, useSearchParams } from "next/navigation";
 import { useState } from "react";
-import useSWR, { mutate } from "swr";
+import useSWR from "swr";
 import fetchBookings from "@/app/components/FetchBookings";
 import Layout from "../../components/layout";
 import ConfirmBookingModal from "@/app/components/ConfirmBookingModal";
@@ -54,6 +54,7 @@ function Booking({ params }: { params: { id: string; name: string } }) {
       </div>
     ); // or return null, or a loading spinner, etc.
   }
+  if (error) return toast({ title: "An error occurred", status: "error" });
 
   const handleData = async () => {
     try {
@@ -68,7 +69,9 @@ function Booking({ params }: { params: { id: string; name: string } }) {
     }
   };
 
-  if (error) return toast({ title: "An error occurred", status: "error" });
+  // #TODO - Disable the time that is behind the current time
+  // #TODO - Disable the time that is already booked
+  // #TODO - Fix the size of the date start end time
 
   return (
     <>
@@ -86,13 +89,8 @@ function Booking({ params }: { params: { id: string; name: string } }) {
                 <p className="truncate mb-1 block text-sm font-medium text-gray-900 dark:text-white">
                   Date{" "}
                 </p>
-
-                {/* <Calendar
-                    setSelectedDate={setSelectedDate}
-                    setEndDateUnix={setEndDateUnix}
-                    setDateName={setDateName}
-                  /> */}
                 <AntDatepicker
+                  className="w-full h-12"
                   setSelectedDate={setSelectedDate}
                   setEndDateUnix={setEndDateUnix}
                   setDateName={setDateName}
@@ -103,6 +101,7 @@ function Booking({ params }: { params: { id: string; name: string } }) {
                   Start Time
                 </span>
                 <SelectStartTime
+                  className="w-full h-12"
                   userStartTime={selectedStartTime}
                   setUserStartTime={setSelectedStartTime}
                 />
@@ -112,6 +111,7 @@ function Booking({ params }: { params: { id: string; name: string } }) {
                   End Time
                 </span>
                 <SelectEndTime
+                  className="w-full h-12"
                   userEndTime={selectedEndTime}
                   setUserEndTime={setSelectedEndTime}
                 />
