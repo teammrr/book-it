@@ -7,7 +7,7 @@ import { Table } from "flowbite-react";
 import CancelReservation from "./CancelReservation";
 import { Button } from "@chakra-ui/react";
 
-function MyBookings() {
+function BookingsHistory() {
   const { data: session } = useSession({
     required: true,
   });
@@ -117,4 +117,4 @@ function MyBookings() {
   );
 }
 
-export default MyBookings;
+export default BookingsHistory;
