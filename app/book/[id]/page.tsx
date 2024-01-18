@@ -20,6 +20,7 @@ function Booking({ params }: { params: { id: string; name: string } }) {
       redirect("/api/auth/signin");
     },
   });
+
   const [selectedStartTime, setSelectedStartTime] = useState();
   const [selectedEndTime, setSelectedEndTime] = useState();
   const [selectedDate, setSelectedDate] = useState("");
@@ -31,7 +32,6 @@ function Booking({ params }: { params: { id: string; name: string } }) {
   const toast = useToast();
   const defaultToastProps = {
     position: "top-right" as ToastPosition,
-    duration: 5000,
     isClosable: true,
   };
   const {
@@ -69,8 +69,6 @@ function Booking({ params }: { params: { id: string; name: string } }) {
     }
   };
 
-  // #TODO - Disable the time that is behind the current time
-  // #TODO - Disable the time that is already booked
   // #TODO - Fix the size of the date start end time
 
   return (

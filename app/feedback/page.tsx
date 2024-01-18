@@ -1,13 +1,9 @@
 "use client";
 import Layout from "../components/layout";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import { Button } from "@/components/ui/button";
-import { CardContent, Card } from "@/components/ui/card";
 import { useState } from "react";
 import { useSession } from "next-auth/react";
 import axios from "axios";
-import { set } from "mongoose";
+import Image from "next/image";
 
 export default function Component() {
   const { data: session, status } = useSession({
@@ -17,10 +13,10 @@ export default function Component() {
     },
   });
   const user: any = session?.user || {};
-  const [name, setName] = useState(user.name);
-  const [email, setEmail] = useState(user.email);
+  const [name] = useState(user.name);
+  const [email] = useState(user.email);
   const [message, setMessage] = useState("");
-  const [isMessageSent, setIsMessageSent] = useState(false);
+  const [isMessageSent, setIsMessageSent] = useState(true);
   const sendMessage = async () => {
     try {
       await axios.post("/api/feedback", { message, name, email });
@@ -34,23 +30,15 @@ export default function Component() {
     <>
       <Layout>
         {isMessageSent ? (
-          <div className="flex items-center justify-center h-screen">
+          <div className="flex items-center justify-center pt-20">
             <div>
               <div className="flex flex-col items-center space-y-2">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="text-green-600 w-28 h-28"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  stroke-width="1"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-                  />
-                </svg>
+                <Image
+                  src="/img/ThankYouComputer.png"
+                  width={300}
+                  height={300}
+                  alt="Thank you"
+                />
                 <h1 className="text-4xl font-bold">Thank You !</h1>
                 <p className="pl-4 pr-4 pb-2 text-center ">
                   We appreciate your willingness to help me make this services
@@ -58,7 +46,7 @@ export default function Component() {
                 </p>
                 <a
                   href="/"
-                  className="inline-flex items-center px-4 py-2 text-white bg-blue-600 border border-blue-600 rounded-full hover:bg-indigo-700 focus:outline-none focus:ring"
+                  className="inline-flex items-center px-4 py-2 text-white bg-[#1b4c82] border border-[#1b4c82] rounded-full hover:bg-[#2a4460] focus:outline-none focus:ring"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -80,42 +68,72 @@ export default function Component() {
             </div>
           </div>
         ) : (
-          <div className="flex items-center justify-center h-screen pl-2 pr-2 lg:pr-48 lg:pl-48">
-            <Card>
-              <CardContent>
-                <div className="space-y-4">
-                  <div className="space-y-2">
-                    <h2 className="text-3xl pt-6 font-semibold">
-                      👋 Help us improve
-                    </h2>
-                    <p className="text-zinc-500 dark:text-zinc-400">
-                      I am always looking for ways to improve this services, and
-                      your feedback is essential to this process. Please take a
-                      few minutes to share your thoughts and experiences with
-                      us.
-                    </p>
-                  </div>
-                  <div className="space-y-4">
-                    <div className="grid grid-cols-2 gap-4"></div>
-                    <Label htmlFor="message">Message</Label>
-                    <Textarea
-                      className="min-h-[100px]"
-                      id="message"
-                      value={message}
-                      placeholder="Enter your message"
-                      onChange={(e) => setMessage(e.target.value)}
+          <div>
+            <div className="max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto">
+              <div className="mx-auto max-w-2xl">
+                <div className="text-center">
+                  <h2 className="text-xl text-gray-800 font-bold sm:text-3xl dark:text-white">
+                    Write your feedback
+                  </h2>
+                </div>
+
+                <div className="mt-5 p-4 relative z-10 bg-white border rounded-xl sm:mt-10 md:p-10 dark:bg-gray-800 dark:border-gray-700">
+                  <div className="mb-4 sm:mb-8">
+                    <label className="block mb-2 text-sm font-medium dark:text-white">
+                      Full name
+                    </label>
+                    <input
+                      disabled
+                      type="text"
+                      id="hs-feedback-post-comment-name-1"
+                      className="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 dark:focus:ring-gray-600"
+                      placeholder="Full name"
+                      value={name}
                     />
                   </div>
-                  <Button
-                    className="bg-gray-800 text-white"
-                    type="submit"
-                    onClick={sendMessage}
-                  >
-                    Send message
-                  </Button>
+
+                  <div className="mb-4 sm:mb-8">
+                    <label className="block mb-2 text-sm font-medium dark:text-white">
+                      Email address
+                    </label>
+                    <input
+                      disabled
+                      type="email"
+                      value={email}
+                      id="hs-feedback-post-comment-email-1"
+                      className="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 dark:focus:ring-gray-600"
+                      placeholder="Email address"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block mb-2 text-sm font-medium dark:text-white">
+                      Comment
+                    </label>
+                    <div className="mt-1">
+                      <textarea
+                        required
+                        onChange={(e) => setMessage(e.target.value)}
+                        id="hs-feedback-post-comment-textarea-1"
+                        name="hs-feedback-post-comment-textarea-1"
+                        rows={3}
+                        className="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-[#1b4c82] focus:ring-[#1b4c82]disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 dark:focus:ring-gray-600"
+                        placeholder="Leave your comment here..."
+                      ></textarea>
+                    </div>
+                  </div>
+
+                  <div className="mt-6 grid">
+                    <button
+                      onClick={sendMessage}
+                      className="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-[#1b4c82] text-white hover:bg-[#365679] disabled:opacity-50 disabled:pointer-events-none dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
+                    >
+                      Submit
+                    </button>
+                  </div>
                 </div>
-              </CardContent>
-            </Card>
+              </div>
+            </div>
           </div>
         )}
       </Layout>
